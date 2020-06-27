@@ -1,14 +1,15 @@
 // ==UserScript==
-// @name        CheckOlymp
-// @version     1.4
+// @name        CheckAllOlymp
+// @version     1.6
 // @date        2020-06-29
 // @author      kazakovstepan
 // @description Get all abiturient olymps
 // @homepage    https://vk.com/kazakovstepan
 // @icon        https://raw.githubusercontent.com/ksrt12/ksrt12.github.io/master/icon.png
-// @updateURL   https://raw.githubusercontent.com/ksrt12/ksrt12.github.io/master/diploma.meta.js
+// @updateURL   https://raw.githubusercontent.com/ksrt12/ksrt12.github.io/master/diploma.user.js
 // @downloadURL https://raw.githubusercontent.com/ksrt12/ksrt12.github.io/master/diploma.user.js
 // @include     https://isu.ifmo.ru/pls/apex/f?p=2175:ST_FORM:109432209050434*
+// @include     https://isu.ifmo.ru/pls/apex/f?p=2175:2:109432209050434*
 // @include     https://ksrt12.github.io/*
 // @run-at      document-end
 // @grant       GM_listValues
@@ -41,7 +42,7 @@ var сheckolymp = document.createElement("button");
 сheckolymp.style="margin-right: 5px;"
 var DELOLYMP = document.getElementById("PERS_UPDATE");
 DELOLYMP.parentNode.insertBefore(сheckolymp, DELOLYMP);
-сheckolymp.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>Проверить');
+сheckolymp.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>Проверить олимпиады');
 сheckolymp.onclick=function(){javascript:addOLYMPlink();};
 }
 
@@ -50,14 +51,6 @@ function loadISU(){
 	FN=document.getElementById('ST_FIRSTNAME').value;
 	MN=document.getElementById('ST_MIDDLENAME').value;
 	BD=document.getElementById('ST_DOB').value.split('.');
-	namestr = LN+' '+FN+' '+MN+' '+BD[2]+'-'+BD[1]+'-'+BD[0];
-	return namestr;
-}
-
-function addOLYMPlink(){
-	a=loadISU();
-	console.log(a);
-    window.open('https://ksrt12.github.io?LN='+LN+'&FN='+FN+'&MN='+MN+'&BDD='+BD[0]+'&BDM='+BD[1]+'&BDY='+BD[2]);
 }
 
 function SHA256(s){
@@ -278,12 +271,16 @@ function loadd(){
 		'Класс'
 	]));
 	namestring=loadvars();
-	console.log(namestring);
 	personID=SHA256(namestring);
 	YEARS=["2016","2017","2018","2019","2020"];
 	for (YEAR of YEARS){
 		load_diploma_list('https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-'+YEAR+'/by-person-released/'+personID+'/codes.js');
 	}
+}
+
+function addOLYMPlink(){
+	loadISU();
+    window.open('https://ksrt12.github.io?LN='+LN+'&FN='+FN+'&MN='+MN+'&BDD='+BD[0]+'&BDM='+BD[1]+'&BDY='+BD[2]);
 }
 
 if (document.location.host.includes("ksrt12")){
