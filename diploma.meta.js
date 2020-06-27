@@ -1,15 +1,14 @@
 // ==UserScript==
 // @name        CheckOlymps
-// @version     1.0
-// @date        2020-06-27
+// @version     1.4
+// @date        2020-06-29
 // @author      kazakovstepan
 // @description Get all abiturient olymps
 // @homepage    https://vk.com/kazakovstepan
-// @icon        https://raw.githubusercontent.com/ksrt12/checkolymp/master/checkAllOlymp_files/icon.png
-// @updateURL   https://raw.githubusercontent.com/ksrt12/checkolymp/master/checkAllOlymp_files/diploma.meta.js
-// @downloadURL https://raw.githubusercontent.com/ksrt12/checkolymp/master/checkAllOlymp_files/diploma.user.js
-// @include     http://*
-// @include     https://*
+// @icon        https://raw.githubusercontent.com/ksrt12/ksrt12.github.io/master/icon.png
+// @updateURL   https://raw.githubusercontent.com/ksrt12/ksrt12.github.io/master/diploma.meta.js
+// @downloadURL https://raw.githubusercontent.com/ksrt12/ksrt12.github.io/master/diploma.user.js
+// @include     https://isu.ifmo.ru/pls/apex/f?p=2175:ST_FORM:109432209050434*
 // @run-at      document-end
 // @grant       GM_listValues
 // @grant       GM_setValue
@@ -31,5 +30,4 @@
 // @grant       GM.openInTab
 // @grant       GM.setClipboard
 // @grant       GM.xmlHttpRequest
-// @connect     isu.ifmo.ru
 // ==/UserScript==
