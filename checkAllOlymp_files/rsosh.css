@@ -1,0 +1,125 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #666666;
+	text-decoration: none;
+	background-color: #E5E3D5;
+	margin: 0px;
+	padding: 0px;
+}
+
+.header {
+	background-repeat: no-repeat;
+	height: 176px;
+}
+.contents {
+	background-color:#fff;
+	background-repeat: no-repeat;
+	background-position: center top;
+	margin-bottom: 25px;
+	padding-top: 25px;
+}
+
+.main .contents .left {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.main .contents .left p {
+	font-size: 12px;
+	line-height: 16px;
+	text-align: justify;
+}
+.main .contents .right .rightcontents {
+	border: 1px solid #E4DCC2;
+	padding: 5px;
+	margin-bottom: 15px;
+}
+.rightcontents ul {
+	display: block;
+	margin: 0px;
+	padding: 0px;
+}
+.rightcontents li {
+	list-style-type: none;
+	margin-top: 5px;
+	margin-bottom: 3px;
+	text-decoration: none;
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+	border-bottom-color: #b3b2a8;
+}
+.rightcontents li:last-child
+{
+	border:none;
+}
+
+.main {
+	background-repeat: repeat-y;
+	width: 940px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+}
+h1 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 24px;
+	color: #336699;
+	text-decoration: none;
+	font-weight: normal;
+}
+h2 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 20px;
+	color: #996633;
+	text-decoration: none;
+	font-weight: normal;
+	display: block;
+	margin-bottom: 5px;
+}
+.main .contents .left a:link {
+	color: #0099FF;
+	text-decoration: none;
+}
+
+.main .contents .left a:visited {
+	color: #0066FF;
+	text-decoration: underline;
+}
+.main .contents .left a:hover {
+
+	color: #FF9933;
+	text-decoration: none;
+}
+.main .contents .left a:active {
+
+	color: #0066FF;
+	text-decoration: underline;
+}
+
+.mainTableInfo thead
+{
+	background-color:#e3d4bb;  
+	color:#105590;
+}
+
+.mainTableInfo
+{
+	background: #F9F5F0; 
+	width:100%; 
+	margin:0px !important;
+	padding:0px;
+	border: 1px solid #89939B;
+    margin: 5px;
+}
+.mainTableInfo tbody tr:nth-child(even)
+{
+	background:#d7c6aa;
+}
+.mainTableInfo tbody td:last-child
+{
+	text-align: center;
+}
+
