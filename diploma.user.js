@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name        CheckAllOlymp
-// @version     1.9
+// @name        Check All Olymps
+// @version     2.0
 // @date        2020-06-28
 // @author      kazakovstepan
 // @namespace   ITMO University
-// @description Get all abiturient olymps
+// @description Get all abiturient's olymps
 // @homepage    https://vk.com/kazakovstepan
 // @icon        https://ksrt12.github.io/icon.png
 // @updateURL   https://ksrt12.github.io/diploma.user.js
