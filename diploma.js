@@ -137,8 +137,8 @@ function clean_results(){
 }
 
 function make_link(t, u){
-  var a = document.createElement('a');
-  a.href=u;
+  var a = document.createElement('button');
+  a.onclick=function(){window.open(u,'_blank')};
   a.appendChild(document.createTextNode(t));
   return a;
 }
