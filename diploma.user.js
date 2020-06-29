@@ -11,27 +11,8 @@
 // @downloadURL https://ksrt12.github.io/diploma.user.js
 // @include     https://isu.ifmo.ru/pls/apex/f?p=2175*
 // @run-at      document-end
-// @grant       GM_listValues
-// @grant       GM_setValue
-// @grant       GM_getValue
-// @grant       GM_deleteValue
-// @grant       GM_xmlhttpRequest
-// @grant       GM_info
-// @grant       GM_openInTab
-// @grant       GM_setClipboard
-// @grant       GM_registerMenuCommand
-// @grant       GM_unregisterMenuCommand
-// @grant       GM_notification
-// @grant       GM_download
-// @grant       GM.info
-// @grant       GM.listValues
-// @grant       GM.setValue
-// @grant       GM.getValue
-// @grant       GM.deleteValue
-// @grant       GM.openInTab
-// @grant       GM.setClipboard
+// @grant       none
 // ==/UserScript==
-//
 
 function addcheck(str,ISUid){
 var сheckolymp = document.createElement("button");
