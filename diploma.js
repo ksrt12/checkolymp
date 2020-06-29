@@ -184,7 +184,7 @@ function update_diplomas(){
     var d = diplomaCodes[i];
     table.appendChild(table_row([
         d.oa, 
-        make_link((''+d.code).replace(/([0-9]{3})([0-9]{4})([0-9]{4})/,'$1 $2-$3'), 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-'+olympYear+'/by-code/'+d.code+'/white.pdf'),
+        make_link((''+d.code).replace(/([0-9]{3})([0-9]{4})([0-9]{4})/,'$1 $2-$3'), rsrolymp+olympYear+'/by-code/'+d.code+'/white.pdf'),
 		d.name,
 		d.form,
       ]));
@@ -204,6 +204,8 @@ function load_diploma_list(url){
 }
 
 function loadd(){
+	rsrolymp='https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
+	
 	table = document.createElement('table');
 
 	table.setAttribute('rules', 'all');
@@ -219,7 +221,7 @@ function loadd(){
 	personID=SHA256(namestring);
 	YEARS=["2016","2017","2018","2019","2020"];
 	for (YEAR of YEARS){
-		load_diploma_list('https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-'+YEAR+'/by-person-released/'+personID+'/codes.js');
+		load_diploma_list(rsrolymp+YEAR+'/by-person-released/'+personID+'/codes.js');
 	}
 }
 
