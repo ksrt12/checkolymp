@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Check All Olymps
-// @version     2.1
-// @date        2020-06-29
+// @version     2.2
+// @date        2020-06-30
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description Get all abiturient's olymps
@@ -41,9 +41,11 @@ var сheckolymp = document.createElement("button");
 сheckolymp.type="button";
 сheckolymp.style="margin-right: 5px;"
 var ISUELEM = document.getElementById(ISUid);
+if (ISUELEM != null) {
 ISUELEM.parentNode.insertBefore(сheckolymp, ISUELEM);
 сheckolymp.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>'+str);
 сheckolymp.onclick=function(){addOLYMPlink()};
+}
 }
 
 function loadISU(){
