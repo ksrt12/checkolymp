@@ -219,8 +219,7 @@ function loadd(){
 	]));
 	namestring=loadvars();
 	personID=SHA256(namestring);
-	YEARS=["2016","2017","2018","2019","2020"];
-	for (YEAR of YEARS){
+	for (let YEAR=2014; YEAR<2021; YEAR++){
 		load_diploma_list(rsrolymp+YEAR+'/by-person-released/'+personID+'/codes.js');
 	}
 }

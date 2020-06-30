@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Check All Olymps
-// @version     2.2
+// @version     2.3
 // @date        2020-06-30
 // @author      kazakovstepan
 // @namespace   ITMO University
