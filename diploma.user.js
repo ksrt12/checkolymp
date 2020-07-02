@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Check All Olymps
-// @version     2.4
-// @date        2020-07-01
+// @version     2.5
+// @date        2020-07-02
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description Get all abiturient's olymps

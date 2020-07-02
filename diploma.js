@@ -121,12 +121,6 @@ function loadvars(){
 	return namestr;
 }
 
-function urlYear(url){
-	var res = url.toString().split("/").filter(function(x){return x.match(/[0-9]{4}/);})[0].replace(/compiled-storage-/g,'');
-	if(! res) {res="2014";};
-	return res;
-}
-
 function clean_results(){
   var target = document.getElementById('results');
   var i;
@@ -192,11 +186,12 @@ function update_diplomas(){
   target.appendChild(table);
 }
 
-function load_diploma_list(url){
+function load_diploma_list(year,pid){
   var diplomaCodes = [];
   var s = document.createElement('script');
+  var url = rsrolymp+year+'/by-person-released/'+pid+'/codes.js'
   s.onload = function(){
-  	olympYear=urlYear(url);
+  	olympYear=year;
   	update_diplomas();
   };
   s.src = url;
@@ -213,14 +208,13 @@ function loadd(){
 
 	table.appendChild(table_row([
 		'Олимпиада',
-		'Код подтверждения (номер электронного дмиплома',
+		'Номер электронного дмиплома (код подтверждения)',
 		'Имя на дипломе',
 		'Класс'
 	]));
-	namestring=loadvars();
-	personID=SHA256(namestring);
+	personID=SHA256(loadvars());
 	for (let YEAR=2014; YEAR<2021; YEAR++){
-		load_diploma_list(rsrolymp+YEAR+'/by-person-released/'+personID+'/codes.js');
+		load_diploma_list(YEAR,personID);
 	}
 }
 
