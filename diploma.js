@@ -202,6 +202,7 @@ function loadd(){
 	rsrolymp = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
 	
 	table = document.createElement('table');
+	table.id='table';
 	table.setAttribute('rules', 'all');
 	table.setAttribute('border', 'all');
 	table.appendChild(table_row([
@@ -217,4 +218,15 @@ function loadd(){
 	}
 }
 
+function checktable(){
+	window.addEventListener("load", function(event) {
+		TABLE=document.getElementById('table');
+		if (TABLE == null) {
+			alert('Олимпиад РСОШ не найдено!');
+			window.close();
+		};
+	});
+}
+
 loadd();
+checktable();
