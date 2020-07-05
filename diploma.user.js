@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Check All Olymps
-// @version     2.5
-// @date        2020-07-02
+// @version     2.6
+// @date        2020-07-05
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description Get all abiturient's olymps
@@ -11,8 +11,7 @@
 // @downloadURL https://ksrt12.github.io/diploma.user.js
 // @include     https://isu.ifmo.ru/pls/apex/f?p=2175*
 // @run-at      document-end
-// @grant       GM_xmlhttpRequest
-// @grant       GM.xmlHttpRequest
+// @grant       none
 // ==/UserScript==
 
 function addcheck(str,ISUid){

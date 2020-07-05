@@ -199,21 +199,20 @@ function load_diploma_list(year,pid){
 }
 
 function loadd(){
-	rsrolymp='https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
+	rsrolymp = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
 	
 	table = document.createElement('table');
-
 	table.setAttribute('rules', 'all');
 	table.setAttribute('border', 'all');
-
 	table.appendChild(table_row([
 		'Олимпиада',
 		'Номер электронного дмиплома (код подтверждения)',
 		'Имя на дипломе',
 		'Класс'
 	]));
+	var currYEAR = new Date().getFullYear();
 	personID=SHA256(loadvars());
-	for (let YEAR=2014; YEAR<2021; YEAR++){
+	for (let YEAR=2014; YEAR<=currYEAR; YEAR++){
 		load_diploma_list(YEAR,personID);
 	}
 }
