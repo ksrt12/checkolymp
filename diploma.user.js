@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Check All Olymps
-// @version     2.6
-// @date        2020-07-05
+// @version     3.0
+// @date        2020-07-07
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description Get all abiturient's olymps
@@ -15,18 +15,18 @@
 // ==/UserScript==
 
 function addcheck(str,ISUid){
-var сheckolymp = document.createElement("button");
-сheckolymp.id="OLYMP_CHECK";
-сheckolymp.value=str;
-сheckolymp.className="btn btn-labeled ";
-сheckolymp.type="button";
-сheckolymp.style="margin-right: 5px;"
-var ISUELEM = document.getElementById(ISUid);
-if (ISUELEM != null) {
-ISUELEM.parentNode.insertBefore(сheckolymp, ISUELEM);
-сheckolymp.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>'+str);
-сheckolymp.onclick=function(){addOLYMPlink()};
-}
+	var сheckolymp = document.createElement("button");
+	сheckolymp.id="OLYMP_CHECK";
+	сheckolymp.value=str;
+	сheckolymp.className="btn btn-labeled ";
+	сheckolymp.type="button";
+	сheckolymp.style="margin-right: 5px;"
+	var ISUELEM = document.getElementById(ISUid);
+	if (ISUELEM != null) {
+		ISUELEM.parentNode.insertBefore(сheckolymp, ISUELEM);
+		сheckolymp.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>'+str);
+		сheckolymp.onclick=function(){addOLYMPlink()};
+	}
 }
 
 function loadISU(){

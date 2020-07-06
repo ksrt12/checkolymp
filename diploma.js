@@ -158,32 +158,53 @@ function add_entry(x, tgt){
     }
 }
 
-function table_row(l){
-  var tr = document.createElement('tr');
-  var td, i;
-  for(i in l){
-    td = document.createElement('td');
-    add_entry(l[i], td);
-    tr.appendChild(td);
-  }
-  return tr;
+function table_row(l,head){
+	var tr = document.createElement('tr');
+	var g, i;
+	for(i in l){
+		if (head) {g = document.createElement('th')}
+		else {g = document.createElement('td')};
+		add_entry(l[i], g);
+		tr.appendChild(g);
+	}
+	return tr;
+}
+
+function getSubTitles(olympname,part){
+	switch(part){
+		case 0:
+			title=olympname.substring(olympname.indexOf('. "')+3,olympname.indexOf('("')-2);
+			break;
+		case 1:
+			title=olympname.substr(olympname.indexOf('уровень')-2,1);
+			break;
+		case 2:
+			title=olympname.substr(olympname.indexOf('Диплом')+7,1);
+			break;
+		case 3:
+			title=olympname.substring(olympname.indexOf('("')+2,olympname.indexOf('")'));
+			break;
+	}
+	return title;
 }
 
 function update_diplomas(){
-  var target = clean_results();
-  var i;
-  table.setAttribute('rules', 'all');
-  table.setAttribute('border', 'all');
+	var target = clean_results();
+	var i;
+	table.setAttribute('rules', 'all');
+	table.setAttribute('border', 'all');
     for(i in diplomaCodes){
     var d = diplomaCodes[i];
     table.appendChild(table_row([
-        d.oa, 
+		getSubTitles(d.oa,0),
+		getSubTitles(d.oa,1),
+		getSubTitles(d.oa,2),
+		getSubTitles(d.oa,3),
         make_link((''+d.code).replace(/([0-9]{3})([0-9]{4})([0-9]{4})/,'$1 $2-$3'), rsrolymp+olympYear+'/by-code/'+d.code+'/white.pdf'),
-		d.name,
 		d.form,
-      ]));
+	]));
     }
-  target.appendChild(table);
+	target.appendChild(table);
 }
 
 function load_diploma_list(year,pid){
@@ -207,10 +228,12 @@ function loadd(){
 	table.setAttribute('border', 'all');
 	table.appendChild(table_row([
 		'Олимпиада',
-		'Номер электронного дмиплома (код подтверждения)',
-		'Имя на дипломе',
+		'Уровень',
+		'Степень',
+		'Предмет',
+		'Номер электронного дмиплома',
 		'Класс'
-	]));
+	],true));
 	var currYEAR = new Date().getFullYear();
 	personID=SHA256(loadvars());
 	for (let YEAR=2014; YEAR<=currYEAR; YEAR++){
