@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Check All Olymps
-// @version     3.0
-// @date        2020-07-07
+// @version     3.1
+// @date        2020-07-09
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description Get all abiturient's olymps
@@ -41,4 +41,18 @@ function addOLYMPlink(){
 	window.open('https://ksrt12.github.io?LN='+LN+'&FN='+FN+'&MN='+MN+'&BDD='+BD[0]+'&BDM='+BD[1]+'&BDY='+BD[2],'_blank');
 }
 
+function autophotocopy(){
+	var DZCH = document.getElementById('LK_DELO_0');
+	var LK_PHOTO = document.getElementById('LK_PHOTO_0');
+	var LK_COPY = document.getElementById('LK_PODL_COPY_0');
+	if (DZCH != null) {
+		DZCH.addEventListener("click", function() {
+			LK_PHOTO.checked = DZCH.checked;
+			LK_COPY.checked = DZCH.checked;
+		})
+	}
+}
+
 addcheck("Проверить олимпиады","PERS_UPDATE");
+
+autophotocopy();
