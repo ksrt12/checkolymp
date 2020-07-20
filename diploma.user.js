@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Check All Olymps
-// @version     3.2
-// @date        2020-07-09
+// @version     3.3
+// @date        2020-07-20
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description Get all abiturient's olymps
@@ -59,7 +59,29 @@ function autophotocopy(){
 	}
 }
 
+function sedate(sub) {
+	var EGEDATE = document.getElementById('EGE_DATE');
+	switch(sub) {
+	case 4:
+		EGEDATE.selectedIndex=6;
+		break;
+	default:
+		EGEDATE.selectedIndex=5;
+		break;
+	}
+	delete(EGEDATE);
+}
+
+function autoEGE(){
+	var EGESUBJ = document.getElementById('EGE_SUBJ');
+	var EGEPOINTS = document.getElementById('EGE_POINTS');
+	if (EGEPOINTS != null) {
+		EGEPOINTS.onclick=function(){sedate(EGESUBJ.selectedIndex)};
+	}
+}
+
 addcheck("Проверить олимпиады","PERS_UPDATE");
 // addcheck("Проверить", "OLYMP_DELETE");
 
 autophotocopy();
+autoEGE();
