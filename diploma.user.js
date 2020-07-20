@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Check All Olymps
-// @version     3.3
+// @version     3.4
 // @date        2020-07-20
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -61,23 +61,26 @@ function autophotocopy(){
 
 function sedate(sub) {
 	var EGEDATE = document.getElementById('EGE_DATE');
-	switch(sub) {
-	case 4:
-		EGEDATE.selectedIndex=6;
-		break;
-	default:
-		EGEDATE.selectedIndex=5;
-		break;
+	if (EGEDATE.selectedIndex == 0) {
+		switch(sub) {
+		case 4:
+			EGEDATE.selectedIndex=6;
+			break;
+		default:
+			EGEDATE.selectedIndex=5;
+			break;
+		}
 	}
 	delete(EGEDATE);
 }
 
 function autoEGE(){
 	var EGESUBJ = document.getElementById('EGE_SUBJ');
-	var EGEPOINTS = document.getElementById('EGE_POINTS');
-	if (EGEPOINTS != null) {
-		EGEPOINTS.onclick=function(){sedate(EGESUBJ.selectedIndex)};
+	var EGEFORM = document.getElementById('ege_form');
+	if (EGEFORM != null) {
+		EGEFORM.onclick=function(){sedate(EGESUBJ.selectedIndex)};
 	}
+	delete(EGEFORM);
 }
 
 addcheck("Проверить олимпиады","PERS_UPDATE");
