@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент 2.0
-// @version     3.6
+// @version     3.7
 // @date        2020-07-23
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -15,7 +15,7 @@
 // ==/UserScript==
 
 function getID(someID) {
-  return document.getElementById(someID)
+	return document.getElementById(someID)
 }
 
 // make buttons
@@ -31,8 +31,10 @@ function addCheckButton(str,ISUid) {
 		ISUELEM.parentNode.insertBefore(CheckButton, ISUELEM);
 		CheckButton.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>'+str);
 		CheckButton.onclick=function(){
-			if (ISUid == "PERS_UPDATE") {window.open(addAllOlympsCheck(),'_blank')}
-			else if (ISUid == "OLYMP_DELETE") {window.open(addOlympCheck(),'_blank')};
+			if (ISUid == "PERS_UPDATE")
+				window.open(addAllOlympsCheck(),'_blank')
+			else if (ISUid == "OLYMP_DELETE")
+				window.open(addOlympCheck(),'_blank');
 		};
 	}
 }
@@ -43,7 +45,7 @@ function addAllOlympsCheck() {
 	var FN=getID('ST_FIRSTNAME').value;
 	var MN=getID('ST_MIDDLENAME').value;
 	var BD=getID('ST_DOB').value.split('.');
-	return 'https://ksrt12.github.io?LN='+LN+'&FN='+FN+'&MN='+MN+'&BDD='+BD[0]+'&BDM='+BD[1]+'&BDY='+BD[2]
+	return 'https://ksrt12.github.io/?LN='+LN+'&FN='+FN+'&MN='+MN+'&BDD='+BD[0]+'&BDM='+BD[1]+'&BDY='+BD[2]
 }
 
 // generate link for checking current olymp
@@ -52,10 +54,8 @@ function addOlympCheck() {
 	var OLYMPYEAR = getID('OLYMP_YEAR').value;
 	var olink;
     if (OLYMPNUM.indexOf('0000') == 0) {
-		if (OLYMPYEAR == 2020) {
-			olink = 'https://docs.edu.gov.ru/document/85e4bfd283620234cf05b1f478a5a20c/download/2905/';
-        } else if (OLYMPYEAR == 2019) {
-			olink = 'https://docs.edu.gov.ru/document/851c2c217101a84a0008bc8c35e47ce1/download/1978/';
+		if ((OLYMPYEAR == 2020) || (OLYMPYEAR == 2019) || (OLYMPYEAR == 2018)) {
+			olink = 'https://ksrt12.github.io/'+OLYMPYEAR+'.pdf'
 		} else {
             alert('Древний ВСЕРОС')
         }
