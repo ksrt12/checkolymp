@@ -27,3 +27,9 @@ body {
 	line-height: 16px;
 	text-align: center;
 }
+.main tr {
+	height: 35px;
+}
+.main button {
+	white-space: nowrap;
+}
