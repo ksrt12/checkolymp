@@ -170,22 +170,13 @@ function table_row(l,head){
 	return tr;
 }
 
-function getSubTitles(olympname,part){
-	switch(part){
-		case 0:
-			title=olympname.substring(olympname.indexOf('. "')+3,olympname.indexOf('("')-2);
-			break;
-		case 1:
-			title=olympname.substr(olympname.indexOf('уровень')-2,1);
-			break;
-		case 2:
-			title=olympname.substr(olympname.indexOf('Диплом')+7,1);
-			break;
-		case 3:
-			title=olympname.substring(olympname.indexOf('("')+2,olympname.indexOf('")'));
-			break;
-	}
-	return title;
+function getSubTitles(olympname,grad,newstream){
+	var t1 = olympname.substring(olympname.indexOf('. "')+3,olympname.indexOf('("')-2);
+	var t2 = olympname.substr(olympname.indexOf('уровень')-2,1);
+	var t3 = olympname.substr(olympname.indexOf('Диплом')+7,1);
+	var t4 = olympname.substring(olympname.indexOf('("')+2,olympname.indexOf('")'));
+	var BVI = checkBVI(grad,newstream,t4,t1,t2,t3);
+	return [t1,t2,t3,t4,BVI];
 }
 
 function update_diplomas(){
@@ -195,23 +186,26 @@ function update_diplomas(){
 	table.setAttribute('border', 'all');
     for(i in diplomaCodes){
     var d = diplomaCodes[i];
+	var doa = getSubTitles(d.oa,d.form,newstream);
     table.appendChild(table_row([
-		getSubTitles(d.oa,0),
-		getSubTitles(d.oa,1),
-		getSubTitles(d.oa,2),
-		getSubTitles(d.oa,3),
+		doa[0],
+		doa[1],
+		doa[2],
+		doa[3],
         make_link((''+d.code).replace(/([0-9]{3})([0-9]{4})([0-9]{4})/,'$1 $2-$3'), rsrolymp+olympYear+'/by-code/'+d.code+'/white.pdf'),
 		d.form,
+		doa[4],
 	]));
     }
 	target.appendChild(table);
 }
 
-function load_diploma_list(year,pid){
+function load_diploma_list(year,pid,stream){
   var diplomaCodes = [];
   var s = document.createElement('script');
   var url = rsrolymp+year+'/by-person-released/'+pid+'/codes.js'
   s.onload = function(){
+	newstream=stream;
   	olympYear=year;
   	update_diplomas();
   };
@@ -219,7 +213,7 @@ function load_diploma_list(year,pid){
   document.head.appendChild(s);
 }
 
-function loadd(){
+function make_head(){
 	rsrolymp = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
 	
 	table = document.createElement('table');
@@ -232,12 +226,16 @@ function loadd(){
 		'Степень',
 		'Предмет',
 		'Номер электронного дмиплома',
-		'Класс'
+		'Класс',
+		makeselector()
 	],true));
+}
+
+function make_body(stream){
 	var currYEAR = new Date().getFullYear();
 	personID=SHA256(loadvars());
 	for (let YEAR=2014; YEAR<=currYEAR; YEAR++){
-		load_diploma_list(YEAR,personID);
+		load_diploma_list(YEAR,personID,stream);
 	}
 }
 
@@ -251,5 +249,14 @@ function checktable(){
 	});
 }
 
-loadd();
+function update_body(stream){
+	console.log(stream);
+	while(table.rows.length > 1){
+        table.deleteRow(1);
+	};
+	make_body(stream);
+}
+
+make_head();
+make_body('01.03.02');
 checktable();

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        Абитуриент 2.0
-// @version     3.7
-// @date        2020-07-23
+// @name        Абитуриент 2.1
+// @version     4.0
+// @date        2020-07-24
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -55,7 +55,7 @@ function addOlympCheck() {
 	var olink;
     if (OLYMPNUM.indexOf('0000') == 0) {
 		if ((OLYMPYEAR == 2020) || (OLYMPYEAR == 2019) || (OLYMPYEAR == 2018)) {
-			olink = 'https://ksrt12.github.io/'+OLYMPYEAR+'.pdf'
+			olink = 'https://ksrt12.github.io/files/'+OLYMPYEAR+'.pdf'
 		} else {
             alert('Древний ВСЕРОС')
         }
