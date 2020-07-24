@@ -115,9 +115,12 @@ function SHA256(s){
  return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
 }
 
-function loadvars(){
-	urlParams=new URLSearchParams(window.location.search);
-	namestr = urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN')+' '+urlParams.get('BDY')+'-'+urlParams.get('BDM')+'-'+urlParams.get('BDD');
+function loadvars(func){
+	var urlParams = new URLSearchParams(window.location.search);
+	if (func == 'search')
+		namestr = urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN')+' '+urlParams.get('BDY')+'-'+urlParams.get('BDM')+'-'+urlParams.get('BDD');
+	else
+		namestr = urlParams.get('DN')+' '+urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN');
 	return namestr;
 }
 
@@ -233,7 +236,7 @@ function make_head(){
 
 function make_body(stream){
 	var currYEAR = new Date().getFullYear();
-	personID=SHA256(loadvars());
+	personID=SHA256(loadvars('search'));
 	for (let YEAR=2014; YEAR<=currYEAR; YEAR++){
 		load_diploma_list(YEAR,personID,stream);
 	}

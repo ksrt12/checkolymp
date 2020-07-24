@@ -1,12 +1,10 @@
 function checkBVI(grad,stream,subj,name,lvl,dip){
-// stream.subj.name.lvl.dip
-var status;
+
+var status, lvl = Number(lvl), dip = Number(dip);
 if (status != "") status = "";
 var name = name.replace(/[«»]+/g, '"');
-var lvl = Number(lvl);
-var dip = Number(dip);
 if ((grad == 11) || (grad == 10)) {
-var bvi = 'БВИ (проверить ЕГЭ)'; sto = '100'; wtf = '—';
+var bvi = 'БВИ (проверить ЕГЭ)', sto = '100', wtf = '—';
 
 function itt(){
 	if (lvl == 1) {
@@ -43,7 +41,7 @@ switch(stream) {
 								break;
 							default:
 								status = sto;
-						}
+						};
 						break;
 					case 'Открытая олимпиада школьников':
 						switch(lvl) {
@@ -108,7 +106,7 @@ switch(stream) {
 				};
 				break;
 			case 'компьютерная безопасность':
-				if ((name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') && (dip == 1) && ((lvl == 1 ) || (lvl == 2))) status = bvi;
+				if ((name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') && (dip == 1) && ((lvl == 1 ) || (lvl == 2))) status = bvi
 				else status = sto;
 				break;
 			case 'информационные технологии':
@@ -397,7 +395,7 @@ switch(stream) {
 
 
 function makeselector(){
-	var streams = [
+var streams = [
 	"01.03.02",
 	"09.03.01",
 	"09.03.02",
@@ -428,7 +426,7 @@ function makeselector(){
 	"44.03.04",
 	"45.03.04",
 	];
-	var sstream = document.createElement('select');
+var sstream = document.createElement('select');
 	sstream.id = "itmostream";
 	sstream.addEventListener('change', function(){update_body(this.value)});
 	for (var i = 0; i < streams.length; i++) {

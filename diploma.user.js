@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент 2.1
-// @version     4.0
+// @version     4.1
 // @date        2020-07-24
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -45,15 +45,20 @@ function addAllOlympsCheck() {
 	var FN=getID('ST_FIRSTNAME').value;
 	var MN=getID('ST_MIDDLENAME').value;
 	var BD=getID('ST_DOB').value.split('.');
-	return 'https://ksrt12.github.io/?LN='+LN+'&FN='+FN+'&MN='+MN+'&BDD='+BD[0]+'&BDM='+BD[1]+'&BDY='+BD[2]
+	var DN=getID('P2_DELO').value;
+	return 'https://ksrt12.github.io/?LN='+LN+'&FN='+FN+'&MN='+MN+'&BDD='+BD[0]+'&BDM='+BD[1]+'&BDY='+BD[2]+'&DN='+DN;
+}
+
+function getONUM(){
+	return getID('OLYMP_NUM').value.replace(/[. -]+/g, "");
 }
 
 // generate link for checking current olymp
 function addOlympCheck() {
-	var OLYMPNUM = getID('OLYMP_NUM').value.replace(/[. -]+/g, "");
+	var OLYMPNUM = getONUM();
 	var OLYMPYEAR = getID('OLYMP_YEAR').value;
 	var olink;
-    if (OLYMPNUM.indexOf('0000') == 0) {
+	if (OLYMPNUM.indexOf('0000') == 0) {
 		if ((OLYMPYEAR == 2020) || (OLYMPYEAR == 2019) || (OLYMPYEAR == 2018)) {
 			olink = 'https://ksrt12.github.io/files/'+OLYMPYEAR+'.pdf'
 		} else {
@@ -106,7 +111,7 @@ function autoEGE() {
 }
 
 function listenOLYMP() {
-	if ((getID('OLYMP_CHECK') == null) && (getID('OLYMP_DELETE') != null))
+	if ((getID('OLYMP_CHECK') == null) && (getID('OLYMP_DELETE') != null) && (getONUM() != ""))
 		addCheckButton("Проверить", "OLYMP_DELETE");
 }
 
