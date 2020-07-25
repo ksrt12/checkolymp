@@ -115,12 +115,21 @@ function SHA256(s){
  return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
 }
 
-function loadvars(func){
+function loadvars(n){
+	var n = Number(n);
 	var urlParams = new URLSearchParams(window.location.search);
-	if (func == 'search')
-		namestr = urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN')+' '+urlParams.get('BDY')+'-'+urlParams.get('BDM')+'-'+urlParams.get('BDD');
-	else
-		namestr = urlParams.get('DN')+' '+urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN');
+	switch (n){
+		case 1:
+			namestr = urlParams.get('DN')+' '+urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN');
+			break;
+		case 2:
+			namestr = urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN')+' '+urlParams.get('BDY')+'-'+urlParams.get('BDM')+'-'+urlParams.get('BDD');
+			break;
+		case 3:
+			namestr = window.location.search;
+			break;
+	};
+		
 	return namestr;
 }
 
@@ -236,7 +245,7 @@ function make_head(){
 
 function make_body(stream){
 	var currYEAR = new Date().getFullYear();
-	personID=SHA256(loadvars('search'));
+	personID=SHA256(loadvars(2));
 	for (let YEAR=2014; YEAR<=currYEAR; YEAR++){
 		load_diploma_list(YEAR,personID,stream);
 	}
@@ -245,7 +254,7 @@ function make_body(stream){
 function checktable(){
 	window.addEventListener("load", function(event) {
 		TABLE=document.getElementById('table');
-		if (TABLE == null) {
+		if ((TABLE == null) && (loadvars(3) != "")){
 			alert('Олимпиад РСОШ не найдено!');
 			window.close();
 		};

@@ -5,12 +5,10 @@ body {
 	color: #666666;
 	text-decoration: none;
 	background-color: #E5E3D5;
-	margin: 0px;
 	padding: 0px;
 }
 .main {
-	background-repeat: repeat-y;
-	width: 940px;
+	width: 60%;
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 0px;
@@ -19,7 +17,6 @@ body {
 	background-color:#fff;
 	background-repeat: no-repeat;
 	background-position: center top;
-	margin-bottom: 25px;
 	padding-top: 25px;
 	padding-left: 20px;
 	padding-right: 20px;
@@ -27,9 +24,28 @@ body {
 	line-height: 16px;
 	text-align: center;
 }
+.left {
+	margin-left: 20px;
+	margin-right: auto;
+	float: left;
+	width: 15%;
+	margin-top: 0px;
+}
+img {
+	width: 100%;
+	height: auto;
+}
+.right {
+	float: right;
+	width: 15%;
+	margin-top: 25px;
+}
 .main tr {
 	height: 35px;
 }
 .main button {
 	white-space: nowrap;
+}
+.main table {
+	width: 100%;
 }
