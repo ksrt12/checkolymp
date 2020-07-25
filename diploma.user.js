@@ -31,10 +31,11 @@ function addCheckButton(str,ISUid) {
 		ISUELEM.parentNode.insertBefore(CheckButton, ISUELEM);
 		CheckButton.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>'+str);
 		CheckButton.onclick=function(){
-			if (ISUid == "PERS_UPDATE")
+			if (ISUid == "PERS_UPDATE") {
 				window.open(addAllOlympsCheck(),'_blank')
-			else if (ISUid == "OLYMP_DELETE")
-				window.open(addOlympCheck(),'_blank');
+			} else if (ISUid == "OLYMP_DELETE") {
+				window.open(addOlympCheck(),'_blank')
+			};
 		};
 	}
 }

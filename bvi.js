@@ -1,21 +1,19 @@
 function checkBVI(grad,stream,subj,name,lvl,dip){
 
 var status, lvl = Number(lvl), dip = Number(dip);
-if (status != "") status = "";
+if (status != "") {status = ""};
 var name = name.replace(/[«»]+/g, '"');
 if ((grad == 11) || (grad == 10)) {
 var bvi = 'БВИ (проверить ЕГЭ)', sto = '100', wtf = '—';
 
 function itt(){
-	if (lvl == 1)
-		status = bvi
-	else
-		status = wtf;
+	if (lvl == 1) {status = bvi}
+	else {status = wtf};
 }
 
 function ooshm(){
-	if ((lvl == 3) && (dip == 1)) status = bvi
-	else status = sto;
+	if ((lvl == 3) && (dip == 1)) {status = bvi}
+	else {status = sto};
 }
 
 switch(stream) {
@@ -46,8 +44,8 @@ switch(stream) {
 						switch(lvl) {
 							case 1:
 							case 2:
-								if (dip == 1) status = bvi
-								else status = sto;
+								if (dip == 1) {status = bvi}
+								else {status = sto};
 								break;
 							default:
 								status = sto;
@@ -59,6 +57,7 @@ switch(stream) {
 				break;
 			case 'математика':
 				switch(name) {
+					case 'Межрегиональная олимпиада школьников "Высшая проба"':
 					case 'Всероссийская олимпиада школьников "Высшая проба"':
 					case 'Межрегиональная олимпиада школьников по математике и криптографии':
 					case 'Олимпиада школьников "Ломоносов"':
@@ -77,8 +76,8 @@ switch(stream) {
 						switch(lvl) {
 							case 1:
 							case 2:
-								if (dip == 1) status = bvi
-								else status = sto;
+								if (dip == 1) {status = bvi}
+								else {status = sto};
 								break;
 							default:
 								status = sto;
@@ -105,13 +104,13 @@ switch(stream) {
 				};
 				break;
 			case 'компьютерная безопасность':
-				if ((name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') && (dip == 1) && ((lvl == 1 ) || (lvl == 2))) status = bvi
-				else status = wtf;
+				if ((name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') && (dip == 1) && ((lvl == 1 ) || (lvl == 2))) {status = bvi}
+				else {status = wtf};
 				break;
 			case 'информационные технологии':
 				if (lvl == 1) {
-					if (dip == 1) status = bvi
-					else status = sto;
+					if (dip == 1) {status = bvi}
+					else {status = sto};
 				} else
 					status = wtf;
 				break;
@@ -130,8 +129,8 @@ switch(stream) {
 						ooshm();
 						break;
 					case 'информатика':
-						if ((lvl == 1) || (lvl == 2)) status = bvi
-						else status = sto;
+						if ((lvl == 1) || (lvl == 2)) {status = bvi}
+						else {status = sto};
 						break;
 					case 'информационные технологии':
 						itt();
@@ -145,8 +144,8 @@ switch(stream) {
 						break;
 					case 'математика':
 					case 'информатика':
-						if ((lvl == 1) || (lvl == 2)) status = bvi
-						else status = sto;
+						if ((lvl == 1) || (lvl == 2)) {status = bvi}
+						else {status = sto};
 						break;
 					case 'русский язык':
 						status = sto;
