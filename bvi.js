@@ -7,10 +7,9 @@ if ((grad == 11) || (grad == 10)) {
 var bvi = 'БВИ (проверить ЕГЭ)', sto = '100', wtf = '—';
 
 function itt(){
-	if (lvl == 1) {
-		if (dip == 1) status = bvi
-		else status = sto;
-	} else
+	if (lvl == 1)
+		status = bvi
+	else
 		status = wtf;
 }
 
@@ -107,10 +106,14 @@ switch(stream) {
 				break;
 			case 'компьютерная безопасность':
 				if ((name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') && (dip == 1) && ((lvl == 1 ) || (lvl == 2))) status = bvi
-				else status = sto;
+				else status = wtf;
 				break;
 			case 'информационные технологии':
-				itt();
+				if (lvl == 1) {
+					if (dip == 1) status = bvi
+					else status = sto;
+				} else
+					status = wtf;
 				break;
 			case 'русский язык':
 				status = sto;
