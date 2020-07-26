@@ -1,10 +1,10 @@
-function checkBVI(grad,stream,subj,name,lvl,dip){
+function checkBVI(stream,grad,subj,name,lvl,dip){
 
 var status, lvl = Number(lvl), dip = Number(dip);
 if (status != "") {status = ""};
 var name = name.replace(/[«»]+/g, '"');
 if ((grad == 11) || (grad == 10)) {
-var bvi = 'БВИ (проверить ЕГЭ)', sto = '100', wtf = '—';
+var bvi = 'БВИ (проверить ЕГЭ)', sto = '100', wtf = '—'; itin = 'спросить у Итина';
 
 function itt(){
 	if (lvl == 1) {status = bvi}
@@ -104,8 +104,13 @@ switch(stream) {
 				};
 				break;
 			case 'компьютерная безопасность':
-				if ((name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') && (dip == 1) && ((lvl == 1 ) || (lvl == 2))) {status = bvi}
-				else {status = wtf};
+				if ((dip == 1) && ((lvl == 1 ) || (lvl == 2))) {
+					if (name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') {
+						status = bvi
+					} else {
+						status = itin;
+					}
+				} else {status = wtf};
 				break;
 			case 'информационные технологии':
 				if (lvl == 1) {
@@ -116,6 +121,10 @@ switch(stream) {
 				break;
 			case 'русский язык':
 				status = sto;
+				break;
+			case 'Большие данные и машинное обучение':
+			case 'Нейротехнологии':
+				status = itin;
 				break;
 			default:
 				status = wtf;
@@ -149,6 +158,10 @@ switch(stream) {
 						break;
 					case 'русский язык':
 						status = sto;
+						break;
+					case 'Большие данные и машинное обучение':
+					case 'Нейротехнологии':
+						status = itin;
 						break;
 					default:
 						status = wtf;
@@ -430,7 +443,7 @@ var streams = [
 	];
 var sstream = document.createElement('select');
 	sstream.id = "itmostream";
-	sstream.addEventListener('change', function(){update_body(this.value)});
+	sstream.addEventListener('change', function(){update_status(this.value)});
 	for (var i = 0; i < streams.length; i++) {
 		var option = document.createElement("option");
 		option.value = streams[i];

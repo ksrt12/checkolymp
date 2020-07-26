@@ -174,20 +174,23 @@ function table_row(l,head){
 	var tr = document.createElement('tr');
 	var g, i;
 	for(i in l){
-		if (head) {g = document.createElement('th')}
-		else {g = document.createElement('td')};
+		if (head) {
+			g = document.createElement('th')
+		} else {
+			g = document.createElement('td');
+		};
 		add_entry(l[i], g);
 		tr.appendChild(g);
 	}
 	return tr;
 }
 
-function getSubTitles(olympname,grad,newstream){
+function getSubTitles(olympname,grad){
 	var t1 = olympname.substring(olympname.indexOf('. "')+3,olympname.indexOf('("')-2);
 	var t2 = olympname.substr(olympname.indexOf('уровень')-2,1);
 	var t3 = olympname.substr(olympname.indexOf('Диплом')+7,1);
 	var t4 = olympname.substring(olympname.indexOf('("')+2,olympname.indexOf('")'));
-	var BVI = checkBVI(grad,newstream,t4,t1,t2,t3);
+	var BVI = checkBVI('01.03.02',grad,t4,t1,t2,t3);
 	return [t1,t2,t3,t4,BVI];
 }
 
@@ -198,7 +201,7 @@ function update_diplomas(){
 	table.setAttribute('border', 'all');
     for(i in diplomaCodes){
     var d = diplomaCodes[i];
-	var doa = getSubTitles(d.oa,d.form,newstream);
+	var doa = getSubTitles(d.oa,d.form);
     table.appendChild(table_row([
 		doa[0],
 		doa[1],
@@ -212,12 +215,11 @@ function update_diplomas(){
 	target.appendChild(table);
 }
 
-function load_diploma_list(year,pid,stream){
+function load_diploma_list(year,pid){
   var diplomaCodes = [];
   var s = document.createElement('script');
   var url = rsrolymp+year+'/by-person-released/'+pid+'/codes.js'
   s.onload = function(){
-	newstream=stream;
   	olympYear=year;
   	update_diplomas();
   };
@@ -225,7 +227,7 @@ function load_diploma_list(year,pid,stream){
   document.head.appendChild(s);
 }
 
-function make_head(){
+function make_table(){
 	rsrolymp = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
 	
 	table = document.createElement('table');
@@ -241,13 +243,10 @@ function make_head(){
 		'Класс',
 		makeselector()
 	],true));
-}
-
-function make_body(stream){
 	var currYEAR = new Date().getFullYear();
 	personID=SHA256(loadvars(2));
 	for (let YEAR=2014; YEAR<=currYEAR; YEAR++){
-		load_diploma_list(YEAR,personID,stream);
+		load_diploma_list(YEAR,personID);
 	}
 }
 
@@ -261,14 +260,18 @@ function checktable(){
 	});
 }
 
-function update_body(stream){
+function update_status(stream){
 	console.log(stream);
-	while(table.rows.length > 1){
-        table.deleteRow(1);
+	for (let i=1; i < table.rows.length; i++) {
+		table.rows[i].cells[6].innerHTML = checkBVI(
+			stream,
+			table.rows[i].cells[5].innerText,
+			table.rows[i].cells[3].innerText,
+			table.rows[i].cells[0].innerText,
+			table.rows[i].cells[1].innerText,
+			table.rows[i].cells[2].innerText);
 	};
-	make_body(stream);
 }
 
-make_head();
-make_body('01.03.02');
+make_table();
 checktable();
