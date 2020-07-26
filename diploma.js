@@ -118,18 +118,27 @@ function SHA256(s){
 function loadvars(n){
 	var n = Number(n);
 	var urlParams = new URLSearchParams(window.location.search);
+	var vars = ['DN','LN','FN','MN','BDY','BDM','BDD'];
+	for (i in vars){
+		this[vars[i]] = urlParams.get(vars[i]);
+		if (this[vars[i]] == null)
+			this[vars[i]] = "";
+	}
+	var NAME = LN+' '+FN+' '+MN;
 	switch (n){
+		case 0:
+			namestr = NAME;
+			break;
 		case 1:
-			namestr = urlParams.get('DN')+' '+urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN');
+			namestr = DN+' '+NAME;
 			break;
 		case 2:
-			namestr = urlParams.get('LN')+' '+urlParams.get('FN')+' '+urlParams.get('MN')+' '+urlParams.get('BDY')+'-'+urlParams.get('BDM')+'-'+urlParams.get('BDD');
+			namestr = NAME+' '+BDY+'-'+BDM+'-'+BDD;
 			break;
 		case 3:
 			namestr = window.location.search;
 			break;
-	};
-		
+	};		
 	return namestr;
 }
 
@@ -199,7 +208,7 @@ function update_diplomas(){
 	var i;
 	table.setAttribute('rules', 'all');
 	table.setAttribute('border', 'all');
-    for(i in diplomaCodes){
+    for (i in diplomaCodes){
     var d = diplomaCodes[i];
 	var doa = getSubTitles(d.oa,d.form);
     table.appendChild(table_row([
@@ -254,7 +263,7 @@ function checktable(){
 	window.addEventListener("load", function(event) {
 		TABLE=document.getElementById('table');
 		if ((TABLE == null) && (loadvars(3) != "")){
-			alert('Олимпиад РСОШ не найдено!');
+			alert('Олимпиад РСОШ абитуриента \n'+loadvars(0)+' не найдено!');
 			window.close();
 		};
 	});
