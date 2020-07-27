@@ -4,8 +4,22 @@ body {
 	font-weight: normal;
 	color: #666666;
 	text-decoration: none;
-	background-color: #E5E3D5;
 	padding: 0px;
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-repeat: no-repeat;
+	background-size: 400% 800%;
+	animation: gradient 15s ease infinite;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 .main {
 	width: 60%;
@@ -14,7 +28,7 @@ body {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	padding: 0px;
-	background-color:#fff;
+	background: linear-gradient(90deg, #efefef, #b9deed);
 	background-repeat: no-repeat;
 	background-position: center top;
 	padding-top: 25px;
@@ -23,7 +37,9 @@ body {
 	font-size: 12px;
 	line-height: 16px;
 	text-align: center;
+	z-index: 1;
 }
+
 .left {
 	margin-left: 20px;
 	margin-right: auto;
@@ -40,6 +56,14 @@ img {
 	width: 15%;
 	margin-top: 25px;
 }
+.right a:hover {
+	color: #b9deed;
+	text-decoration: none;
+}
+.right a {
+	color: #efefef;
+	text-decoration: none;
+}
 .main tr {
 	height: 35px;
 }
@@ -48,4 +72,13 @@ img {
 }
 .main table {
 	width: 100%;
+}
+#stars {
+	z-index: -1;
+	width: 100%;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
 }

@@ -232,6 +232,7 @@ function load_diploma_list(year,pid){
   	olympYear=year;
   	update_diplomas();
   };
+  s.crossorigin = "anonymous";
   s.src = url;
   document.head.appendChild(s);
 }
