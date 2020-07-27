@@ -1,8 +1,8 @@
 body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-family: 'ALS Schlange Sans', sans-serif;
+	line-height: 16px;
 	font-weight: normal;
-	color: #666666;
+	color: #313131;
 	text-decoration: none;
 	padding: 0px;
 	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
@@ -22,6 +22,7 @@ body {
 	}
 }
 .main {
+	font-size: 16px;
 	width: 60%;
 	margin-right: auto;
 	margin-left: auto;
@@ -34,8 +35,6 @@ body {
 	padding-top: 25px;
 	padding-left: 20px;
 	padding-right: 20px;
-	font-size: 12px;
-	line-height: 16px;
 	text-align: center;
 	z-index: 1;
 }
@@ -52,6 +51,7 @@ img {
 	height: auto;
 }
 .right {
+	font-size: 15px;
 	float: right;
 	width: 15%;
 	margin-top: 25px;
@@ -65,7 +65,7 @@ img {
 	text-decoration: none;
 }
 .main tr {
-	height: 35px;
+	height: 40px;
 }
 .main button {
 	white-space: nowrap;
