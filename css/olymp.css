@@ -65,13 +65,24 @@ img {
 	text-decoration: none;
 }
 .main tr {
-	height: 40px;
+	height: 52px;
 }
-.main button {
+.main table a {
 	white-space: nowrap;
+	color: #030d10;
+	text-decoration: none;
 }
 .main table {
+	table-layout: auto;
 	width: 100%;
+}
+.main table a:visited {
+	color: #8a00ad;
+	text-decoration: none;
+}
+.main table a:hover {
+	color: #0045ad;
+	text-decoration: underline;
 }
 #stars {
 	z-index: -1;

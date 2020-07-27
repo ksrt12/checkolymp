@@ -144,16 +144,16 @@ function loadvars(n){
 
 function clean_results(){
   var target = document.getElementById('results');
-  var i;
-  for (; 0< target.childNodes.length; i+=1){
+  while (0 < target.childNodes.length){
     target.removeChild(target.childNodes[0]);
   }
   return target;
 }
 
 function make_link(t, u){
-  var a = document.createElement('button');
-  a.onclick=function(){window.open(u,'_blank')};
+  var a = document.createElement('a');
+  a.href = u;
+  //a.onclick = function(){window.open(u,'_blank')};
   a.appendChild(document.createTextNode(t));
   return a;
 }
@@ -187,6 +187,9 @@ function table_row(l,head){
 			g = document.createElement('th')
 		} else {
 			g = document.createElement('td');
+			if (i == '6') {
+				g.width = "85px";
+			}
 		};
 		add_entry(l[i], g);
 		tr.appendChild(g);
