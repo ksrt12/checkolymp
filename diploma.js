@@ -243,6 +243,7 @@ function load_diploma_list(year,pid){
 function make_table(){
 	rsrolymp = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
 	
+	if (loadvars(3) != "") {
 	table = document.createElement('table');
 	table.id='table';
 	table.setAttribute('rules', 'all');
@@ -260,6 +261,7 @@ function make_table(){
 	personID=SHA256(loadvars(2));
 	for (let YEAR=2014; YEAR<=currYEAR; YEAR++){
 		load_diploma_list(YEAR,personID);
+	};
 	}
 }
 

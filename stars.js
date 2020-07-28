@@ -161,8 +161,6 @@ stats.domElement.style.position = 'absolute';
 stats.domElement.style.left = '0px';
 stats.domElement.style.top = '0px';
 
-
-
 /*!
  * Mantis.js / jQuery / Zepto.js plugin for Constellation
  * @version 1.2.2
