@@ -7,6 +7,7 @@ body {
 	color: #313131;
 	text-decoration: none;
 	padding: 0px;
+	margin: 0px;
 	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
 	background-repeat: no-repeat;
 	background-size: 400% 800%;
@@ -23,24 +24,20 @@ body {
 		background-position: 0% 50%;
 	}
 }
-.container {
-	width: 100%;
-	flex: 0 1 auto;
-}
 .main {
 	display: table;
 	font-size: 16px;
-	margin-right: auto;
-	margin-left: auto;
+	margin-right: 15%;
+	margin-left: 15%;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	padding: 0px;
 	background: linear-gradient(90deg, #efefef, #b9deed);
 	background-repeat: no-repeat;
 	background-position: center top;
 	padding-top: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
+	padding-bottom: 20px;
 	text-align: center;
 }
 .main tr {
@@ -83,14 +80,14 @@ body {
 }
 @media (orientation: landscape) {
 .main {
-	width: 60%;
+	width: 65%;
 }
 .left {
-	margin-left: 1%;
-	margin-right: auto;
 	float: left;
 	width: 15%;
 	margin-top: 0px;
+	margin-right: 10px;
+	margin-left: 10px
 }
 img {
 	width: 100%;
@@ -112,6 +109,8 @@ img {
 }
 #stars {
 	position: absolute;
+	left: 0px;
+	top: 0px;
 	margin-bottom: 0;
 	margin-top: 0;
 	margin-right: 0;
@@ -128,7 +127,14 @@ img {
 }
 @media (orientation: portrait) {
 .main {
+	margin: 0;
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-bottom: 20px;
 	width: 100%;
+}
+.main p {
+	margin-bottom: 0px;
 }
 .right, .left, #stars {
 	display: none;
