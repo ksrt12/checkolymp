@@ -184,12 +184,12 @@ function table_row(l,head){
 	var g, i;
 	for(i in l){
 		if (head) {
-			g = document.createElement('th')
-		} else {
-			g = document.createElement('td');
+			g = document.createElement('th');
 			if (i == '6') {
 				g.width = "85px";
 			}
+		} else {
+			g = document.createElement('td')
 		};
 		add_entry(l[i], g);
 		tr.appendChild(g);

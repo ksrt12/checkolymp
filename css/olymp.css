@@ -23,9 +23,11 @@ body {
 		background-position: 0% 50%;
 	}
 }
+.container {
+	width: 100%;
+}
 .main {
 	font-size: 16px;
-	width: 60%;
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 0px;
@@ -39,7 +41,30 @@ body {
 	padding-right: 20px;
 	text-align: center;
 }
-
+.main tr {
+	height: 52px;
+}
+.main table {
+	table-layout: auto;
+	width: 100%;
+}
+.main table a {
+	white-space: nowrap;
+	color: #030d10;
+	text-decoration: none;
+}
+.main table a:visited {
+	color: #8a00ad;
+	text-decoration: none;
+}
+.main table a:hover {
+	color: #0045ad;
+	text-decoration: underline;
+}
+@media (orientation: landscape) {
+.main {
+	width: 60%;
+}
 .left {
 	margin-left: 20px;
 	margin-right: auto;
@@ -65,26 +90,6 @@ img {
 	color: #efefef;
 	text-decoration: none;
 }
-.main tr {
-	height: 52px;
-}
-.main table a {
-	white-space: nowrap;
-	color: #030d10;
-	text-decoration: none;
-}
-.main table {
-	table-layout: auto;
-	width: 100%;
-}
-.main table a:visited {
-	color: #8a00ad;
-	text-decoration: none;
-}
-.main table a:hover {
-	color: #0045ad;
-	text-decoration: underline;
-}
 #stars {
 	position: absolute;
 	margin-bottom: 0;
@@ -99,4 +104,13 @@ img {
 	-ms-transition: all 0.4s ease-in-out;
 	-o-transition: all 0.4s ease-in-out;
 	transition: all 0.4s ease-in-out;
+}
+}
+@media (orientation: portrait) {
+.main {
+	width: 100%;
+}
+.right, .left, #stars {
+	display: none;
+}
 }

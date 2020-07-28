@@ -442,7 +442,6 @@ var streams = [
 	"45.03.04",
 	];
 var sstream = document.createElement('select');
-	sstream.id = "itmostream";
 	sstream.autofocus = true;
 	sstream.addEventListener('change', function(){update_status(this.value)});
 	for (var i = 0; i < streams.length; i++) {
