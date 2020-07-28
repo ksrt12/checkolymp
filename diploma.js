@@ -248,6 +248,7 @@ function make_table(){
 	table.id='table';
 	table.setAttribute('rules', 'all');
 	table.setAttribute('border', 'all');
+	table.createCaption().textContent = (loadvars(1));
 	table.appendChild(table_row([
 		'Олимпиада',
 		'Уровень',

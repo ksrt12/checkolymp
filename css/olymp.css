@@ -36,7 +36,7 @@ body {
 	background: linear-gradient(90deg, #efefef, #b9deed);
 	background-repeat: no-repeat;
 	background-position: center top;
-	padding-top: 25px;
+	padding-top: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	text-align: center;
@@ -47,6 +47,11 @@ body {
 .main table {
 	table-layout: auto;
 	width: 100%;
+}
+.main table caption {
+	padding-bottom: 15px;
+	font-weight: bold;
+	font-size: 20px;
 }
 .main table a {
 	white-space: nowrap;
