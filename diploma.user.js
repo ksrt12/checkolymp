@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name        Абитуриент 2.1
-// @version     4.3
-// @date        2020-07-26
+// @version     4.4
+// @date        2020-07-30
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
 // @homepage    https://vk.com/kazakovstepan
-// @icon        https://ksrt12.github.io/icon.png
+// @icon        https://ksrt12.github.io/favicon.ico
 // @updateURL   https://ksrt12.github.io/diploma.user.js
 // @downloadURL https://ksrt12.github.io/diploma.user.js
 // @include     https://isu.ifmo.ru/pls/apex/f?p=2175*
@@ -112,8 +112,9 @@ function autoEGE() {
 }
 
 function listenOLYMP() {
-	if ((getID('OLYMP_CHECK') == null) && (getID('OLYMP_DELETE') != null) && (getONUM() != ""))
-		addCheckButton("Проверить", "OLYMP_DELETE");
+	if ((getID('OLYMP_CHECK') == null) && (getID('OLYMP_DELETE') != null) && (getONUM() != "")) {
+		addCheckButton("Проверить", "OLYMP_DELETE")
+	}
 }
 
 // add olymps check button
