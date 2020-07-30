@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент 2.1
-// @version     4.4
+// @version     4.5
 // @date        2020-07-30
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -15,27 +15,27 @@
 // ==/UserScript==
 
 function getID(someID) {
-	return document.getElementById(someID)
+	return document.getElementById(someID);
 }
 
 // make buttons
 function addCheckButton(str,ISUid) {
 	var ISUELEM = getID(ISUid);
-	if (ISUELEM != null) {
+	if (ISUELEM !== null) {
 	var CheckButton = document.createElement("button");
 		CheckButton.id="OLYMP_CHECK";
 		CheckButton.value=str;
 		CheckButton.className="btn btn-labeled ";
 		CheckButton.type="button";
-		CheckButton.style="margin-right: 5px;"
+		CheckButton.style="margin-right: 5px;";
 		ISUELEM.parentNode.insertBefore(CheckButton, ISUELEM);
 		CheckButton.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>'+str);
 		CheckButton.onclick=function(){
 			if (ISUid == "PERS_UPDATE") {
-				window.open(addAllOlympsCheck(),'_blank')
+				window.open(addAllOlympsCheck(),'_blank');
 			} else if (ISUid == "OLYMP_DELETE") {
-				window.open(addOlympCheck(),'_blank')
-			};
+				window.open(addOlympCheck(),'_blank');
+			}
 		};
 	}
 }
@@ -59,11 +59,11 @@ function addOlympCheck() {
 	var OLYMPNUM = getONUM();
 	var OLYMPYEAR = getID('OLYMP_YEAR').value;
 	var olink;
-	if (OLYMPNUM.indexOf('0000') == 0) {
+	if (OLYMPNUM.indexOf('0000') === 0) {
 		if ((OLYMPYEAR == 2020) || (OLYMPYEAR == 2019) || (OLYMPYEAR == 2018)) {
-			olink = 'https://ksrt12.github.io/files/'+OLYMPYEAR+'.pdf'
+			olink = 'https://ksrt12.github.io/files/'+OLYMPYEAR+'.pdf';
 		} else {
-            alert('Древний ВСЕРОС')
+            alert('Древний ВСЕРОС');
         }
 	} else {
 		olink = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-'+
@@ -77,11 +77,11 @@ function autophotocopy() {
 	var DZCH = getID('LK_DELO_0');
 	var LK_PHOTO = getID('LK_PHOTO_0');
 	var LK_COPY = getID('LK_PODL_COPY_0');
-	if (DZCH != null) {
+	if (DZCH !== null) {
 		DZCH.addEventListener("click", function() {
 			LK_PHOTO.checked = DZCH.checked;
 			LK_COPY.checked = DZCH.checked;
-		})
+		});
 	}
 }
 
@@ -105,15 +105,17 @@ function sedate(subIndex) {
 function autoEGE() {
 	var EGESUBJ = getID('EGE_SUBJ');
 	var EGEFORM = getID('ege_form');
-	if (EGEFORM != null) {
-		EGEFORM.onclick=function(){sedate(EGESUBJ.selectedIndex)};
+	if (EGEFORM !== null) {
+		EGEFORM.onclick = function(){
+			sedate(EGESUBJ.selectedIndex);
+		};
 	}
-	delete(EGEFORM);
+	delete EGEFORM;
 }
 
 function listenOLYMP() {
-	if ((getID('OLYMP_CHECK') == null) && (getID('OLYMP_DELETE') != null) && (getONUM() != "")) {
-		addCheckButton("Проверить", "OLYMP_DELETE")
+	if ((getID('OLYMP_CHECK') === null) && (getID('OLYMP_DELETE') !== null) && (getONUM() != "")) {
+		addCheckButton("Проверить", "OLYMP_DELETE");
 	}
 }
 
@@ -126,8 +128,8 @@ autoEGE();
 // add current olymp check button
 window.addEventListener('hashchange', function(){
 	if (document.location.hash == '#olymp') {
-		document.addEventListener('click', listenOLYMP)
+		document.addEventListener('click', listenOLYMP);
 	} else {
-		document.removeEventListener('click', listenOLYMP)
-	};
+		document.removeEventListener('click', listenOLYMP);
+	}
 });

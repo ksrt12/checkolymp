@@ -1,19 +1,33 @@
-function checkBVI(stream,grad,subj,name,lvl,dip){
+function checkBVI(stream,grad_in,subj_in,name_in,lvl_in,dip_in){
 
-var status, lvl = Number(lvl), dip = Number(dip); subj = subj.toLowerCase();
-if (status != "") {status = ""};
-var name = name.replace(/[«»]+/g, '"');
+var status,
+	grad = Number(grad_in),
+	lvl = Number(lvl_in),
+	dip = Number(dip_in),
+	subj = subj_in.toLowerCase(),
+	name = name_in.replace(/[«»]+/g, '"');
+
 if ((grad == 11) || (grad == 10)) {
-var bvi = 'БВИ (проверить ЕГЭ)', sto = '100', wtf = '—'; itin = 'спросить у Итина';
 
-function itt(){
-	if (lvl == 1) {status = bvi}
-	else {status = wtf};
+var bvi = 'БВИ (проверить ЕГЭ)',
+	sto = '100',
+	wtf = '—',
+	itin = 'спросить у Итина';
+
+function itt() {
+	if (lvl == 1) {
+		status = bvi;
+	} else {
+		status = wtf;
+	}
 }
 
-function ooshm(){
-	if ((lvl == 3) && (dip == 1)) {status = bvi}
-	else {status = sto};
+function ooshm() {
+	if ((lvl == 3) && (dip == 1)) {
+		status = bvi;
+	} else {
+		status = sto;
+	}
 }
 
 switch(stream) {
@@ -38,22 +52,25 @@ switch(stream) {
 								break;
 							default:
 								status = sto;
-						};
+						}
 						break;
 					case 'Открытая олимпиада школьников':
 						switch(lvl) {
 							case 1:
 							case 2:
-								if (dip == 1) {status = bvi}
-								else {status = sto};
+								if (dip == 1) {
+									status = bvi;
+								} else {
+									status = sto;
+								}
 								break;
 							default:
 								status = sto;
-						};
+						}
 						break;
 					default:
 						status = sto;
-				};
+				}
 				break;
 			case 'математика':
 				switch(name) {
@@ -76,12 +93,15 @@ switch(stream) {
 						switch(lvl) {
 							case 1:
 							case 2:
-								if (dip == 1) {status = bvi}
-								else {status = sto};
+								if (dip == 1) {
+									status = bvi;
+								} else {
+									status = sto;
+								}
 								break;
 							default:
 								status = sto;
-						};
+						}
 						break;
 					case 'Открытая олимпиада школьников':
 						ooshm();
@@ -97,27 +117,33 @@ switch(stream) {
 								break;
 							default:
 								status = sto;
-						};
+						}
 						break;
 					default:
 						status = sto;
-				};
+				}
 				break;
 			case 'компьютерная безопасность':
 				if ((dip == 1) && ((lvl == 1 ) || (lvl == 2))) {
 					if (name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') {
-						status = bvi
+						status = bvi;
 					} else {
 						status = itin;
 					}
-				} else {status = wtf};
+				} else {
+					status = wtf;
+				}
 				break;
 			case 'информационные технологии':
 				if (lvl == 1) {
-					if (dip == 1) {status = bvi}
-					else {status = sto};
-				} else
+					if (dip == 1) {
+						status = bvi;
+					} else {
+						status = sto;
+					}
+				} else {
 					status = wtf;
+				}
 				break;
 			case 'русский язык':
 				status = sto;
@@ -128,7 +154,7 @@ switch(stream) {
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '09.03.02':
 		switch(name){
@@ -138,13 +164,16 @@ switch(stream) {
 						ooshm();
 						break;
 					case 'информатика':
-						if ((lvl == 1) || (lvl == 2)) {status = bvi}
-						else {status = sto};
+						if ((lvl == 1) || (lvl == 2)) {
+							status = bvi;
+						} else {
+							status = sto;
+						}
 						break;
 					case 'информационные технологии':
 						itt();
 						break;
-				};	
+				}
 				break;
 			default:
 				switch(subj) {
@@ -153,8 +182,11 @@ switch(stream) {
 						break;
 					case 'математика':
 					case 'информатика':
-						if ((lvl == 1) || (lvl == 2)) {status = bvi}
-						else {status = sto};
+						if ((lvl == 1) || (lvl == 2)) {
+							status = bvi;
+						} else {
+							status = sto;
+						}
 						break;
 					case 'русский язык':
 						status = sto;
@@ -166,7 +198,7 @@ switch(stream) {
 					default:
 						status = wtf;
 				}
-		};
+		}
 		break;
 	case '09.03.03':
 		switch(subj) {
@@ -183,14 +215,14 @@ switch(stream) {
 					default:
 						status = sto;
 						break;
-				};
+				}
 				break;
 			case 'русский язык':
 				status = sto;
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '11.03.02':
 		switch(subj) {
@@ -210,7 +242,7 @@ switch(stream) {
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '45.03.04':
 		switch(subj) {
@@ -230,7 +262,7 @@ switch(stream) {
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '09.03.01':
 	case '09.03.04':
@@ -273,7 +305,7 @@ switch(stream) {
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '12.03.02':
 	case '12.03.03':
@@ -304,7 +336,7 @@ switch(stream) {
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '12.03.04':
 	case '18.03.02':
@@ -323,7 +355,7 @@ switch(stream) {
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '16.03.01':
 		switch(subj) {
@@ -349,7 +381,7 @@ switch(stream) {
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '14.03.01':
 	case '16.03.03':
@@ -371,7 +403,7 @@ switch(stream) {
 				break;
 			default:
 				status = wtf;
-		};
+		}
 		break;
 	case '27.03.05':
 	case '38.03.05':
@@ -402,7 +434,7 @@ switch(stream) {
 		status = wtf;
 }
 } else {
-	status = 'ИД'
+	status = 'ИД';
 }
 
 	return status;
@@ -443,7 +475,9 @@ var streams = [
 	];
 var sstream = document.createElement('select');
 	sstream.autofocus = true;
-	sstream.addEventListener('change', function(){update_status(this.value)});
+	sstream.addEventListener('change', function(){
+		update_status(this.value);
+	});
 	for (var i = 0; i < streams.length; i++) {
 		var option = document.createElement("option");
 		option.value = streams[i];
