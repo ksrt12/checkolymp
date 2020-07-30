@@ -360,7 +360,6 @@ switch(stream) {
 	case '16.03.01':
 		switch(subj) {
 			case 'математика':
-			case 'информатика':
 			case 'инженерное дело':
 			case 'системы связи и дистанционного зондирования земли':
 			case 'наносистемы и наноинженерия':
@@ -375,6 +374,13 @@ switch(stream) {
 			case 'умный город':
 			case 'естественные науки':
 				status = bvi;
+				break;
+			case 'информатика':
+				if ((lvl == 1) || (lvl == 2)) {
+					status = bvi;
+				} else {
+					status = wtf;
+				}
 				break;
 			case 'русский язык':
 				status = sto;
