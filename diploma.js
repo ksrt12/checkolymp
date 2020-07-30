@@ -284,9 +284,13 @@ function make_table() {
 function checktable() {
 	window.addEventListener("load", function() {
 		var TABLE = document.getElementById('table');
-		if ((TABLE == null) && (loadvars(3) != "")) {
-			alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
-			window.close();
+		if (TABLE == null) {
+				if (loadvars(3) != "") {
+					alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
+					window.close();
+				} else {
+					document.getElementById('main_res').remove();
+				}
 		}
 	});
 }
