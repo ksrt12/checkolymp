@@ -63,9 +63,9 @@ function addOlympCheck() {
 		if ((OLYMPYEAR == 2020) || (OLYMPYEAR == 2019) || (OLYMPYEAR == 2018)) {
 			olink = 'https://ksrt12.github.io/files/'+OLYMPYEAR+'.pdf';
 		} else {
-            alert('Древний ВСЕРОС');
+			alert('Древний ВСЕРОС');
 			olink = 'https://www.google.ru/';
-        }
+		}
 	} else {
 		olink = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-'+
 		OLYMPYEAR+'/by-code/'+OLYMPNUM+'/white.pdf';
