@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Абитуриент 2.1
-// @version     4.5
-// @date        2020-07-30
+// @version     4.6
+// @date        2020-07-31
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -59,11 +59,12 @@ function addOlympCheck() {
 	var OLYMPNUM = getONUM();
 	var OLYMPYEAR = getID('OLYMP_YEAR').value;
 	var olink;
-	if (OLYMPNUM.indexOf('0000') === 0) {
+	if (OLYMPNUM.startsWith('0000')) {
 		if ((OLYMPYEAR == 2020) || (OLYMPYEAR == 2019) || (OLYMPYEAR == 2018)) {
 			olink = 'https://ksrt12.github.io/files/'+OLYMPYEAR+'.pdf';
 		} else {
             alert('Древний ВСЕРОС');
+			olink = 'https://www.google.ru/';
         }
 	} else {
 		olink = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-'+

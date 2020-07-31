@@ -137,31 +137,35 @@ function SHA256(s) {
 }
 
 var RSROLYMP = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
-var table;
+var table, params;
 
-function loadvars(func) {
-	var i, namestr;
-	var n = Number(func);
-	var urlParams = new URLSearchParams(window.location.search);
-	var vars = ['DN', 'LN', 'FN', 'MN', 'BDY', 'BDM', 'BDD'];
-	for (i in vars) {
-		this[vars[i]] = urlParams.get(vars[i]);
-		if (this[vars[i]] == null)
-			this[vars[i]] = "";
-	}
-	var NAME = LN+' '+FN+' '+MN;
+function load_params() {
+	params = window.location.search.replace('?','').split('&').reduce(
+        function(p, e) {
+            var a = e.split('=');
+            p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+            return p;
+        },
+        {}
+    );
+}
+
+function loadvars(n) {
+	var namestr;
+	var NAME = params.LN+' '+params.FN+' '+params.MN;
 	switch (n) {
 		case 0:
 			namestr = NAME;
 			break;
 		case 1:
-			namestr = DN+' '+NAME;
+			if (params.DN === undefined) {
+				namestr = NAME;
+			} else {
+				namestr = params.DN+' '+NAME;
+			}
 			break;
 		case 2:
-			namestr = NAME+' '+BDY+'-'+BDM+'-'+BDD;
-			break;
-		case 3:
-			namestr = window.location.search;
+			namestr = NAME+' '+params.BDY+'-'+params.BDM+'-'+params.BDD;
 			break;
 	}
 	return namestr;
@@ -178,7 +182,6 @@ function clean_results() {
 function make_link(t, u) {
 	var a = document.createElement('a');
 	a.href = u;
-	//a.onclick = function(){window.open(u,'_blank')};
 	a.appendChild(document.createTextNode(t));
 	return a;
 }
@@ -258,7 +261,7 @@ function load_diploma_list(year, pid) {
 }
 
 function make_table() {
-	if (loadvars(3) != "") {
+	if (params.LN) {
 		table = document.createElement('table');
 		table.id = 'table';
 		table.setAttribute('rules', 'all');
@@ -284,12 +287,17 @@ function make_table() {
 function checktable() {
 	window.addEventListener("load", function() {
 		var TABLE = document.getElementById('table');
-		if (TABLE == null) {
-				if (loadvars(3) != "") {
+		if (TABLE === null) {
+				if (params.LN) {
 					alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
 					window.close();
 				} else {
 					document.getElementById('main_res').remove();
+					if (params.source == "pwa") {
+						alert('W='+window.innerWidth+
+							', H='+window.innerHeight+
+							', DPR='+window.devicePixelRatio);
+					}
 				}
 		}
 	});
@@ -307,5 +315,6 @@ function update_status(stream) {
 	}
 }
 
+load_params();
 make_table();
 checktable();
