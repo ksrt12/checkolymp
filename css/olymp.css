@@ -33,12 +33,15 @@ body {
 .main {
 	display: table;
 	font-size: 16px;
-	margin: 0;
 	padding: 10px 20px 10px 20px;
 	background: linear-gradient(90deg, #efefef, #b9deed);
 	background-repeat: no-repeat;
 	background-size: cover;
 	text-align: center;
+}
+
+a {
+	text-decoration: none;
 }
 
 .main tr {
@@ -59,12 +62,10 @@ body {
 .main table a {
 	white-space: nowrap;
 	color: #030d10;
-	text-decoration: none;
 }
 
 .main table a:visited {
 	color: #8a00ad;
-	text-decoration: none;
 }
 
 .main table a:hover {
@@ -83,8 +84,8 @@ body {
 }
 
 .copyright a {
-	color: #efefefa6;
-	text-decoration: none;
+	color: #efefef;
+	opacity: 0.65;
 }
 
 #stars {
@@ -104,12 +105,16 @@ body {
 
 @media (orientation: landscape) {
 	.main {
-		width: 65%;
+		width: auto;
+		position: relative;
+		margin: 0px 16% 0px 16%;
 	}
 	.left {
-		float: left;
+		left: 0;
 		width: 15%;
-		margin: 0 10px 0 10px;
+		position: fixed;
+		padding: 0;
+		margin: 0px 0.5% 0px 0.5%;
 	}
 	img {
 		width: 100%;
@@ -117,17 +122,17 @@ body {
 	}
 	.right {
 		font-size: 15px;
-		float: right;
-		width: 15%;
-		margin-top: 25px;
+		right: 0;
+		width: 14%;
+		position: fixed;
+		padding: 0;
+		margin: 25px 0px 0px 2%;
 	}
 	.right a:hover {
 		color: #b9deed;
-		text-decoration: none;
 	}
 	.right a {
 		color: #efefef;
-		text-decoration: none;
 	}
 }
 

@@ -207,11 +207,11 @@ function table_row(l, head) {
 	for (i in l) {
 		if (head) {
 			g = document.createElement('th');
-			if (i == '6') {
-				g.width = "85px";
-			}
 		} else {
 			g = document.createElement('td');
+		}
+		if (i == '6') {
+			g.width = "85px";
 		}
 		add_entry(l[i], g);
 		tr.appendChild(g);
