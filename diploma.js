@@ -138,17 +138,17 @@ function SHA256(s) {
 
 var RSROLYMP = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
 var diplomaCodes = [];
-var table, params;
+var table, tbody, params;
 
 function load_params() {
 	params = window.location.search.replace('?','').split('&').reduce(
-        function(p, e) {
-            var a = e.split('=');
-            p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
-            return p;
-        },
-        {}
-    );
+		function(p, e) {
+			var a = e.split('=');
+			p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+			return p;
+		},
+		{}
+	);
 }
 
 function loadvars(n) {
@@ -208,6 +208,29 @@ function table_row(l, head) {
 	for (i in l) {
 		if (head) {
 			g = document.createElement('th');
+			switch (Number(i)) {
+				case 0:
+					g.id = "name";
+					break;
+				case 1:
+					g.id = "lvl";
+					break;
+				case 2:
+					g.id = "dip";
+					break;
+				case 3:
+					g.id = "subj";
+					break;
+				case 4:
+					g.id = "num";
+					break;
+				case 5:
+					g.id = "grad";
+					break;
+				case 6:
+					g.id = "stream";
+					break;	
+			}
 		} else {
 			g = document.createElement('td');
 		}
@@ -235,7 +258,7 @@ function update_diplomas(olympYear) {
 	for (i in diplomaCodes) {
 		var d = diplomaCodes[i];
 		var doa = getSubTitles(d.oa, d.form);
-		table.appendChild(table_row([
+		tbody.appendChild(table_row([
 			doa[0],
 			doa[1],
 			doa[2],
@@ -265,10 +288,13 @@ function make_table() {
 	if (params.LN) {
 		table = document.createElement('table');
 		table.id = 'table';
+		table.className = "table_sort";
 		table.setAttribute('rules', 'all');
 		table.setAttribute('border', 'all');
 		table.createCaption().textContent = (loadvars(1));
-		table.appendChild(table_row([
+	var thead = document.createElement('thead');
+		table.appendChild(thead);
+		thead.appendChild(table_row([
 			'Олимпиада',
 			'Уровень',
 			'Степень',
@@ -277,6 +303,8 @@ function make_table() {
 			'Класс',
 			makeselector()
 		], true));
+		tbody = document.createElement('tbody');
+		table.appendChild(tbody);
 		var currYEAR = new Date().getFullYear();
 		var personID = SHA256(loadvars(2));
 		for (let YEAR = 2014; YEAR <= currYEAR; YEAR++) {
@@ -300,19 +328,44 @@ function checktable() {
 							', DPR='+window.devicePixelRatio);
 					}
 				}
+		} else {
+			//const getSort = ({ target }) => {
+			function getSort(target) {
+				const order = (target.dataset.order = -(target.dataset.order || -1));
+				const index = [...target.parentNode.cells].indexOf(target);
+				const collator = new Intl.Collator(['en', 'ru'], { numeric: true });
+				const comparator = (index, order) => (a, b) => order * collator.compare(
+					a.children[index].innerHTML,
+					b.children[index].innerHTML
+				);
+				for(const tBody of target.closest('table').tBodies)
+					tBody.append(...[...tBody.rows].sort(comparator(index, order)));
+				for(const cell of target.parentNode.cells)
+					cell.classList.toggle('sorted', cell === target);
+			};
+			//document.querySelectorAll('.table_sort thead').forEach(tableTH => tableTH.addEventListener('click', getSort(event)));
+			var th_sort = document.querySelectorAll('.table_sort th');
+			for (let i of th_sort) {
+				if (i.id !== "stream") {
+					i.addEventListener('click', function() {
+						getSort(i);
+					});
+				}
+			}
+			getSort(th_sort.item(4));
 		}
 	});
 }
 
 function update_status(stream) {
-	for (let i = 1; i < table.rows.length; i++) {
-		table.rows[i].cells[6].innerHTML = checkBVI(
+	for (let i = 0; i < tbody.rows.length; i++) {
+		tbody.rows[i].cells[6].innerHTML = checkBVI(
 			stream,
-			table.rows[i].cells[5].innerText,
-			table.rows[i].cells[3].innerText,
-			table.rows[i].cells[0].innerText,
-			table.rows[i].cells[1].innerText,
-			table.rows[i].cells[2].innerText);
+			tbody.rows[i].cells[5].innerText,
+			tbody.rows[i].cells[3].innerText,
+			tbody.rows[i].cells[0].innerText,
+			tbody.rows[i].cells[1].innerText,
+			tbody.rows[i].cells[2].innerText);
 	}
 }
 

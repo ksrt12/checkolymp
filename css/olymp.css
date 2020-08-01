@@ -73,6 +73,18 @@ a {
 	text-decoration: underline;
 }
 
+th:not(#stream) {
+	cursor: pointer;
+}
+
+th.sorted[data-order="-1"] {
+	color: #0092bd;
+}
+
+th.sorted[data-order="1"] {
+	color: #2967c5;
+}
+
 .copyright {
 	position: fixed;
 	left: 0;
