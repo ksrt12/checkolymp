@@ -137,6 +137,7 @@ function SHA256(s) {
 }
 
 var RSROLYMP = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
+var diplomaCodes = [];
 var table, params;
 
 function load_params() {
@@ -249,7 +250,7 @@ function update_diplomas(olympYear) {
 }
 
 function load_diploma_list(year, pid) {
-	var diplomaCodes = [];
+
 	var s = document.createElement('script');
 	var url = RSROLYMP + year + '/by-person-released/' + pid + '/codes.js';
 	s.onload = function() {
