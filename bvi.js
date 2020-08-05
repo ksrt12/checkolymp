@@ -22,14 +22,6 @@ function itt() {
 	}
 }
 
-function ooshm() {
-	if ((lvl == 3) && (dip == 1)) {
-		status = bvi;
-	} else {
-		status = sto;
-	}
-}
-
 switch(stream) {
 	case '01.03.02':
 		switch(subj) {
@@ -104,7 +96,11 @@ switch(stream) {
 						}
 						break;
 					case 'Открытая олимпиада школьников':
-						ooshm();
+						if ((lvl == 3) && (dip == 1)) {
+							status = bvi;
+						} else {
+							status = sto;
+						}
 						break;
 					case 'Московская олимпиада школьников':
 					case 'Олимпиада школьников Санкт-Петербургского государственного университета':
@@ -161,7 +157,11 @@ switch(stream) {
 			case 'Открытая олимпиада школьников':
 				switch(subj) {
 					case 'математика':
-						ooshm();
+						if (lvl == 3) {
+							status = bvi;
+						} else {
+							status = itin;
+						}
 						break;
 					case 'информатика':
 						if ((lvl == 1) || (lvl == 2)) {
