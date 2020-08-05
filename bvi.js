@@ -7,7 +7,7 @@ var status,
 	subj = subj_in.toLowerCase(),
 	name = name_in.replace(/[«»]+/g, '"');
 
-if ((grad == 11) || (grad == 10)) {
+if ((grad === 11) || (grad === 10)) {
 
 var bvi = 'БВИ (проверить ЕГЭ)',
 	sto = '100',
@@ -15,7 +15,7 @@ var bvi = 'БВИ (проверить ЕГЭ)',
 	itin = 'спросить у Итина';
 
 function itt() {
-	if (lvl == 1) {
+	if (lvl === 1) {
 		status = bvi;
 	} else {
 		status = wtf;
@@ -37,27 +37,17 @@ switch(stream) {
 					case 'Олимпиада Университета Иннополис "Innopolis Open"':
 					case 'Олимпиада школьников Санкт-Петербургского государственного университета':
 					case 'Олимпиада школьников по программированию "ТехноКубок"':
-						switch(lvl) {
-							case 1:
-							case 2:
-								status = bvi;
-								break;
-							default:
-								status = sto;
+						if (lvl === 3) {
+							status = sto;
+						} else {
+							status = bvi;
 						}
 						break;
 					case 'Открытая олимпиада школьников':
-						switch(lvl) {
-							case 1:
-							case 2:
-								if (dip == 1) {
-									status = bvi;
-								} else {
-									status = sto;
-								}
-								break;
-							default:
-								status = sto;
+						if ((lvl !== 3) && (dip === 1)) {
+							status = bvi;
+						} else {
+							status = sto;
 						}
 						break;
 					default:
@@ -82,21 +72,14 @@ switch(stream) {
 					case 'Олимпиада Юношеской математической школы':
 					case 'Отраслевая физико-математическая олимпиада школьников "Росатом"':
 					case 'Турнир имени М.В. Ломоносова':
-						switch(lvl) {
-							case 1:
-							case 2:
-								if (dip == 1) {
-									status = bvi;
-								} else {
-									status = sto;
-								}
-								break;
-							default:
-								status = sto;
+						if ((lvl !== 3) && (dip === 1)) {
+							status = bvi;
+						} else {
+							status = sto;
 						}
 						break;
 					case 'Открытая олимпиада школьников':
-						if ((lvl == 3) && (dip == 1)) {
+						if ((lvl === 3) && (dip === 1)) {
 							status = bvi;
 						} else {
 							status = sto;
@@ -106,13 +89,10 @@ switch(stream) {
 					case 'Олимпиада школьников Санкт-Петербургского государственного университета':
 					case 'Санкт-Петербургская олимпиада школьников':
 					case 'Турнир городов':
-						switch(lvl) {
-							case 1:
-							case 2:
-								status = bvi;
-								break;
-							default:
-								status = sto;
+						if (lvl === 3) {
+							status = sto;
+						} else {
+							status = bvi;
 						}
 						break;
 					default:
@@ -120,7 +100,7 @@ switch(stream) {
 				}
 				break;
 			case 'компьютерная безопасность':
-				if ((dip == 1) && ((lvl == 1 ) || (lvl == 2))) {
+				if ((dip === 1) && (lvl !== 3)) {
 					if (name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') {
 						status = bvi;
 					} else {
@@ -131,8 +111,8 @@ switch(stream) {
 				}
 				break;
 			case 'информационные технологии':
-				if (lvl == 1) {
-					if (dip == 1) {
+				if (lvl === 1) {
+					if (dip === 1) {
 						status = bvi;
 					} else {
 						status = sto;
@@ -145,7 +125,6 @@ switch(stream) {
 				status = sto;
 				break;
 			case 'большие данные и машинное обучение':
-			case 'нейротехнологии':
 				status = itin;
 				break;
 			default:
@@ -157,17 +136,17 @@ switch(stream) {
 			case 'Открытая олимпиада школьников':
 				switch(subj) {
 					case 'математика':
-						if (lvl == 3) {
+						if (lvl === 3) {
 							status = bvi;
 						} else {
 							status = itin;
 						}
 						break;
 					case 'информатика':
-						if ((lvl == 1) || (lvl == 2)) {
-							status = bvi;
-						} else {
+						if (lvl === 3) {
 							status = sto;
+						} else {
+							status = bvi;
 						}
 						break;
 					case 'информационные технологии':
@@ -182,17 +161,16 @@ switch(stream) {
 						break;
 					case 'математика':
 					case 'информатика':
-						if ((lvl == 1) || (lvl == 2)) {
-							status = bvi;
-						} else {
+						if (lvl === 3) {
 							status = sto;
+						} else {
+							status = bvi;
 						}
 						break;
 					case 'русский язык':
 						status = sto;
 						break;
 					case 'большие данные и машинное обучение':
-					case 'нейротехнологии':
 						status = itin;
 						break;
 					default:
@@ -207,14 +185,10 @@ switch(stream) {
 				break;
 			case 'математика':
 			case 'информатика':
-				switch(lvl) {
-					case 1:
-					case 2:
-						status = bvi;
-						break;
-					default:
-						status = sto;
-						break;
+				if (lvl === 3) {
+					status = sto;
+				} else {
+					status = bvi;
 				}
 				break;
 			case 'русский язык':
@@ -289,6 +263,7 @@ switch(stream) {
 			case 'системы связи и дистанционного зондирования земли':
 			case 'анализ космических снимков и геопространственных данных':
 			case 'водные робототехнические системы':
+			case 'нейротехнологии':
 			case 'нейротехнологии и когнитивные науки':
 			case 'передовые производственные технологии':
 			case 'программная инженерия финансовых технологий':
@@ -302,6 +277,9 @@ switch(stream) {
 				break;
 			case 'русский язык':
 				status = sto;
+				break;
+			case 'большие данные и машинное обучение':
+				status = itin;
 				break;
 			default:
 				status = wtf;
@@ -376,10 +354,10 @@ switch(stream) {
 				status = bvi;
 				break;
 			case 'информатика':
-				if ((lvl == 1) || (lvl == 2)) {
-					status = bvi;
-				} else {
+				if (lvl === 3) {
 					status = wtf;
+				} else {
+					status = bvi;
 				}
 				break;
 			case 'русский язык':
