@@ -124,9 +124,6 @@ switch(stream) {
 			case 'русский язык':
 				status = sto;
 				break;
-			case 'большие данные и машинное обучение':
-				status = itin;
-				break;
 			default:
 				status = wtf;
 		}
@@ -169,9 +166,6 @@ switch(stream) {
 						break;
 					case 'русский язык':
 						status = sto;
-						break;
-					case 'большие данные и машинное обучение':
-						status = itin;
 						break;
 					default:
 						status = wtf;
@@ -277,9 +271,6 @@ switch(stream) {
 				break;
 			case 'русский язык':
 				status = sto;
-				break;
-			case 'большие данные и машинное обучение':
-				status = itin;
 				break;
 			default:
 				status = wtf;
