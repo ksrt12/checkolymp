@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Абитуриент 2.1
-// @version     4.6
-// @date        2020-07-31
+// @version     4.7
+// @date        2020-08-07
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -60,7 +60,7 @@ function addOlympCheck() {
 	var OLYMPYEAR = getID('OLYMP_YEAR').value;
 	var olink;
 	if (OLYMPNUM.startsWith('0000')) {
-		if ((OLYMPYEAR == 2020) || (OLYMPYEAR == 2019) || (OLYMPYEAR == 2018)) {
+		if ((OLYMPYEAR === '2020') || (OLYMPYEAR === '2019') || (OLYMPYEAR === '2018')) {
 			olink = 'https://ksrt12.github.io/files/'+OLYMPYEAR+'.pdf';
 		} else {
 			alert('Древний ВСЕРОС');
@@ -128,7 +128,7 @@ autoEGE();
 
 // add current olymp check button
 window.addEventListener('hashchange', function(){
-	if (document.location.hash == '#olymp') {
+	if (document.location.hash === '#olymp') {
 		document.addEventListener('click', listenOLYMP);
 	} else {
 		document.removeEventListener('click', listenOLYMP);
