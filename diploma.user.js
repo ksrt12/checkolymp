@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name        Абитуриент 2.1
-// @version     4.7
-// @date        2020-08-07
+// @name        Абитуриент 2.2
+// @version     5.0
+// @date        2020-08-08
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -74,22 +74,19 @@ function addOlympCheck() {
 }
 
 // set checkboxes automatically if 'LK_DELO_0' is checked
-function autophotocopy() {
-	var DZCH = getID('LK_DELO_0');
+function autophotocopy(DZCH) {
 	var LK_PHOTO = getID('LK_PHOTO_0');
 	var LK_COPY = getID('LK_PODL_COPY_0');
-	if (DZCH !== null) {
-		DZCH.addEventListener("click", function() {
-			LK_PHOTO.checked = DZCH.checked;
-			LK_COPY.checked = DZCH.checked;
-		});
-	}
+	DZCH.onclick = function() {
+		LK_PHOTO.checked = DZCH.checked;
+		LK_COPY.checked = DZCH.checked;
+	};
 }
 
 // set default EGE date for subject
 function sedate(subIndex) {
 	var EGEDATE = getID('EGE_DATE');
-	if (EGEDATE.selectedIndex == 0) {
+	if (EGEDATE.selectedIndex === 0) {
 		switch(subIndex) {
 		case 4:
 			EGEDATE.selectedIndex=6;
@@ -107,7 +104,7 @@ function autoEGE() {
 	var EGESUBJ = getID('EGE_SUBJ');
 	var EGEFORM = getID('ege_form');
 	if (EGEFORM !== null) {
-		EGEFORM.onclick = function(){
+		EGEFORM.onclick = function() {
 			sedate(EGESUBJ.selectedIndex);
 		};
 	}
@@ -115,22 +112,44 @@ function autoEGE() {
 }
 
 function listenOLYMP() {
-	if ((getID('OLYMP_CHECK') === null) && (getID('OLYMP_DELETE') !== null) && (getONUM() != "")) {
+	if ((getID('OLYMP_CHECK') === null) && (getID('OLYMP_DELETE') !== null) && (getONUM() !== "")) {
 		addCheckButton("Проверить", "OLYMP_DELETE");
 	}
 }
 
-// add olymps check button
-addCheckButton("Проверить олимпиады","PERS_UPDATE");
-
-autophotocopy();
-autoEGE();
-
-// add current olymp check button
-window.addEventListener('hashchange', function(){
-	if (document.location.hash === '#olymp') {
-		document.addEventListener('click', listenOLYMP);
-	} else {
-		document.removeEventListener('click', listenOLYMP);
+function checkBVIwoCON() {
+	var bvi, con;
+	var LK_AGREE = getID('LK_AGREE');
+	for (var i of document.querySelectorAll("#report_rating_rep > tbody > tr > td:nth-child(5)")) {
+		if (i.innerText === 'без вступительных испытаний') {
+			bvi = i.closest('tr').querySelector('td:nth-child(2)').innerText.substr(0,8);
+		}
 	}
-});
+	con = LK_AGREE.options[LK_AGREE.options.selectedIndex].text.substr(0,8);
+	if (con !== bvi) {
+		G2.notify('БВИ без согласия!','Ошибка',true);
+	}
+}
+
+function main() {
+	var url = document.location.href;
+	if (url.includes('ST_FORM')) {
+		addCheckButton("Проверить олимпиады","PERS_UPDATE");
+	} else if (url.includes('APPLICATIONS')) {
+		autoEGE();
+		window.addEventListener('hashchange', function() {
+			if (document.location.hash === '#olymp') {
+				document.addEventListener('click', listenOLYMP);
+			} else {
+				document.removeEventListener('click', listenOLYMP);
+			}
+		});
+	} else if (url.includes('SU_OFFICE')) {
+		var LK_UPDATE = getID('LK_UPDATE');
+		var DZCH = getID('LK_DELO_0');
+		if (LK_UPDATE !== null) {LK_UPDATE.onclick = checkBVIwoCON;}
+		if (DZCH !== null) {autophotocopy(DZCH);}
+	}
+}
+
+main();
