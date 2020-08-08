@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент 2.2
-// @version     5.1
+// @version     5.2
 // @date        2020-08-08
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -19,24 +19,18 @@ function getID(someID) {
 }
 
 // make buttons
-function addCheckButton(str,ISUid) {
+function addCheckButton(str,ISUid,func) {
 	var ISUELEM = getID(ISUid);
 	if (ISUELEM !== null) {
 	var CheckButton = document.createElement("button");
-		CheckButton.id="OLYMP_CHECK";
-		CheckButton.value=str;
-		CheckButton.className="btn btn-labeled ";
-		CheckButton.type="button";
-		CheckButton.style="margin-right: 5px;";
+		CheckButton.id = "OLYMP_CHECK";
+		CheckButton.value = str;
+		CheckButton.className = "btn btn-labeled ";
+		CheckButton.type = "button";
+		CheckButton.style = "margin-right: 5px;";
 		ISUELEM.parentNode.insertBefore(CheckButton, ISUELEM);
 		CheckButton.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>'+str);
-		CheckButton.onclick=function(){
-			if (ISUid == "PERS_UPDATE") {
-				window.open(addAllOlympsCheck(),'_blank');
-			} else if (ISUid == "OLYMP_DELETE") {
-				window.open(addOlympCheck(),'_blank');
-			}
-		};
+		CheckButton.onclick = function() {window.open(func,'_blank');};
 	}
 }
 
@@ -113,7 +107,7 @@ function autoEGE() {
 
 function listenOLYMP() {
 	if ((getID('OLYMP_CHECK') === null) && (getID('OLYMP_DELETE') !== null) && (getONUM() !== "")) {
-		addCheckButton("Проверить", "OLYMP_DELETE");
+		addCheckButton("Проверить", "OLYMP_DELETE", addOlympCheck());
 	}
 }
 
@@ -133,9 +127,9 @@ function checkBVIwoAGREE() {
 
 function main() {
 	var url = document.location.href;
-	if (url.includes('ST_FORM')) {
-		addCheckButton("Проверить олимпиады","PERS_UPDATE");
-	} else if (url.includes('APPLICATIONS')) {
+	if ((url.includes('ST_FORM')) || (url.includes('=2175:2:'))) {
+		addCheckButton("Проверить олимпиады", "PERS_UPDATE", addAllOlympsCheck());
+	} else if ((url.includes('APPLICATIONS')) || (url.includes('=2175:4:'))) {
 		autoEGE();
 		window.addEventListener('hashchange', function() {
 			if (document.location.hash === '#olymp') {
@@ -144,7 +138,7 @@ function main() {
 				document.removeEventListener('click', listenOLYMP);
 			}
 		});
-	} else if (url.includes('SU_OFFICE')) {
+	} else if ((url.includes('SU_OFFICE')) || (url.includes('=2175:5:'))) {
 		var LK_UPDATE = getID('LK_UPDATE');
 		var DZCH = getID('LK_DELO_0');
 		if (LK_UPDATE !== null) {LK_UPDATE.onclick = checkBVIwoAGREE;}

@@ -1,15 +1,11 @@
-function checkBVI(stream,grad_in,subj_in,name_in,lvl_in,dip_in){
+function checkBVI(stream,subj_in,name_in,lvl_in,dip_in){
 
 var status,
-	grad = Number(grad_in),
 	lvl = Number(lvl_in),
 	dip = Number(dip_in),
 	subj = subj_in.toLowerCase(),
-	name = name_in.replace(/[«»]+/g, '"');
-
-if ((grad === 11) || (grad === 10)) {
-
-var bvi = 'БВИ (проверить ЕГЭ)',
+	name = name_in.replace(/[«»]+/g, '"'),
+	bvi = 'БВИ (проверить ЕГЭ)',
 	sto = '100',
 	wtf = '—',
 	itin = 'спросить у Итина';
@@ -408,10 +404,6 @@ switch(stream) {
 	default:
 		status = wtf;
 }
-} else {
-	status = 'ИД';
-}
-
 	return status;
 }
 

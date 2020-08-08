@@ -216,12 +216,17 @@ function table_row(l, head) {
 }
 
 function getSubTitles(olympname, grad) {
+	var status;
 	var t1 = olympname.substring(olympname.indexOf('. "') + 3, olympname.indexOf('("') - 2);
 	var t2 = olympname.substr(olympname.indexOf('уровень') - 2, 1);
 	var t3 = olympname.substr(olympname.indexOf('Диплом') + 7, 1);
 	var t4 = olympname.substring(olympname.indexOf('("') + 2, olympname.indexOf('")'));
-	var BVI = checkBVI('01.03.02', grad, t4, t1, t2, t3);
-	return [t1, t2, t3, t4, BVI];
+	if ((grad === 10) || (grad === 11)) {
+		status = checkBVI('01.03.02', t4, t1, t2, t3);
+	} else {
+		status = "ИД";
+	}
+	return [t1, t2, t3, t4, status];
 }
 
 function update_diplomas(olympYear) {
@@ -328,13 +333,13 @@ function checktable() {
 
 function update_status(stream) {
 	for (let i = 0; i < tbody.rows.length; i++) {
-		tbody.rows[i].cells[6].innerHTML = checkBVI(
-			stream,
-			tbody.rows[i].cells[5].innerText,
+		if ((tbody.rows[i].cells[5].innerText === "11") || (tbody.rows[i].cells[5].innerText === "10")) {
+			tbody.rows[i].cells[6].innerHTML = checkBVI(stream,
 			tbody.rows[i].cells[3].innerText,
 			tbody.rows[i].cells[0].innerText,
 			tbody.rows[i].cells[1].innerText,
 			tbody.rows[i].cells[2].innerText);
+		}
 	}
 }
 
