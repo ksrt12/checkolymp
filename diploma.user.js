@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент 2.2
-// @version     5.0
+// @version     5.1
 // @date        2020-08-08
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -117,17 +117,17 @@ function listenOLYMP() {
 	}
 }
 
-function checkBVIwoCON() {
-	var bvi, con;
+function checkBVIwoAGREE() {
+	var bvi, agree;
 	var LK_AGREE = getID('LK_AGREE');
 	for (var i of document.querySelectorAll("#report_rating_rep > tbody > tr > td:nth-child(5)")) {
 		if (i.innerText === 'без вступительных испытаний') {
 			bvi = i.closest('tr').querySelector('td:nth-child(2)').innerText.substr(0,8);
+			agree = LK_AGREE.options[LK_AGREE.options.selectedIndex].text.substr(0,8);
+			if (agree !== bvi) {
+				G2.notify('БВИ без согласия!','Ошибка',true);
+			}
 		}
-	}
-	con = LK_AGREE.options[LK_AGREE.options.selectedIndex].text.substr(0,8);
-	if (con !== bvi) {
-		G2.notify('БВИ без согласия!','Ошибка',true);
 	}
 }
 
@@ -147,7 +147,7 @@ function main() {
 	} else if (url.includes('SU_OFFICE')) {
 		var LK_UPDATE = getID('LK_UPDATE');
 		var DZCH = getID('LK_DELO_0');
-		if (LK_UPDATE !== null) {LK_UPDATE.onclick = checkBVIwoCON;}
+		if (LK_UPDATE !== null) {LK_UPDATE.onclick = checkBVIwoAGREE;}
 		if (DZCH !== null) {autophotocopy(DZCH);}
 	}
 }
