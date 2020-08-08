@@ -288,7 +288,6 @@ function make_table() {
 	if (params.LN) {
 		table = document.createElement('table');
 		table.id = 'table';
-		table.className = "table_sort";
 		table.setAttribute('rules', 'all');
 		table.setAttribute('border', 'all');
 		table.createCaption().textContent = (loadvars(1));
@@ -344,12 +343,12 @@ function checktable() {
 					cell.classList.toggle('sorted', cell === target);
 			};
 			//document.querySelectorAll('.table_sort thead').forEach(tableTH => tableTH.addEventListener('click', getSort(event)));
-			var th_sort = document.querySelectorAll('.table_sort th');
+			var th_sort = document.querySelectorAll('#table th');
 			for (let i of th_sort) {
 				if (i.id !== "stream") {
-					i.addEventListener('click', function() {
+					i.onclick = function() {
 						getSort(i);
-					});
+					};
 				}
 			}
 			getSort(th_sort.item(4));
