@@ -137,6 +137,7 @@ function SHA256(s) {
 }
 
 var RSROLYMP = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
+var colnames = ["name", "lvl", "dip", "subj", "num", "grad", "stream"];
 var diplomaCodes = [];
 var table, tbody, params;
 
@@ -146,28 +147,21 @@ function load_params() {
 			var a = e.split('=');
 			p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
 			return p;
-		},
-		{}
+		}, {}
 	);
+	params.NAME = params.LN+' '+params.FN+' '+params.MN;
 }
 
 function loadvars(n) {
-	var namestr;
-	var NAME = params.LN+' '+params.FN+' '+params.MN;
-	switch (n) {
-		case 0:
-			namestr = NAME;
-			break;
-		case 1:
-			if (params.DN === undefined) {
-				namestr = NAME;
-			} else {
-				namestr = params.DN+' '+NAME;
-			}
-			break;
-		case 2:
-			namestr = NAME+' '+params.BDY+'-'+params.BDM+'-'+params.BDD;
-			break;
+	var namestr;	
+	if (n === 0) {
+		if ((params.DN === undefined) || (params.DN === "")) {
+			namestr = params.NAME;
+		} else {
+			namestr = params.DN+' '+params.NAME;
+		}
+	} else if (n === 2) {
+		namestr = params.NAME+' '+params.BDY+'-'+params.BDM+'-'+params.BDD;
 	}
 	return namestr;
 }
@@ -208,29 +202,7 @@ function table_row(l, head) {
 	for (i in l) {
 		if (head) {
 			g = document.createElement('th');
-			switch (Number(i)) {
-				case 0:
-					g.id = "name";
-					break;
-				case 1:
-					g.id = "lvl";
-					break;
-				case 2:
-					g.id = "dip";
-					break;
-				case 3:
-					g.id = "subj";
-					break;
-				case 4:
-					g.id = "num";
-					break;
-				case 5:
-					g.id = "grad";
-					break;
-				case 6:
-					g.id = "stream";
-					break;	
-			}
+			g.id = colnames[i];
 		} else {
 			g = document.createElement('td');
 		}
@@ -273,7 +245,6 @@ function update_diplomas(olympYear) {
 }
 
 function load_diploma_list(year, pid) {
-
 	var s = document.createElement('script');
 	var url = RSROLYMP + year + '/by-person-released/' + pid + '/codes.js';
 	s.onload = function() {
@@ -290,7 +261,7 @@ function make_table() {
 		table.id = 'table';
 		table.setAttribute('rules', 'all');
 		table.setAttribute('border', 'all');
-		table.createCaption().textContent = (loadvars(1));
+		table.createCaption().textContent = loadvars(0);
 	var thead = document.createElement('thead');
 		table.appendChild(thead);
 		thead.appendChild(table_row([
@@ -304,45 +275,43 @@ function make_table() {
 		], true));
 		tbody = document.createElement('tbody');
 		table.appendChild(tbody);
-		var currYEAR = new Date().getFullYear();
 		var personID = SHA256(loadvars(2));
-		for (let YEAR = 2014; YEAR <= currYEAR; YEAR++) {
+		for (let YEAR = 2020; YEAR >= 2014; YEAR--) {
 			load_diploma_list(YEAR, personID);
 		}
 	}
+}
+
+function getSort(target) {
+	const order = (target.dataset.order = -(target.dataset.order || -1));
+	const index = [...target.parentNode.cells].indexOf(target);
+	const collator = new Intl.Collator(['en', 'ru'], { numeric: true });
+	const comparator = (index, order) => (a, b) => order * collator.compare(
+		a.children[index].innerHTML,
+		b.children[index].innerHTML
+	);
+	for (const tBody of target.closest('table').tBodies)
+		tBody.append(...[...tBody.rows].sort(comparator(index, order)));
+	for (const cell of target.parentNode.cells)
+		cell.classList.toggle('sorted', cell === target);
 }
 
 function checktable() {
 	window.addEventListener("load", function() {
 		var TABLE = document.getElementById('table');
 		if (TABLE === null) {
-				if (params.LN) {
-					alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
-					window.close();
-				} else {
-					document.getElementById('main_res').remove();
-					if (params.source == "pwa") {
-						alert('W='+window.innerWidth+
-							', H='+window.innerHeight+
-							', DPR='+window.devicePixelRatio);
-					}
+			if (params.LN) {
+				alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
+				window.close();
+			} else {
+				document.getElementById('main_res').remove();
+				if (params.source == "pwa") {
+					alert('W=' + window.innerWidth +
+						', H=' + window.innerHeight +
+						', DPR=' + window.devicePixelRatio);
 				}
+			}
 		} else {
-			//const getSort = ({ target }) => {
-			function getSort(target) {
-				const order = (target.dataset.order = -(target.dataset.order || -1));
-				const index = [...target.parentNode.cells].indexOf(target);
-				const collator = new Intl.Collator(['en', 'ru'], { numeric: true });
-				const comparator = (index, order) => (a, b) => order * collator.compare(
-					a.children[index].innerHTML,
-					b.children[index].innerHTML
-				);
-				for(const tBody of target.closest('table').tBodies)
-					tBody.append(...[...tBody.rows].sort(comparator(index, order)));
-				for(const cell of target.parentNode.cells)
-					cell.classList.toggle('sorted', cell === target);
-			};
-			//document.querySelectorAll('.table_sort thead').forEach(tableTH => tableTH.addEventListener('click', getSort(event)));
 			var th_sort = document.querySelectorAll('#table th');
 			for (let i of th_sort) {
 				if (i.id !== "stream") {
@@ -351,6 +320,7 @@ function checktable() {
 					};
 				}
 			}
+			th_sort.item(4).dataset.order = 1;
 			getSort(th_sort.item(4));
 		}
 	});
