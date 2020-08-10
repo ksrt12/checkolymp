@@ -246,10 +246,10 @@ function loadOLYMPS() {
 function checkSTREAM() {
 	var points;
 	var err_count = 0, warn_count = 0;
-	var minpoints = getMinPoints(curr_stream);
 	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0,8);
 	var curr_olymp = getSelectedText(getID('APPL_OLYMP'));
-	var isBVI = (getSelectedText(getID('APPL_USL')) === 'без вступительных испытаний');
+	var minpoints = getMinPoints(curr_stream);
+	var isBVI = (getID('APPL_USL').selectedIndex === 1);
 	var isOlymps = (getID('report_olymp_rep') !== null);
 	console.log(OLYMPSbyName);
 	if (isBVI) {
@@ -309,8 +309,10 @@ function checkSTREAM() {
 			}
 		}
 	}
-	if ((err_count === 0) && (warn_count === 0)) {
-		G2.notify(curr_stream + ': OK!');
+	if (err_count === 0) {
+		if (warn_count === 0) {
+			G2.notify(curr_stream + ': OK!');
+		}
 		getID('APPL_UPDATE').click();
 	}
 }
