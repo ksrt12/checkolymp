@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     5.7
+// @version     5.7.1
 // @date        2020-08-12
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -248,7 +248,7 @@ function checkSTREAM() {
 	var points, err_mes;
 	var err_count = 0, warn_count = 0, sum = 0;
 	var annul = (getID('APPL_STATUS').selectedIndex === 1);
-	var annul_text = 'Заявление аннулированно';
+	var annul_text = 'Заявление аннулировано';
 	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0,8);
 	var curr_olymp = getSelectedText(getID('APPL_OLYMP'));
 	var minpoints = getMinPoints(curr_stream);
