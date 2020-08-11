@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     5.7.1
+// @version     5.7.2
 // @date        2020-08-12
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -26,10 +26,18 @@ function NotifyWarn(str) {
 	G2.notify(str, null, false, true);
 }
 
+function NotifyInfo(str) {
+	G2.notify(str);
+}
+
+function getSelectedText(elem) {
+	return elem.options[elem.options.selectedIndex].text;
+}
+
 var EGE_points = {}, OLYMPSbyName = {};
 
 // make buttons
-function addCheckButton(str,ISUid,func) {
+function addCheckButton(str, ISUid, func) {
 	var ISUELEM = getID(ISUid);
 	if ((ISUELEM !== null) && (getID("ButCheck") === null)) {
 	var CheckButton = document.createElement("button");
@@ -39,22 +47,22 @@ function addCheckButton(str,ISUid,func) {
 		CheckButton.type = "button";
 		CheckButton.style = "margin-right: 5px;";
 		ISUELEM.parentNode.insertBefore(CheckButton, ISUELEM);
-		CheckButton.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>'+str);
+		CheckButton.insertAdjacentHTML('beforeend', '<span class="btn-label icon fa fa-refresh"></span>' + str);
 		CheckButton.onclick = func;
 	}
 }
 
 // generate link for checking all olymps
 function addAllOlympsCheck() {
-	var LN=getID('ST_LASTNAME').value;
-	var FN=getID('ST_FIRSTNAME').value;
-	var MN=getID('ST_MIDDLENAME').value;
-	var BD=getID('ST_DOB').value.split('.');
-	var DN=getID('P2_DELO').value;
-	return 'https://ksrt12.github.io/?LN='+LN+'&FN='+FN+'&MN='+MN+'&BDD='+BD[0]+'&BDM='+BD[1]+'&BDY='+BD[2]+'&DN='+DN;
+	var LN = getID('ST_LASTNAME').value;
+	var FN = getID('ST_FIRSTNAME').value;
+	var MN = getID('ST_MIDDLENAME').value;
+	var BD = getID('ST_DOB').value.split('.');
+	var DN = getID('P2_DELO').value;
+	return 'https://ksrt12.github.io/?LN=' + LN + '&FN=' + FN + '&MN=' + MN + '&BDD=' + BD[0] + '&BDM=' + BD[1] + '&BDY=' + BD[2] + '&DN=' + DN;
 }
 
-function getONUM(){
+function getONUM() {
 	return getID('OLYMP_NUM').value.replace(/[. -]+/g, "");
 }
 
@@ -65,14 +73,14 @@ function addOlympCheck() {
 	var olink;
 	if (OLYMPNUM.startsWith('0000')) {
 		if ((OLYMPYEAR === '2020') || (OLYMPYEAR === '2019') || (OLYMPYEAR === '2018')) {
-			olink = 'https://ksrt12.github.io/files/'+OLYMPYEAR+'.pdf';
+			olink = 'https://ksrt12.github.io/files/' + OLYMPYEAR + '.pdf';
 		} else {
 			alert('Древний ВСЕРОС');
 			olink = 'https://www.google.ru/';
 		}
 	} else {
-		olink = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-'+
-		OLYMPYEAR+'/by-code/'+OLYMPNUM+'/white.pdf';
+		olink = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-' +
+			OLYMPYEAR + '/by-code/' + OLYMPNUM + '/white.pdf';
 	}
 	return olink;
 }
@@ -91,13 +99,13 @@ function autophotocopy(DZCH) {
 function sedate(subIndex) {
 	var EGEDATE = getID('EGE_DATE');
 	if (EGEDATE.selectedIndex === 0) {
-		switch(subIndex) {
-		case 4:
-			EGEDATE.selectedIndex=6;
-			break;
-		default:
-			EGEDATE.selectedIndex=5;
-			break;
+		switch (subIndex) {
+			case 4:
+				EGEDATE.selectedIndex = 6;
+				break;
+			default:
+				EGEDATE.selectedIndex = 5;
+				break;
 		}
 	}
 	delete(EGEDATE);
@@ -115,23 +123,23 @@ function autoEGE() {
 	delete EGEFORM;
 }
 
+// add check button for current olymp
 function listenOLYMP() {
 	if ((getID('ButCheck') === null) && (getID('OLYMP_DELETE') !== null) && (getONUM() !== "")) {
-		addCheckButton("Проверить", "OLYMP_DELETE", function () {window.open(addOlympCheck(),'_blank')});
+		addCheckButton("Проверить", "OLYMP_DELETE", function() {
+			window.open(addOlympCheck(), '_blank');
+		});
 	}
 }
 
-function getSelectedText(elem) {
-	return elem.options[elem.options.selectedIndex].text;
-}
-
+// check BVI without agree
 function checkBVIwoAGREE() {
 	var bvi, agree;
 	var LK_AGREE = getID('LK_AGREE');
 	for (var i of document.querySelectorAll("#report_rating_rep > tbody > tr")) {
 		if (i.querySelector('td:nth-child(5)').innerText === 'без вступительных испытаний') {
-			bvi = i.querySelector('td:nth-child(2)').innerText.substr(0,8);
-			agree = getSelectedText(LK_AGREE).substr(0,8);
+			bvi = i.querySelector('td:nth-child(2)').innerText.substr(0, 8);
+			agree = getSelectedText(LK_AGREE).substr(0, 8);
 			if (agree !== bvi) {
 				NotifyErr('БВИ без согласия!');
 			}
@@ -139,6 +147,7 @@ function checkBVIwoAGREE() {
 	}
 }
 
+// get min points for current stream
 function getMinPoints(stream) {
 	var points, math, subj;
 	if (stream === '01.03.02') {
@@ -146,13 +155,14 @@ function getMinPoints(stream) {
 	} else {
 		math = 62;
 	}
-	var minpoints = {'Математика': math, 'Русский язык': 60};
-	if ((stream === '12.03.03') ||
-		(stream === '12.05.01') ||
-		(stream === '16.03.01') ||
-		(stream === '16.03.03')) {
-			points = 60;
-			subj = 'Физика';
+	var minpoints = {
+		'Математика': math,
+		'Русский язык': 60
+	};
+	if ((stream === '12.03.03') || (stream === '16.03.01') ||
+		(stream === '12.05.01') || (stream === '16.03.03')) {
+		points = 60;
+		subj = 'Физика';
 	} else if ((stream === '18.03.02') || (stream === '19.03.01')) {
 		points = 60;
 		subj = 'Химия';
@@ -176,6 +186,7 @@ function getMinPoints(stream) {
 	return minpoints;
 }
 
+// get subjects for VSOSH
 function getVSEROS(stream) {
 	var vsosh = {'Математика': true};
 	var subj;
@@ -228,6 +239,7 @@ function getVSEROS(stream) {
 	return vsosh;
 }
 
+// get EGE points
 function loadEGEpoints() {
 	EGE_points = {};
 	for (var i of document.querySelectorAll("#report_baki_ege_rep > tbody > tr")) {
@@ -235,21 +247,23 @@ function loadEGEpoints() {
 	}
 }
 
+// get olymps
 function loadOLYMPS() {
 	for (var i of document.querySelectorAll("#report_olymp_rep > tbody > tr > td:nth-child(1)")) {
 		var a = i.innerText;
-		var olymp_subj = a.substring(a.indexOf(' (')+2, a.indexOf(', '));
+		var olymp_subj = a.substring(a.indexOf(' (') + 2, a.indexOf(', '));
 		var olymp_name = a.substring(0, a.indexOf(' ('));
 		OLYMPSbyName[olymp_name] = olymp_subj;
 	}
 }
 
+// check current stream
 function checkSTREAM() {
 	var points, err_mes;
 	var err_count = 0, warn_count = 0, sum = 0;
 	var annul = (getID('APPL_STATUS').selectedIndex === 1);
 	var annul_text = 'Заявление аннулировано';
-	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0,8);
+	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0, 8);
 	var curr_olymp = getSelectedText(getID('APPL_OLYMP'));
 	var minpoints = getMinPoints(curr_stream);
 	var appl_usl = getID('APPL_USL').selectedIndex;
@@ -270,14 +284,14 @@ function checkSTREAM() {
 		if (annul) {
 			NotifyWarn(curr_stream + ': ' + annul_text + ' (' + sum + ')');
 			warn_count++;
-		}			
+		}
 	} else {
 		// не БВИ
 		for (var subj in minpoints) {
 			points = EGE_points[subj];
 			console.log(subj + ' ' + minpoints[subj] + ':' + points);
 			if (points === undefined) {
-				err_mes = 'Нет ЕГЭ! (' + subj +')';
+				err_mes = 'Нет ЕГЭ! (' + subj + ')';
 			} else if (points < minpoints[subj]) {
 				err_mes = curr_stream + ': ' + subj + ': ' + points + '\nМинимальный балл: ' + minpoints[subj];
 			} else {
@@ -285,7 +299,7 @@ function checkSTREAM() {
 			}
 			if (err_mes) {
 				if (annul) {
-					G2.notify(annul_text + ':\n' + err_mes);
+					NotifyInfo(annul_text + ':\n' + err_mes);
 					err_count = 0;
 					warn_count++;
 				} else {
@@ -301,7 +315,7 @@ function checkSTREAM() {
 			}
 			if (err_mes) {
 				if (annul) {
-					G2.notify(annul_text + ':\n' + err_mes);
+					NotifyInfo(annul_text + ':\n' + err_mes);
 					err_count = 0;
 					warn_count++;
 				} else {
@@ -318,7 +332,7 @@ function checkSTREAM() {
 				warn_count++;
 			}
 		} else {
-			if (curr_olymp === '...' ) {
+			if (curr_olymp === '...') {
 				if (isBVI) {
 					NotifyErr('БВИ без олимпиады!');
 					err_count++;
@@ -331,7 +345,7 @@ function checkSTREAM() {
 				if (curr_olymp === 'Всероссийская олимпиада школьников') {
 					if (getVSEROS(curr_stream)[curr_subj]) {
 						if (isBVI) {
-							G2.notify(curr_stream + ': ВСЕРОС!');
+							NotifyInfo(curr_stream + ': ВСЕРОС!');
 							err_count++;
 						} else {
 							NotifyErr('ВСЕРОС без БВИ');
@@ -342,7 +356,7 @@ function checkSTREAM() {
 					}
 				} else {
 					points = EGE_points[curr_subj];
-					if ((points < 75) || (points === undefined )) {
+					if ((points < 75) || (points === undefined)) {
 						NotifyErr('Олимпиада не подтверждена! (' + curr_subj + ': ' + points + ')');
 						err_count++;
 					}
@@ -352,12 +366,13 @@ function checkSTREAM() {
 	}
 	if (err_count === 0) {
 		if (warn_count === 0) {
-			G2.notify(curr_stream + ': OK! (' + sum + ')');
+			NotifyInfo(curr_stream + ': OK! (' + sum + ')');
 		}
 		getID('APPL_UPDATE').click();
 	}
 }
 
+// listen application
 function checkAPPL() {
 	var HASH = document.location.hash;
 	if (HASH === '#olymp') {
@@ -369,16 +384,16 @@ function checkAPPL() {
 		console.log("opened appl");
 		loadEGEpoints();
 		loadOLYMPS();
-		var applf = document.querySelector("#appl_form > div.panel-body");
-		applf.addEventListener('change', addCheckButton("Проверить", "APPL_UPDATE", checkSTREAM));
-		//addCheckButton("Проверить", "APPL_UPDATE", checkSTREAM);
+		document.querySelector("#appl_form > div.panel-body").onchange = addCheckButton("Проверить", "APPL_UPDATE", checkSTREAM);
 	}
 }
 
 function main() {
 	var url = document.location.href;
 	if ((url.includes('ST_FORM')) || (url.includes('=2175:2:'))) {
-		addCheckButton("Проверить олимпиады", "PERS_UPDATE", function () {window.open(addAllOlympsCheck(),'_blank')});
+		addCheckButton("Проверить олимпиады", "PERS_UPDATE", function() {
+			window.open(addAllOlympsCheck(), '_blank');
+		});
 	} else if ((url.includes('APPLICATIONS')) || (url.includes('=2175:4:'))) {
 		autoEGE();
 		checkAPPL();
