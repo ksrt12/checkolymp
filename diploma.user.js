@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     5.5
-// @date        2020-08-11
+// @version     5.7
+// @date        2020-08-12
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -229,6 +229,7 @@ function getVSEROS(stream) {
 }
 
 function loadEGEpoints() {
+	EGE_points = {};
 	for (var i of document.querySelectorAll("#report_baki_ege_rep > tbody > tr")) {
 		EGE_points[i.querySelector('td:nth-child(2)').innerText] = Number(i.querySelector('td:nth-child(4)').innerText);
 	}
@@ -244,14 +245,16 @@ function loadOLYMPS() {
 }
 
 function checkSTREAM() {
-	var points;
-	var err_count = 0, warn_count = 0;
+	var points, err_mes;
+	var err_count = 0, warn_count = 0, sum = 0;
+	var annul = (getID('APPL_STATUS').selectedIndex === 1);
+	var annul_text = 'Заявление аннулированно';
 	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0,8);
 	var curr_olymp = getSelectedText(getID('APPL_OLYMP'));
 	var minpoints = getMinPoints(curr_stream);
-	var isBVI = (getID('APPL_USL').selectedIndex === 1);
+	var appl_usl = getID('APPL_USL').selectedIndex;
+	var isBVI = (appl_usl === 1);
 	var isOlymps = (getID('report_olymp_rep') !== null);
-	console.log(OLYMPSbyName);
 	if (isBVI) {
 		// БВИ
 		if (isOlymps) {
@@ -263,55 +266,93 @@ function checkSTREAM() {
 			NotifyErr('Нет олимпиад!');
 			err_count++;
 		}
+		sum = 'БВИ';
+		if (annul) {
+			NotifyWarn(curr_stream + ': ' + annul_text + ' (' + sum + ')');
+			warn_count++;
+		}			
 	} else {
 		// не БВИ
 		for (var subj in minpoints) {
 			points = EGE_points[subj];
 			console.log(subj + ' ' + minpoints[subj] + ':' + points);
 			if (points === undefined) {
-				NotifyErr('Нет ЕГЭ! (' + subj +')');
-				err_count++;
+				err_mes = 'Нет ЕГЭ! (' + subj +')';
 			} else if (points < minpoints[subj]) {
-				NotifyErr(curr_stream + ': ' + subj + ': ' + points + '\nМинимальный балл: ' + minpoints[subj]);
-				err_count++;
+				err_mes = curr_stream + ': ' + subj + ': ' + points + '\nМинимальный балл: ' + minpoints[subj];
+			} else {
+				sum += points;
+			}
+			if (err_mes) {
+				if (annul) {
+					G2.notify(annul_text + ':\n' + err_mes);
+					err_count = 0;
+					warn_count++;
+				} else {
+					NotifyErr(err_mes);
+					err_count++;
+				}
+			}
+			err_mes = null;
+		}
+		if (appl_usl === 3) {
+			if (sum < 250) {
+				err_mes = 'Минимальная сумма баллов для целевого: 250! (' + sum + ')';
+			}
+			if (err_mes) {
+				if (annul) {
+					G2.notify(annul_text + ':\n' + err_mes);
+					err_count = 0;
+					warn_count++;
+				} else {
+					NotifyErr(err_mes);
+					err_count++;
+				}
 			}
 		}
 	}
 	if (isOlymps) {
-		if (curr_olymp === '...' ) {
-			if (isBVI) {
-				NotifyErr('БВИ без олимпиады!');
-				err_count++;
-			} else {
-				NotifyWarn('Обнаружены непроставленные олимпиады');
+		if (annul) {
+			if (err_count !== 0) {
+				NotifyWarn(curr_stream + ': ' + annul_text);
 				warn_count++;
 			}
 		} else {
-			var curr_subj = OLYMPSbyName[curr_olymp];
-			if (curr_olymp === 'Всероссийская олимпиада школьников') {
-				if (getVSEROS(curr_stream)[curr_subj]) {
-					if (isBVI) {
-						G2.notify(curr_stream + ': ВСЕРОС!');
-						err_count++;
-					} else {
-						NotifyErr('ВСЕРОС без БВИ');
-					}
+			if (curr_olymp === '...' ) {
+				if (isBVI) {
+					NotifyErr('БВИ без олимпиады!');
+					err_count++;
 				} else {
-					NotifyErr('Олимпиада не подходит!');
+					NotifyWarn('Обнаружены непроставленные олимпиады');
 					warn_count++;
 				}
 			} else {
-				points = EGE_points[curr_subj];
-				if ((points < 75) || (points === undefined )) {
-					NotifyErr('Олимпиада не подтверждена! (' + curr_subj + ': ' + points + ')');
-					err_count++;
+				var curr_subj = OLYMPSbyName[curr_olymp];
+				if (curr_olymp === 'Всероссийская олимпиада школьников') {
+					if (getVSEROS(curr_stream)[curr_subj]) {
+						if (isBVI) {
+							G2.notify(curr_stream + ': ВСЕРОС!');
+							err_count++;
+						} else {
+							NotifyErr('ВСЕРОС без БВИ');
+						}
+					} else {
+						NotifyErr('Олимпиада не подходит!');
+						warn_count++;
+					}
+				} else {
+					points = EGE_points[curr_subj];
+					if ((points < 75) || (points === undefined )) {
+						NotifyErr('Олимпиада не подтверждена! (' + curr_subj + ': ' + points + ')');
+						err_count++;
+					}
 				}
 			}
 		}
 	}
 	if (err_count === 0) {
 		if (warn_count === 0) {
-			G2.notify(curr_stream + ': OK!');
+			G2.notify(curr_stream + ': OK! (' + sum + ')');
 		}
 		getID('APPL_UPDATE').click();
 	}
