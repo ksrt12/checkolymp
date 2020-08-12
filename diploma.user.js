@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     5.7.2
-// @date        2020-08-12
+// @version     5.8
+// @date        2020-08-13
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -35,6 +35,7 @@ function getSelectedText(elem) {
 }
 
 var EGE_points = {}, OLYMPSbyName = {};
+var Achpoints;
 
 // make buttons
 function addCheckButton(str, ISUid, func) {
@@ -249,6 +250,7 @@ function loadEGEpoints() {
 
 // get olymps
 function loadOLYMPS() {
+	OLYMPSbyName = {};
 	for (var i of document.querySelectorAll("#report_olymp_rep > tbody > tr > td:nth-child(1)")) {
 		var a = i.innerText;
 		var olymp_subj = a.substring(a.indexOf(' (') + 2, a.indexOf(', '));
@@ -257,12 +259,20 @@ function loadOLYMPS() {
 	}
 }
 
+// get achievements points
+function loadAchpoints() {
+	Achpoints = 0;
+	for (var i of document.querySelectorAll("#report_backi_achiev_rep > tbody > tr > td:nth-child(2)")) {
+		Achpoints += parseInt(i.textContent.match(/\d+/));
+	}
+}
+
 // check current stream
 function checkSTREAM() {
 	var points, err_mes;
 	var err_count = 0, warn_count = 0, sum = 0;
-	var annul = (getID('APPL_STATUS').selectedIndex === 1);
-	var annul_text = 'Заявление аннулировано';
+	var annul = getID('APPL_ANN').textContent;
+	var annul_text = 'Аннулировано  ' + annul;
 	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0, 8);
 	var curr_olymp = getSelectedText(getID('APPL_OLYMP'));
 	var minpoints = getMinPoints(curr_stream);
@@ -281,10 +291,6 @@ function checkSTREAM() {
 			err_count++;
 		}
 		sum = 'БВИ';
-		if (annul) {
-			NotifyWarn(curr_stream + ': ' + annul_text + ' (' + sum + ')');
-			warn_count++;
-		}
 	} else {
 		// не БВИ
 		for (var subj in minpoints) {
@@ -324,51 +330,53 @@ function checkSTREAM() {
 				}
 			}
 		}
+		sum += '+' + Achpoints;
 	}
 	if (isOlymps) {
-		if (annul) {
-			if (err_count !== 0) {
-				NotifyWarn(curr_stream + ': ' + annul_text);
+		if (curr_olymp === '...') {
+			if (isBVI) {
+				NotifyErr('БВИ без олимпиады!');
+				err_count++;
+			} else {
+				NotifyWarn('Обнаружены непроставленные олимпиады');
 				warn_count++;
 			}
 		} else {
-			if (curr_olymp === '...') {
-				if (isBVI) {
-					NotifyErr('БВИ без олимпиады!');
-					err_count++;
+			var curr_subj = OLYMPSbyName[curr_olymp];
+			if (curr_olymp === 'Всероссийская олимпиада школьников') {
+				if (getVSEROS(curr_stream)[curr_subj]) {
+					if (isBVI) {
+						NotifyInfo(curr_stream + ': ВСЕРОС!');
+						err_count++;
+					} else {
+						NotifyErr('ВСЕРОС без БВИ');
+					}
 				} else {
-					NotifyWarn('Обнаружены непроставленные олимпиады');
+					NotifyErr('Олимпиада не подходит!');
 					warn_count++;
 				}
 			} else {
-				var curr_subj = OLYMPSbyName[curr_olymp];
-				if (curr_olymp === 'Всероссийская олимпиада школьников') {
-					if (getVSEROS(curr_stream)[curr_subj]) {
-						if (isBVI) {
-							NotifyInfo(curr_stream + ': ВСЕРОС!');
-							err_count++;
-						} else {
-							NotifyErr('ВСЕРОС без БВИ');
-						}
-					} else {
-						NotifyErr('Олимпиада не подходит!');
-						warn_count++;
-					}
-				} else {
-					points = EGE_points[curr_subj];
-					if ((points < 75) || (points === undefined)) {
-						NotifyErr('Олимпиада не подтверждена! (' + curr_subj + ': ' + points + ')');
-						err_count++;
-					}
+				points = EGE_points[curr_subj];
+				if ((points < 75) || (points === undefined)) {
+					NotifyErr('Олимпиада не подтверждена! (' + curr_subj + ': ' + points + ')');
+					err_count++;
 				}
 			}
 		}
 	}
 	if (err_count === 0) {
 		if (warn_count === 0) {
-			NotifyInfo(curr_stream + ': OK! (' + sum + ')');
+			if (annul) {
+				NotifyErr(annul_text);
+				NotifyWarn('Необходимо удлаить и заново добавить заявление!');
+				err_count++;
+			} else {
+				NotifyInfo(curr_stream + ': OK! (' + sum + ')');
+			}
 		}
-		getID('APPL_UPDATE').click();
+		if (err_count === 0) {
+			getID('APPL_UPDATE').click();
+		}
 	}
 }
 
@@ -384,6 +392,7 @@ function checkAPPL() {
 		console.log("opened appl");
 		loadEGEpoints();
 		loadOLYMPS();
+		loadAchpoints();
 		document.querySelector("#appl_form > div.panel-body").onchange = addCheckButton("Проверить", "APPL_UPDATE", checkSTREAM);
 	}
 }
