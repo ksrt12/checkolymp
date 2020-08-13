@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     5.8
+// @version     5.9
 // @date        2020-08-13
 // @author      kazakovstepan
 // @namespace   ITMO University
@@ -33,9 +33,6 @@ function NotifyInfo(str) {
 function getSelectedText(elem) {
 	return elem.options[elem.options.selectedIndex].text;
 }
-
-var EGE_points = {}, OLYMPSbyName = {};
-var Achpoints;
 
 // make buttons
 function addCheckButton(str, ISUid, func) {
@@ -242,35 +239,40 @@ function getVSEROS(stream) {
 
 // get EGE points
 function loadEGEpoints() {
-	EGE_points = {};
+	var EGE_points = {};
 	for (var i of document.querySelectorAll("#report_baki_ege_rep > tbody > tr")) {
 		EGE_points[i.querySelector('td:nth-child(2)').innerText] = Number(i.querySelector('td:nth-child(4)').innerText);
 	}
+	return EGE_points;
 }
 
 // get olymps
 function loadOLYMPS() {
-	OLYMPSbyName = {};
+	var OLYMPSbyName = {};
 	for (var i of document.querySelectorAll("#report_olymp_rep > tbody > tr > td:nth-child(1)")) {
 		var a = i.innerText;
 		var olymp_subj = a.substring(a.indexOf(' (') + 2, a.indexOf(', '));
 		var olymp_name = a.substring(0, a.indexOf(' ('));
 		OLYMPSbyName[olymp_name] = olymp_subj;
 	}
+	return OLYMPSbyName;
 }
 
 // get achievements points
 function loadAchpoints() {
-	Achpoints = 0;
+	var Achpoints = 0;
 	for (var i of document.querySelectorAll("#report_backi_achiev_rep > tbody > tr > td:nth-child(2)")) {
 		Achpoints += parseInt(i.textContent.match(/\d+/));
 	}
+	return Achpoints;
 }
 
 // check current stream
 function checkSTREAM() {
-	var points, err_mes;
-	var err_count = 0, warn_count = 0, sum = 0;
+	var points, err_mes, err_count = 0, sum = 0;
+	var EGE_points = loadEGEpoints();
+	var OLYMPSbyName = loadOLYMPS();
+	var Achpoints = loadAchpoints();
 	var annul = getID('APPL_ANN').textContent;
 	var annul_text = 'Аннулировано  ' + annul;
 	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0, 8);
@@ -279,6 +281,10 @@ function checkSTREAM() {
 	var appl_usl = getID('APPL_USL').selectedIndex;
 	var isBVI = (appl_usl === 1);
 	var isOlymps = (getID('report_olymp_rep') !== null);
+
+	if (getID('APPL_MEGA_N').selectedIndex === 1) {
+		NotifyErr(curr_stream + ': ИМРИП поменять на ТИНТ!')
+	} else {
 	if (isBVI) {
 		// БВИ
 		if (isOlymps) {
@@ -307,23 +313,20 @@ function checkSTREAM() {
 				if (annul) {
 					NotifyInfo(annul_text + ':\n' + err_mes);
 					err_count = 0;
-					warn_count++;
+					annul = false;
 				} else {
 					NotifyErr(err_mes);
 					err_count++;
 				}
 			}
-			err_mes = null;
 		}
 		if (appl_usl === 3) {
 			if (sum < 250) {
 				err_mes = 'Минимальная сумма баллов для целевого: 250! (' + sum + ')';
-			}
-			if (err_mes) {
 				if (annul) {
 					NotifyInfo(annul_text + ':\n' + err_mes);
 					err_count = 0;
-					warn_count++;
+					annul = false;
 				} else {
 					NotifyErr(err_mes);
 					err_count++;
@@ -339,7 +342,6 @@ function checkSTREAM() {
 				err_count++;
 			} else {
 				NotifyWarn('Обнаружены непроставленные олимпиады');
-				warn_count++;
 			}
 		} else {
 			var curr_subj = OLYMPSbyName[curr_olymp];
@@ -347,13 +349,13 @@ function checkSTREAM() {
 				if (getVSEROS(curr_stream)[curr_subj]) {
 					if (isBVI) {
 						NotifyInfo(curr_stream + ': ВСЕРОС!');
-						err_count++;
 					} else {
 						NotifyErr('ВСЕРОС без БВИ');
+						err_count++;
 					}
 				} else {
 					NotifyErr('Олимпиада не подходит!');
-					warn_count++;
+					err_count++;
 				}
 			} else {
 				points = EGE_points[curr_subj];
@@ -365,19 +367,17 @@ function checkSTREAM() {
 		}
 	}
 	if (err_count === 0) {
-		if (warn_count === 0) {
-			if (annul) {
-				NotifyErr(annul_text);
-				NotifyWarn('Необходимо удлаить и заново добавить заявление!');
-				err_count++;
-			} else {
+		if (annul) {
+			NotifyErr(annul_text);
+			NotifyWarn('Необходимо удлаить и заново добавить заявление!');
+		} else {
+			if (!err_mes) {
 				NotifyInfo(curr_stream + ': OK! (' + sum + ')');
 			}
-		}
-		if (err_count === 0) {
 			getID('APPL_UPDATE').click();
 		}
 	}
+	} // ИМРИП
 }
 
 // listen application
@@ -390,9 +390,6 @@ function checkAPPL() {
 	}
 	if (HASH === '#appl') {
 		console.log("opened appl");
-		loadEGEpoints();
-		loadOLYMPS();
-		loadAchpoints();
 		document.querySelector("#appl_form > div.panel-body").onchange = addCheckButton("Проверить", "APPL_UPDATE", checkSTREAM);
 	}
 }
