@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     5.9
+// @version     6.0
 // @date        2020-08-13
 // @author      kazakovstepan
 // @namespace   ITMO University

@@ -224,7 +224,7 @@ function getSubTitles(olympname, grad) {
 	if ((grad === 10) || (grad === 11)) {
 		status = checkBVI('01.03.02', t4, t1, t2, t3);
 	} else {
-		status = "ИД";
+		status = checkIA(t4);
 	}
 	return [t1, t2, t3, t4, status];
 }
