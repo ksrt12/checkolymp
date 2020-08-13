@@ -243,6 +243,13 @@ switch(stream) {
 			case 'информационные технологии':
 				itt();
 				break;
+			case 'криптография':
+				if (lvl === 1) {
+					status = bvi;
+				} else {
+					status = sto;
+				}
+				break;
 			case 'математика':
 			case 'информатика':
 			case 'компьютерная безопасность':
