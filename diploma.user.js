@@ -269,7 +269,7 @@ function loadAchpoints() {
 
 // check current stream
 function checkSTREAM() {
-	var points, err_mes, err_count = 0, sum = 0;
+	var points, err_mes, err_count = 0, warn_count = 0, sum = 0;
 	var EGE_points = loadEGEpoints();
 	var OLYMPSbyName = loadOLYMPS();
 	var Achpoints = loadAchpoints();
@@ -313,12 +313,13 @@ function checkSTREAM() {
 				if (annul) {
 					NotifyInfo(annul_text + ':\n' + err_mes);
 					err_count = 0;
-					annul = false;
+					warn_count++;
 				} else {
 					NotifyErr(err_mes);
 					err_count++;
 				}
 			}
+			err_mes = null;
 		}
 		if (appl_usl === 3) {
 			if (sum < 250) {
@@ -326,7 +327,7 @@ function checkSTREAM() {
 				if (annul) {
 					NotifyInfo(annul_text + ':\n' + err_mes);
 					err_count = 0;
-					annul = false;
+					warn_count++;
 				} else {
 					NotifyErr(err_mes);
 					err_count++;
@@ -334,6 +335,10 @@ function checkSTREAM() {
 			}
 		}
 		sum += '+' + Achpoints;
+		if (warn_count !== 0) {
+			annul = false;
+			err_mes = true;
+		}
 	}
 	if (isOlymps) {
 		if (curr_olymp === '...') {
