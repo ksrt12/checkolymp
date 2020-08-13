@@ -411,6 +411,9 @@ switch(stream) {
 	default:
 		status = wtf;
 }
+	if (status === '—') {
+		status = checkIA(subj);
+	}
 	return status;
 }
 
