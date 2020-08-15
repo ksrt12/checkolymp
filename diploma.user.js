@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     6.0
-// @date        2020-08-13
+// @version     6.0.1
+// @date        2020-08-15
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -258,21 +258,11 @@ function loadOLYMPS() {
 	return OLYMPSbyName;
 }
 
-// get achievements points
-function loadAchpoints() {
-	var Achpoints = 0;
-	for (var i of document.querySelectorAll("#report_backi_achiev_rep > tbody > tr > td:nth-child(2)")) {
-		Achpoints += parseInt(i.textContent.match(/\d+/));
-	}
-	return Achpoints;
-}
-
 // check current stream
 function checkSTREAM() {
 	var points, err_mes, err_count = 0, warn_count = 0, sum = 0;
 	var EGE_points = loadEGEpoints();
 	var OLYMPSbyName = loadOLYMPS();
-	var Achpoints = loadAchpoints();
 	var annul = getID('APPL_ANN').textContent;
 	var annul_text = 'Аннулировано  ' + annul;
 	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0, 8);
@@ -334,7 +324,7 @@ function checkSTREAM() {
 				}
 			}
 		}
-		sum += '+' + Achpoints;
+		sum = 'ЕГЭ: ' + sum;
 		if (warn_count !== 0) {
 			annul = false;
 			err_mes = true;
