@@ -148,16 +148,24 @@ th.sorted[data-order="1"] {
 	}
 }
 
-@media (orientation: portrait) {
+@media (max-width: 950px) {
 	.main {
 		position: relative;
 		top: 0;
 		left: 0;
 		margin: 0;
-		width: auto;
+		width: 80%;
 	}
-	.right,
 	.left {
 		display: none;
+	}
+}
+
+@media (orientation: portrait), (max-width: 760px) {
+	.right {
+		display: none;
+	}
+	.main {
+		width: auto;
 	}
 }

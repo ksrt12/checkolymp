@@ -124,7 +124,7 @@ function autoEGE() {
 // add check button for current olymp
 function listenOLYMP() {
 	if ((getID('ButCheck') === null) && (getID('OLYMP_DELETE') !== null) && (getONUM() !== "")) {
-		addCheckButton("Проверить", "OLYMP_DELETE", function() {
+		addCheckButton("Печать", "OLYMP_DELETE", function() {
 			window.open(addOlympCheck(), '_blank');
 		});
 	}
