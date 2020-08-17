@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     6.0.1
-// @date        2020-08-15
+// @version     6.1
+// @date        2020-08-17
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -263,8 +263,8 @@ function checkSTREAM() {
 	var points, err_mes, err_count = 0, warn_count = 0, sum = 0;
 	var EGE_points = loadEGEpoints();
 	var OLYMPSbyName = loadOLYMPS();
-	var annul = getID('APPL_ANN').textContent;
-	var annul_text = 'Аннулировано  ' + annul;
+	var annul = (getID('APPL_STATUS').selectedIndex === 1);
+	var annul_text = 'Аннулировано ' + getID('APPL_ANN').textContent;
 	var curr_stream = getSelectedText(getID('APPL_PROG')).substr(0, 8);
 	var curr_olymp = getSelectedText(getID('APPL_OLYMP'));
 	var minpoints = getMinPoints(curr_stream);
@@ -364,7 +364,7 @@ function checkSTREAM() {
 	if (err_count === 0) {
 		if (annul) {
 			NotifyErr(annul_text);
-			NotifyWarn('Необходимо удлаить и заново добавить заявление!');
+			NotifyWarn('И зря!');
 		} else {
 			if (!err_mes) {
 				NotifyInfo(curr_stream + ': OK! (' + sum + ')');

@@ -149,6 +149,9 @@ function load_params() {
 			return p;
 		}, {}
 	);
+	if (params.EGE) {
+		getEGE();
+	}
 	params.NAME = params.LN+' '+params.FN+' '+params.MN;
 }
 
