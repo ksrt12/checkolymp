@@ -445,6 +445,7 @@ switch(stream) {
 			case 'нанотехнологии':
 			case 'инженерные науки':
 			case 'астрономия':
+			case 'физика':
 				status = bvi;
 				break;
 			case 'русский язык':
