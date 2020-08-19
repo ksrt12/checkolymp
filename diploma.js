@@ -220,10 +220,10 @@ function table_row(l, head) {
 
 function getSubTitles(olympname, grad) {
 	var status;
-	var t1 = olympname.substring(olympname.indexOf('. "') + 3, olympname.indexOf('("') - 2);
-	var t2 = olympname.substr(olympname.indexOf('уровень') - 2, 1);
-	var t3 = olympname.substr(olympname.indexOf('Диплом') + 7, 1);
-	var t4 = olympname.substring(olympname.indexOf('("') + 2, olympname.indexOf('")'));
+	var t1 = olympname.substring(olympname.indexOf('. "') + 3, olympname.indexOf('("') - 2).trim();
+	var t2 = olympname.substr(olympname.indexOf('уровень') - 2, 1).trim();
+	var t3 = olympname.substr(olympname.indexOf('Диплом') + 7, 1).trim();
+	var t4 = olympname.substring(olympname.indexOf('("') + 2, olympname.indexOf('")')).trim();
 	if ((grad === 10) || (grad === 11)) {
 		status = checkBVI('01.03.02', t4, t1, t2, t3);
 	} else if ((grad === 9) || (grad === 8) || (grad === 7)) {
