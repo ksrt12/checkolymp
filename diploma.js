@@ -223,11 +223,11 @@ function getSubTitles(olympname, grad) {
 	var t1 = olympname.substring(olympname.indexOf('. "') + 3, olympname.indexOf('("') - 2).trim();
 	var t2 = olympname.substr(olympname.indexOf('уровень') - 2, 1).trim();
 	var t3 = olympname.substr(olympname.indexOf('Диплом') + 7, 1).trim();
-	var t4 = olympname.substring(olympname.indexOf('("') + 2, olympname.indexOf('")')).trim();
+	var t4 = olympname.substring(olympname.indexOf('("') + 2, olympname.indexOf('")')).replace('cистемы', 'системы').trim();
 	if ((grad === 10) || (grad === 11)) {
 		status = checkBVI('01.03.02', t4, t1, t2, t3);
 	} else if ((grad === 9) || (grad === 8) || (grad === 7)) {
-		status = checkIA(t4);
+		status = checkIA(t4.toLowerCase(), 60);
 	} else {
 		status = '—';
 	}
