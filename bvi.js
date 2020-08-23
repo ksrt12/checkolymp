@@ -105,10 +105,6 @@ function itt() {
 	}
 }
 
-	if (subj === 'русский язык') {
-		return sto;
-	}
-
 switch(stream) {
 	case '01.03.02':
 		switch(subj) {
@@ -475,6 +471,20 @@ switch(stream) {
 	default:
 		status = wtf;
 }
+
+	if (EGE === undefined) {
+		EGE = DEF_EGE;
+		yesconf = '';
+		nonconf = '';
+	}
+
+	if (subj === 'русский язык') {
+		if (checkConfNum(EGE[subj], 75) === 1) {
+			return sto;
+		} else {
+			return wtf;
+		}
+	}
 	var ch60 = checkConf(subj, 60);
 	var ch75 = checkConf(subj, 75);
 	
@@ -508,25 +518,19 @@ function checkConfNum(curr_points, conf_points) {
 }
 
 function checkConf(olymp_profile, conf_points) {
-	var status, curr_points, stat = 0;
+	var status, stat = 0;
 	var conf_subj = SUBJ_EGE[olymp_profile];
-	if (EGE === undefined) {
-		EGE = DEF_EGE;
-		yesconf = '';
-		nonconf = '';
-	}
+
 	if (conf_subj === undefined) {
 		return itin;
 	} else if (conf_subj === false) {
 		return wtf;
 	} else if (Array.isArray(conf_subj)) {
 		for (var i of conf_subj) {
-			curr_points = EGE[i];
-			stat += checkConfNum(curr_points, conf_points);
+			stat += checkConfNum(EGE[i], conf_points);
 		}
 	} else {
-		curr_points = EGE[conf_subj];
-		stat = checkConfNum(curr_points, conf_points);
+		stat = checkConfNum(EGE[conf_subj], conf_points);
 	}
 
 	if (stat > 0) {
