@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     6.1
-// @date        2020-08-17
+// @version     6.5
+// @date        2020-08-24
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент

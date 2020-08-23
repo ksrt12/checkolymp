@@ -4,8 +4,25 @@
   for ITMO University
 */
 
-var EGE;
-var IA = {
+var EGE,
+	bvi = 'БВИ',
+	sto = '100',
+	wtf = '—',
+	ia = 'ИД',
+	itin = 'спросить у Итина',
+	nonconf = ' Не подтв.',
+	yesconf = ' Подтв.',
+	DEF_EGE = {
+		'русский язык':100,
+		'математика':100,
+		'иностранный язык':100,
+		'физика':100,
+		'химия':100,
+		'биология':100,
+		'обществознание':100,
+		'информатика':100
+	},
+	SUBJ_EGE = {
 		'автономные транспортные системы':'информатика',
 		'анализ космических снимков и геопространственных данных':'информатика',
 		'астрономия':'физика',
@@ -37,6 +54,7 @@ var IA = {
 		'механика и математическое моделирование':'физика',
 		'наносистемы и наноинженерия':'физика',
 		'нанотехнологии':['химия','физика','биология'],
+		'нейротехнологии':'информатика',
 		'нейротехнологии и когнитивные науки':'информатика',
 		'обществознание':'обществознание',
 		'передовые производственные технологии':'информатика',
@@ -44,10 +62,11 @@ var IA = {
 		'программная инженерия финансовых технологий':'информатика',
 		'разработка приложений виртуальной и дополненной реальности':'информатика',
 		'робототехника':'информатика',
-		'русский язык':'русский язык',
+		'русский язык':false,
 		'системы связи и дистанционного зондирования земли':['физика','информатика'],
 		'социология':'обществознание',
 		'техника и технологии':'физика',
+		'технический рисунок и декоративная композиция':'информатика',
 		'технологии беспроводной связи':'информатика',
 		'умный город':['физика','информатика'],
 		'физика':'физика',
@@ -58,7 +77,7 @@ var IA = {
 		'журналистика':false,
 		'педагогические науки и образование':false,
 		'филология':false
-	}
+	};
 
 function getEGE() {
 	EGE = params.EGE.split(',').reduce(
@@ -76,19 +95,19 @@ var status,
 	lvl = Number(lvl_in),
 	dip = Number(dip_in),
 	subj = subj_in.toLowerCase(),
-	name = name_in.replace(/[«»]+/g, '"').replace('cистемы', 'системы'),
-	bvi = 'БВИ (проверить ЕГЭ)',
-	sto = '100',
-	wtf = '—',
-	itin = 'спросить у Итина';
+	name = name_in.replace(/[«»]+/g, '"');
 
 function itt() {
 	if (lvl === 1) {
-		status = bvi;
+		return bvi;
 	} else {
-		status = wtf;
+		return wtf;
 	}
 }
+
+	if (subj === 'русский язык') {
+		return sto;
+	}
 
 switch(stream) {
 	case '01.03.02':
@@ -189,9 +208,6 @@ switch(stream) {
 					status = wtf;
 				}
 				break;
-			case 'русский язык':
-				status = sto;
-				break;
 			default:
 				status = wtf;
 		}
@@ -215,14 +231,14 @@ switch(stream) {
 						}
 						break;
 					case 'информационные технологии':
-						itt();
+						status = itt();
 						break;
 				}
 				break;
 			default:
 				switch(subj) {
 					case 'информационные технологии':
-						itt();
+						status = itt();
 						break;
 					case 'математика':
 					case 'информатика':
@@ -232,9 +248,6 @@ switch(stream) {
 							status = bvi;
 						}
 						break;
-					case 'русский язык':
-						status = sto;
-						break;
 					default:
 						status = wtf;
 				}
@@ -243,7 +256,7 @@ switch(stream) {
 	case '09.03.03':
 		switch(subj) {
 			case 'информационные технологии':
-				itt();
+				status = itt();
 				break;
 			case 'математика':
 			case 'информатика':
@@ -253,9 +266,6 @@ switch(stream) {
 					status = bvi;
 				}
 				break;
-			case 'русский язык':
-				status = sto;
-				break;
 			default:
 				status = wtf;
 		}
@@ -263,7 +273,7 @@ switch(stream) {
 	case '11.03.02':
 		switch(subj) {
 			case 'информационные технологии':
-				itt();
+				status = itt();
 				break;
 			case 'математика':
 			case 'информатика':
@@ -273,9 +283,6 @@ switch(stream) {
 			case 'умный город':
 				status = bvi;
 				break;
-			case 'русский язык':
-				status = sto;
-				break;
 			default:
 				status = wtf;
 		}
@@ -283,7 +290,7 @@ switch(stream) {
 	case '45.03.04':
 		switch(subj) {
 			case 'информационные технологии':
-				itt();
+				status = itt();
 				break;
 			case 'математика':
 			case 'информатика':
@@ -293,9 +300,6 @@ switch(stream) {
 			case 'восточные языки':
 			case 'лингвистика':
 				status = bvi;
-				break;
-			case 'русский язык':
-				status = sto;
 				break;
 			default:
 				status = wtf;
@@ -314,7 +318,7 @@ switch(stream) {
 	case '44.03.04':
 		switch(subj) {
 			case 'информационные технологии':
-				itt();
+				status = itt();
 				break;
 			case 'криптография':
 				if (lvl === 1) {
@@ -346,9 +350,6 @@ switch(stream) {
 			case 'технический рисунок и декоративная композиция':
 				status = bvi;
 				break;
-			case 'русский язык':
-				status = sto;
-				break;
 			default:
 				status = wtf;
 		}
@@ -359,7 +360,7 @@ switch(stream) {
 	case '12.05.01':
 		switch(subj) {
 			case 'информационные технологии':
-				itt();
+				status = itt();
 				break;
 			case 'математика':
 			case 'информатика':
@@ -377,9 +378,6 @@ switch(stream) {
 			case 'физика':
 				status = bvi;
 				break;
-			case 'русский язык':
-				status = sto;
-				break;
 			default:
 				status = wtf;
 		}
@@ -395,9 +393,6 @@ switch(stream) {
 			case 'инженерные биологические системы':
 			case 'биология':
 				status = bvi;
-				break;
-			case 'русский язык':
-				status = sto;
 				break;
 			default:
 				status = wtf;
@@ -428,9 +423,6 @@ switch(stream) {
 					status = bvi;
 				}
 				break;
-			case 'русский язык':
-				status = sto;
-				break;
 			default:
 				status = wtf;
 		}
@@ -450,7 +442,6 @@ switch(stream) {
 			case 'физика':
 				status = bvi;
 				break;
-			case 'русский язык':
 			case 'информатика':
 				status = sto;
 				break;
@@ -462,7 +453,7 @@ switch(stream) {
 	case '38.03.05':
 		switch(subj) {
 			case 'информационные технологии':
-				itt();
+				status = itt();
 				break;
 			case 'математика':
 			case 'информатика':
@@ -477,9 +468,6 @@ switch(stream) {
 			case 'гуманитарные и социальные науки':
 				status = bvi;
 				break;
-			case 'русский язык':
-				status = sto;
-				break;
 			default:
 				status = wtf;
 		}
@@ -487,47 +475,71 @@ switch(stream) {
 	default:
 		status = wtf;
 }
-	if (status === wtf) {
-		status = checkIA(subj, 60);
-	} else if ((status === bvi) || (status === sto)) {
-		if (checkIA(subj, 75) !== 'ИД') {
-			status = checkIA(subj, 60);
+	var ch60 = checkConf(subj, 60);
+	var ch75 = checkConf(subj, 75);
+	
+	function chwtf() {
+		if ((ch60 === wtf) || (ch60 === itin)) {
+			return ch60;
+		} else {
+			return ia + ch60;
 		}
 	}
+
+	if (status === wtf) {
+		status = chwtf();
+	} else if ((status === bvi) || (status === sto)) {
+		if (ch75 === yesconf) {
+			status += yesconf;
+		} else {
+			status = chwtf();
+		}
+	}
+
 	return status;
 }
 
-function checkConf(subj, points) {
-	/*if (EGE[subj] >= points) {
+function checkConfNum(curr_points, conf_points) {
+	if (curr_points >= conf_points) {
 		return 1;
 	} else {
 		return 0;
-	}*/
-	return 1;
+	}
 }
 
-function checkIA(subj, points) {
-	var status, stat = 0;
-	var curr_profile = IA[subj];
-	if (curr_profile === undefined) {
-		status = 'спросить у Итина';
-	} else if (curr_profile === false) {
-			status = '—';
-	} else {
-		if (typeof(curr_profile) === "string") {
-			stat = checkConf(curr_profile, points);
-		} else if (typeof(curr_profile) === "object") {
-			for (var i of curr_profile) {
-				stat += checkConf(i, points);
-			}
-		}
-		if (stat === 0) {
-			status = 'Не подтв.';
-		} else {
-			status = 'ИД';
-		}
+function checkConf(olymp_profile, conf_points) {
+	var status, curr_points, stat = 0;
+	var conf_subj = SUBJ_EGE[olymp_profile];
+	if (EGE === undefined) {
+		EGE = DEF_EGE;
+		yesconf = '';
+		nonconf = '';
 	}
-	return status;
+	if (conf_subj === undefined) {
+		return itin;
+	} else if (conf_subj === false) {
+		return wtf;
+	} else if (Array.isArray(conf_subj)) {
+		for (var i of conf_subj) {
+			curr_points = EGE[i];
+			stat += checkConfNum(curr_points, conf_points);
+		}
+	} else {
+		curr_points = EGE[conf_subj];
+		stat = checkConfNum(curr_points, conf_points);
+	}
+
+	if (stat > 0) {
+		status = yesconf;
+	} else {
+		status = nonconf;
+	}
+
+	if (status !== undefined) {
+		return status;
+	} else {
+		return '';
+	}
 }
 
 function makeselector(){
