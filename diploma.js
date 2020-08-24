@@ -149,6 +149,12 @@ function load_params() {
 			return p;
 		}, {}
 	);
+	if (window.location.search !== "") {
+		window.addEventListener("DOMContentLoaded", function() {
+		document.getElementById('indata_id').remove();
+		document.getElementById('check_button').remove();
+		});
+	}
 	if (params.EGE) {
 		getEGE();
 	}
@@ -164,7 +170,11 @@ function loadvars(n) {
 			namestr = params.DN+' '+params.NAME;
 		}
 	} else if (n === 2) {
-		namestr = params.NAME+' '+params.BDY+'-'+params.BDM+'-'+params.BDD;
+		if (params.BD) {
+			namestr = params.NAME+' '+params.BD;
+		} else {
+			namestr = params.NAME+' '+params.BDY+'-'+params.BDM+'-'+params.BDD;
+		}
 	}
 	return namestr;
 }
@@ -314,7 +324,7 @@ function checktable() {
 				alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
 				window.close();
 			} else {
-				document.getElementById('main_res').remove();
+				//document.getElementById('main_res').remove();
 				if (params.source == "pwa") {
 					alert('W=' + window.innerWidth +
 						', H=' + window.innerHeight +
@@ -348,6 +358,26 @@ function update_status(stream) {
 	}
 }
 
+function do_search(){
+	clean_results();
+	EGE = {};
+	for (var i of document.querySelectorAll("#search_form > p > input")) {
+		params[i.id] = i.value.trim().toLowerCase().replace(/(([- ]|^)[^ ])/g, function(s) {
+			return s.toUpperCase();
+		});
+	}
+	for (var j of document.querySelectorAll(".ege > form > p > input")) {
+		EGE[document.querySelector(`[for="${j.id}"]`).innerText.toLowerCase()] = j.value.replace(/^0+/, '');
+	}
+	params.NAME = (params.LN+' '+params.FN+' '+params.MN).replace(/\s+/g, ' ');
+	
+	reload();
+}
+
+function reload() {
+	make_table();
+	checktable();
+}
+
 load_params();
-make_table();
-checktable();
+reload();

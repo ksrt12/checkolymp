@@ -13,9 +13,9 @@
     font-family: 'ALS Schlange Sans';
     src: url('fonts/font.eot');
     src: url('fonts/font.eot?#iefix') format('embedded-opentype'),
-		 url('fonts/font.svg#als_schlange_sansregular') format('svg'),
-		 url('fonts/font.woff') format('woff'),
-		 url('fonts/font.ttf') format('truetype');
+         url('fonts/font.svg#als_schlange_sansregular') format('svg'),
+         url('fonts/font.woff') format('woff'),
+         url('fonts/font.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -50,10 +50,76 @@
         <p><a href="files/contacts.pdf">Ответственные лица (бакалавриат)</a></p>
     </div>
     <div id="main_res" class="main">
+        <br>
+        <div class="indata" id="indata_id">
+            <div class="search">
+                <form id="search_form">
+                    <p>
+                        <label for="LN">Фамилия</label>
+                        <input type="text" id="LN"/>
+                    </p>
+                    <p>
+                        <label for="FN">Имя</label>
+                        <input type="text" id="FN"/>
+                    </p>
+                    <p>
+                        <label for="MN">Отчество</label>
+                        <input type="text" id="MN"/>
+                    </p>
+                    <p>
+                        <label for="BD">Дата рождения</label>
+                        <input type="date" id="BD" max="2005-01-01" min="1977-01-01" width="130px"/>
+                    </p>
+                </form>
+            </div>
+            <div class="ege">
+                <form>
+                    <p>
+                        <label for="m">Математика</label>
+                        <input type="number" min="0" max="100" value="0" id="m"/>
+                    </p>
+                    <p>
+                        <label for="r">Русский язык</label>
+                        <input type="number" min="0" max="100" value="0" id="r"/>
+                    </p>
+                    <p>
+                        <label for="i">Информатика</label>
+                        <input type="number" min="0" max="100" value="0" id="i"/>
+                    </p>
+                    <p>
+                        <label for="f">Физика</label>
+                        <input type="number" min="0" max="100" value="0" id="f"/>
+                    </p>
+                </form>
+                <form>
+                    <p>
+                        <label for="e">Иностранный язык</label>
+                        <input type="number" min="0" max="100" value="0" id="e"/>
+                    </p>
+                    <p>
+                        <label for="o">Обществознание</label>
+                        <input type="number" min="0" max="100" value="0" id="o"/>
+                    </p>
+                    <p>
+                        <label for="c">Химия</label>
+                        <input type="number" min="0" max="100" value="0" id="c"/>
+                    </p>
+                    <p>
+                        <label for="b">Биология</label>
+                        <input type="number" min="0" max="100" value="0" id="b"/>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div id="check_button">
+			<br>
+            <button onclick="do_search()">Проверить</button>
+            <br>
+        </div>
         <p id="results"></p>
     </div>
     <div class="copyright">
-        <a href="https://vk.com/kazakovstepan">© 2020, kazakovstepan</a>
+        <a href="https://vk.com/kazakovstepan">&copy; 2020, kazakovstepan</a>
     </div>
 </body>
 
