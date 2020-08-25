@@ -18,6 +18,10 @@ body {
 	margin: 0;
 }
 
+* {
+    transition: all .2s;
+}
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -28,6 +32,10 @@ body {
 	100% {
 		background-position: 0% 50%;
 	}
+}
+
+.canvas {
+	z-index: -1;
 }
 
 .main {
@@ -53,7 +61,6 @@ body {
 	display: inline-block;
 	margin: 0 auto;
 	font-size: large;
-	width: 320px;
 }
 
 .indata form label {
@@ -143,7 +150,6 @@ th.sorted[data-order="1"] {
 	left: 0;
 	top: 0;
 	margin: 0;
-	z-index: -1;
 	width: 100%;
 	height: auto;
 	-webkit-transition: all 0.4s ease-in-out;
@@ -170,6 +176,9 @@ th.sorted[data-order="1"] {
 		width: 100%;
 		height: auto;
 	}
+	.indata form {
+		width: 320px;
+	}
 	.right {
 		font-size: 15px;
 		right: 0;
@@ -183,6 +192,29 @@ th.sorted[data-order="1"] {
 	}
 	.right a {
 		color: #efefef;
+	}
+}
+
+@media (max-width: 1605px) {
+	.indata form {
+		width: auto;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
+@media (max-width: 1300px) and (min-width: 950px) {
+	.indata div {
+		margin-right: 10px;
+	}
+}
+
+@media (max-width: 875px) {
+	.indata {
+		flex-direction: column;
+	}
+	.indata div {
+		margin-bottom: 5px;
 	}
 }
 
@@ -205,5 +237,17 @@ th.sorted[data-order="1"] {
 	}
 	.main {
 		width: auto;
+	}
+	.left {
+		display: none;
+	}
+}
+
+@media (orientation: portrait) {
+	.main {
+		overflow: scroll;
+	}
+	.indata div {
+		flex-direction: column;
 	}
 }
