@@ -139,22 +139,17 @@ function SHA256(s) {
 var RSROLYMP = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
 var colnames = ["name", "lvl", "dip", "subj", "num", "grad", "stream"];
 var diplomaCodes = [];
-var table, tbody, params;
+var WLS = window.location.search;
+var table, tbody, params = {};
 
 function load_params() {
-	params = window.location.search.replace('?','').split('&').reduce(
+	params = WLS.replace('?','').split('&').reduce(
 		function(p, e) {
 			var a = e.split('=');
 			p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
 			return p;
 		}, {}
 	);
-	if (window.location.search !== "") {
-		window.addEventListener("DOMContentLoaded", function() {
-		document.getElementById('indata_id').remove();
-		document.getElementById('check_button').remove();
-		});
-	}
 	if (params.EGE) {
 		getEGE();
 	}
@@ -251,7 +246,6 @@ function update_diplomas(olympYear) {
 	var target = clean_results();
 	var i;
 	for (i in diplomaCodes) {
-		console.log(i)
 		var d = diplomaCodes[i];
 		var doa = getSubTitles(d.oa, d.form);
 		tbody.appendChild(table_row([
@@ -303,6 +297,7 @@ function make_table() {
 		for (let YEAR = 2020; YEAR >= 2014; YEAR--) {
 			load_diploma_list(YEAR, personID);
 		}
+	return table;
 	}
 }
 
@@ -320,10 +315,9 @@ function getSort(target) {
 		cell.classList.toggle('sorted', cell === target);
 }
 
-function checktable() {
+function checktable(nt) {
 	window.addEventListener("load", function() {
-		var TABLE = document.getElementById('table');
-		if (TABLE === null) {
+		if (nt === null) {
 			if (params.LN) {
 				alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
 				window.close();
@@ -336,18 +330,27 @@ function checktable() {
 				}
 			}
 		} else {
-			var th_sort = document.querySelectorAll('#table th');
-			for (let i of th_sort) {
-				if (i.id !== "stream") {
-					i.onclick = function() {
-						getSort(i);
-					};
-				}
-			}
-			th_sort.item(4).dataset.order = 1;
-			getSort(th_sort.item(4));
+			sort_table(nt);
 		}
 	});
+}
+
+function sort_table(nt) {
+	var th_sort;
+	if (nt) {
+		th_sort = nt.tHead.rows[0].cells;
+	} else {
+		th_sort	= document.querySelectorAll('#table th');
+	}
+	for (let i of th_sort) {
+		if (i.id !== "stream") {
+			i.onclick = function() {
+				getSort(i);
+			};
+		}
+	}
+	th_sort.item(4).dataset.order = 1;
+	getSort(th_sort.item(4));
 }
 
 function bvi_color(tr, new_status) {
@@ -372,7 +375,10 @@ function update_status(stream) {
 }
 
 function do_search(){
-	clean_results();
+	var old_table = document.getElementById('table');
+	if (old_table) {
+		old_table.remove();
+	}
 	EGE = {};
 	for (var i of document.querySelectorAll("#search_form > p > input")) {
 		params[i.id] = i.value.trim().toLowerCase().replace(/(([- ]|^)[^ ])/g, function(s) {
@@ -384,13 +390,17 @@ function do_search(){
 	}
 	params.NAME = (params.LN+' '+params.FN+' '+params.MN).replace(/\s+/g, ' ');
 	
-	reload();
+	new_table = make_table();
+	sort_table(new_table)
 }
 
-function reload() {
-	make_table();
-	checktable();
+if (WLS !== "") {
+	window.addEventListener("DOMContentLoaded", function() {
+		document.getElementById('indata_id').remove();
+		document.getElementById('check_button').remove();
+	});
+	load_params();
+	new_table = make_table();
+	checktable(new_table);
 }
 
-load_params();
-reload();
