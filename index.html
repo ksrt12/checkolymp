@@ -53,22 +53,22 @@
         <br>
         <div class="indata" id="indata_id">
             <div class="search">
-                <form id="search_form">
+                <form id="search_form" autocomplete="on">
                     <p>
                         <label for="LN">Фамилия</label>
-                        <input type="text" id="LN"/>
+                        <input type="text" id="LN" name="last_name"/>
                     </p>
                     <p>
                         <label for="FN">Имя</label>
-                        <input type="text" id="FN"/>
+                        <input type="text" id="FN" name="first_name"/>
                     </p>
                     <p>
                         <label for="MN">Отчество</label>
-                        <input type="text" id="MN"/>
+                        <input type="text" id="MN" name="middle_name"/>
                     </p>
                     <p>
                         <label for="BD">Дата рождения</label>
-                        <input type="date" id="BD" max="2005-01-01" min="1977-01-01" width="130px"/>
+                        <input type="date" id="BD" max="2005-01-01" min="1977-01-01" name="bday" width="130px"/>
                     </p>
                 </form>
             </div>
@@ -113,7 +113,7 @@
         </div>
         <div id="check_button">
 			<br>
-            <button onclick="do_search()">Проверить</button>
+            <button type="submit" onclick="do_search()">Проверить</button>
             <br>
         </div>
         <p id="results"></p>

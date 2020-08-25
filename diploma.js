@@ -209,11 +209,14 @@ function add_entry(x, tgt) {
 	}
 }
 
-function table_row(l, head) {
+function table_row(l, p) {
 	var tr = document.createElement('tr');
+	if (typeof(p) === "string") {
+		bvi_color(tr, p);
+	}
 	var g, i;
 	for (i in l) {
-		if (head) {
+		if (p === true) {
 			g = document.createElement('th');
 			g.id = colnames[i];
 		} else {
@@ -248,6 +251,7 @@ function update_diplomas(olympYear) {
 	var target = clean_results();
 	var i;
 	for (i in diplomaCodes) {
+		console.log(i)
 		var d = diplomaCodes[i];
 		var doa = getSubTitles(d.oa, d.form);
 		tbody.appendChild(table_row([
@@ -259,7 +263,7 @@ function update_diplomas(olympYear) {
 				RSROLYMP + olympYear + '/by-code/' + d.code + '/white.pdf'),
 			d.form,
 			doa[4],
-		]));
+		], doa[4]));
 	}
 	target.appendChild(table);
 }
@@ -346,14 +350,23 @@ function checktable() {
 	});
 }
 
+function bvi_color(tr, new_status) {
+	if (new_status.includes(bvi)) {
+		tr.bgColor = "#4ee8c4";
+	}
+}
+
 function update_status(stream) {
 	for (let i = 0; i < tbody.rows.length; i++) {
 		if ((tbody.rows[i].cells[5].innerText === "11") || (tbody.rows[i].cells[5].innerText === "10")) {
-			tbody.rows[i].cells[6].innerHTML = checkBVI(stream,
+			tbody.rows[i].bgColor = "";
+			var new_status = checkBVI(stream,
 			tbody.rows[i].cells[3].innerText,
 			tbody.rows[i].cells[0].innerText,
 			tbody.rows[i].cells[1].innerText,
 			tbody.rows[i].cells[2].innerText);
+			tbody.rows[i].cells[6].innerHTML = new_status;
+			bvi_color(tbody.rows[i], new_status);
 		}
 	}
 }
