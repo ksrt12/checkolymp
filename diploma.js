@@ -317,7 +317,7 @@ function getSort(target) {
 
 function checktable(nt) {
 	window.addEventListener("load", function() {
-		if (nt === null) {
+		if (nt.lastChild.rows.length === 0) {
 			if (params.LN) {
 				alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
 				window.close();
@@ -386,12 +386,12 @@ function do_search(){
 		});
 	}
 	for (var j of document.querySelectorAll(".ege > form > p > input")) {
-		EGE[document.querySelector(`[for="${j.id}"]`).innerText.toLowerCase()] = j.value.replace(/^0+/, '');
+		EGE[document.querySelector(`[for="${j.id}"]`).innerText.toLowerCase()] = Number(j.value);
 	}
 	params.NAME = (params.LN+' '+params.FN+' '+params.MN).replace(/\s+/g, ' ');
 	
 	new_table = make_table();
-	sort_table(new_table)
+	sort_table(new_table);
 }
 
 if (WLS !== "") {
