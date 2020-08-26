@@ -41,7 +41,7 @@ body {
 .main {
 	font-size: 16px;
 	padding: 10px 20px 10px 20px;
-	background: linear-gradient(90deg, #efefef, #b9deed);
+	background: linear-gradient(90deg, #d3ebf5, #efefef, #d3ebf5);
 	background-repeat: no-repeat;
 	background-size: cover;
 	text-align: center;
@@ -94,7 +94,7 @@ a {
 }
 
 .main tbody tr:hover {
-	background: #9ccfec;
+	background: #bae0f5;
 }
 
 .main table {
@@ -124,7 +124,7 @@ a {
 
 th:not(#stream):hover {
 	cursor: pointer;
-	background: #9ccfec;
+	background: #bae0f5;
 }
 
 th.sorted[data-order="-1"] {
@@ -151,7 +151,7 @@ th.sorted[data-order="1"] {
 }
 
 #stars {
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
 	margin: 0;

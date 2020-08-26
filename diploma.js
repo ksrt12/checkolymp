@@ -355,7 +355,7 @@ function sort_table(nt) {
 
 function bvi_color(tr, new_status) {
 	if (new_status.includes(bvi)) {
-		tr.bgColor = "#4ee8c4";
+		tr.bgColor = "#89f5dc";
 	}
 }
 

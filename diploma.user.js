@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     6.5
-// @date        2020-08-24
+// @version     6.6
+// @date        2020-08-27
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
@@ -132,14 +132,15 @@ function listenOLYMP() {
 
 // check BVI without agree
 function checkBVIwoAGREE() {
-	var bvi, agree;
-	var LK_AGREE = getID('LK_AGREE');
+	var orig = getID('LK_PODL_0').checked;
+	var agree = getSelectedText(getID('LK_AGREE')).substr(0, 8);
 	for (var i of document.querySelectorAll("#report_rating_rep > tbody > tr")) {
 		if (i.querySelector('td:nth-child(5)').innerText === 'без вступительных испытаний') {
-			bvi = i.querySelector('td:nth-child(2)').innerText.substr(0, 8);
-			agree = getSelectedText(LK_AGREE).substr(0, 8);
-			if (agree !== bvi) {
+			if (agree !== i.querySelector('td:nth-child(2)').innerText.substr(0, 8)) {
 				NotifyErr('БВИ без согласия!');
+			}
+			if (!orig) {
+				NotifyErr('БВИ без оригинала!');
 			}
 		}
 	}
