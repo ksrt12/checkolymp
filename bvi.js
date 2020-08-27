@@ -98,11 +98,7 @@ var status,
 	name = name_in.replace(/[«»]+/g, '"');
 
 function itt() {
-	if (lvl === 1) {
-		return bvi;
-	} else {
-		return wtf;
-	}
+	return (lvl === 1) ? bvi : wtf;
 }
 
 switch(stream) {
@@ -120,18 +116,10 @@ switch(stream) {
 					case 'Олимпиада Университета Иннополис "Innopolis Open"':
 					case 'Олимпиада школьников Санкт-Петербургского государственного университета':
 					case 'Олимпиада школьников по программированию "ТехноКубок"':
-						if (lvl === 3) {
-							status = sto;
-						} else {
-							status = bvi;
-						}
+						status = (lvl === 3) ? sto : bvi;
 						break;
 					case 'Открытая олимпиада школьников':
-						if ((lvl !== 3) && (dip === 1)) {
-							status = bvi;
-						} else {
-							status = sto;
-						}
+						status = ((lvl !== 3) && (dip === 1)) ? bvi : sto;
 						break;
 					default:
 						status = sto;
@@ -155,54 +143,26 @@ switch(stream) {
 					case 'Олимпиада Юношеской математической школы':
 					case 'Отраслевая физико-математическая олимпиада школьников "Росатом"':
 					case 'Турнир имени М.В. Ломоносова':
-						if ((lvl !== 3) && (dip === 1)) {
-							status = bvi;
-						} else {
-							status = sto;
-						}
+						status = ((lvl !== 3) && (dip === 1)) ? bvi : sto;
 						break;
 					case 'Открытая олимпиада школьников':
-						if ((lvl === 3) && (dip === 1)) {
-							status = bvi;
-						} else {
-							status = sto;
-						}
+						status = ((lvl === 3) && (dip === 1)) ? bvi : sto;
 						break;
 					case 'Московская олимпиада школьников':
 					case 'Олимпиада школьников Санкт-Петербургского государственного университета':
 					case 'Санкт-Петербургская олимпиада школьников':
 					case 'Турнир городов':
-						if (lvl === 3) {
-							status = sto;
-						} else {
-							status = bvi;
-						}
+						status = (lvl === 3) ? sto : bvi;
 						break;
 					default:
 						status = sto;
 				}
 				break;
 			case 'компьютерная безопасность':
-				if ((dip === 1) && (lvl !== 3)) {
-					if (name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') {
-						status = bvi;
-					} else {
-						status = itin;
-					}
-				} else {
-					status = wtf;
-				}
+				status = ((dip === 1) && (lvl !== 3)) ? (name == 'Межрегиональная олимпиада школьников по информатике и компьютерной безопасности') ? bvi : itin : wtf;
 				break;
 			case 'информационные технологии':
-				if (lvl === 1) {
-					if (dip === 1) {
-						status = bvi;
-					} else {
-						status = sto;
-					}
-				} else {
-					status = wtf;
-				}
+				status = (lvl === 1) ? (dip === 1) ? bvi : sto : wtf;
 				break;
 			default:
 				status = wtf;
@@ -213,18 +173,10 @@ switch(stream) {
 			case 'Открытая олимпиада школьников':
 				switch(subj) {
 					case 'математика':
-						if (lvl === 3) {
-							status = bvi;
-						} else {
-							status = itin;
-						}
+						status = (lvl === 3) ? bvi : itin;
 						break;
 					case 'информатика':
-						if (lvl === 3) {
-							status = sto;
-						} else {
-							status = bvi;
-						}
+						status = (lvl === 3) ? sto : bvi;
 						break;
 					case 'информационные технологии':
 						status = itt();
@@ -238,11 +190,7 @@ switch(stream) {
 						break;
 					case 'математика':
 					case 'информатика':
-						if (lvl === 3) {
-							status = sto;
-						} else {
-							status = bvi;
-						}
+						status = (lvl === 3) ? sto : bvi;
 						break;
 					default:
 						status = wtf;
@@ -256,11 +204,7 @@ switch(stream) {
 				break;
 			case 'математика':
 			case 'информатика':
-				if (lvl === 3) {
-					status = sto;
-				} else {
-					status = bvi;
-				}
+				status = (lvl === 3) ? sto : bvi;
 				break;
 			default:
 				status = wtf;
@@ -317,11 +261,7 @@ switch(stream) {
 				status = itt();
 				break;
 			case 'криптография':
-				if (lvl === 1) {
-					status = bvi;
-				} else {
-					status = sto;
-				}
+				status = (lvl === 1) ? bvi : sto;
 				break;
 			case 'математика':
 			case 'информатика':
@@ -413,11 +353,7 @@ switch(stream) {
 				status = bvi;
 				break;
 			case 'информатика':
-				if (lvl === 3) {
-					status = wtf;
-				} else {
-					status = bvi;
-				}
+				status = (lvl === 3) ? wtf : bvi;
 				break;
 			default:
 				status = wtf;
@@ -479,21 +415,13 @@ switch(stream) {
 	}
 
 	if (subj === 'русский язык') {
-		if (checkConfNum(EGE[subj], 75) === 1) {
-			return sto;
-		} else {
-			return wtf;
-		}
+		return (checkConfNum(EGE[subj], 75) === 1) ? sto : wtf;
 	}
 	var ch60 = checkConf(subj, 60);
 	var ch75 = checkConf(subj, 75);
-	
+
 	function chwtf() {
-		if ((ch60 === wtf) || (ch60 === itin)) {
-			return ch60;
-		} else {
-			return ia + ch60;
-		}
+		return ((ch60 === wtf) || (ch60 === itin)) ? ch60 : ia + ch60;
 	}
 
 	if (status === wtf) {
@@ -510,15 +438,11 @@ switch(stream) {
 }
 
 function checkConfNum(curr_points, conf_points) {
-	if (curr_points >= conf_points) {
-		return 1;
-	} else {
-		return 0;
-	}
+	return (curr_points >= conf_points) ? 1 : 0;
 }
 
 function checkConf(olymp_profile, conf_points) {
-	var status, stat = 0;
+	var stat = 0;
 	var conf_subj = SUBJ_EGE[olymp_profile];
 
 	if (conf_subj === undefined) {
@@ -533,17 +457,7 @@ function checkConf(olymp_profile, conf_points) {
 		stat = checkConfNum(EGE[conf_subj], conf_points);
 	}
 
-	if (stat > 0) {
-		status = yesconf;
-	} else {
-		status = nonconf;
-	}
-
-	if (status !== undefined) {
-		return status;
-	} else {
-		return '';
-	}
+	return (stat > 0) ? yesconf : nonconf;
 }
 
 function makeselector(){

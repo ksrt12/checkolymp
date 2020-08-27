@@ -336,12 +336,7 @@ function checktable(nt) {
 }
 
 function sort_table(nt) {
-	var th_sort;
-	if (nt) {
-		th_sort = nt.tHead.rows[0].cells;
-	} else {
-		th_sort	= document.querySelectorAll('#table th');
-	}
+	var th_sort = nt ? nt.tHead.rows[0].cells : document.querySelectorAll('#table th');
 	for (let i of th_sort) {
 		if (i.id !== "stream") {
 			i.onclick = function() {
@@ -376,9 +371,7 @@ function update_status(stream) {
 
 function do_search(){
 	var old_table = document.getElementById('table');
-	if (old_table) {
-		old_table.remove();
-	}
+	old_table ? old_table.remove() : true;
 	EGE = {};
 	for (var i of document.querySelectorAll("#search_form > p > input")) {
 		params[i.id] = i.value.trim().toLowerCase().replace(/(([- ]|^)[^ ])/g, function(s) {
@@ -386,7 +379,7 @@ function do_search(){
 		});
 	}
 	for (var j of document.querySelectorAll(".ege > form > p > input")) {
-		EGE[document.querySelector(`[for="${j.id}"]`).innerText.toLowerCase()] = Number(j.value);
+		EGE[document.querySelector('[for='+j.id+']').innerText.toLowerCase()] = Number(j.value);
 	}
 	params.NAME = (params.LN+' '+params.FN+' '+params.MN).replace(/\s+/g, ' ');
 	
