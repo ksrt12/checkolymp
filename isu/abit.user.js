@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name        Абитуриент
-// @version     6.7
-// @date        2020-08-28
+// @version     6.8
+// @date        2020-08-29
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description IT's MOre than the Система Абитуриент
 // @homepage    https://vk.com/kazakovstepan
 // @icon        https://ksrt12.github.io/favicon.ico
-// @updateURL   https://ksrt12.github.io/diploma.user.js
-// @downloadURL https://ksrt12.github.io/diploma.user.js
+// @updateURL   https://ksrt12.github.io/isu/abit.user.js
+// @downloadURL https://ksrt12.github.io/isu/abit.user.js
 // @include     https://isu.ifmo.ru/pls/apex/f?p=2175*
 // @run-at      document-end
 // @grant       none

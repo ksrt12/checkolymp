@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name        Средний балл
 // @version     1.1
-// @date        2020-08-28
+// @date        2020-08-29
 // @author      kazakovstepan
 // @namespace   ITMO University
 // @description Считает текущий средний балл
 // @homepage    https://vk.com/kazakovstepan
 // @icon        https://isu.ifmo.ru/i/libraries/frontend/misc/favicon.ico
+// @updateURL   https://ksrt12.github.io/isu/ias.user.js
+// @downloadURL https://ksrt12.github.io/isu/ias.user.js
 // @match       https://isu.ifmo.ru/pls/apex/f?p=2437:110:*
 // @run-at      document-end
 // @grant       none
