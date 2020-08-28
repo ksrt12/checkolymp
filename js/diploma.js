@@ -136,16 +136,16 @@ function SHA256(s) {
 	return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
 }
 
-var RSROLYMP = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-';
-var colnames = ["name", "lvl", "dip", "subj", "num", "grad", "stream"];
+const RSROLYMP = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-',
+	colnames = ["name", "lvl", "dip", "subj", "num", "grad", "stream"],
+	WLS = window.location.search;
 var diplomaCodes = [];
-var WLS = window.location.search;
 var table, tbody, params = {};
 
 function load_params() {
 	params = WLS.replace('?','').split('&').reduce(
 		function(p, e) {
-			var a = e.split('=');
+			let a = e.split('=');
 			p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
 			return p;
 		}, {}
@@ -175,7 +175,7 @@ function loadvars(n) {
 }
 
 function clean_results() {
-	var target = document.getElementById('results');
+	let target = document.getElementById('results');
 	while (0 < target.childNodes.length) {
 		target.removeChild(target.childNodes[0]);
 	}
@@ -183,7 +183,7 @@ function clean_results() {
 }
 
 function make_link(t, u) {
-	var a = document.createElement('a');
+	let a = document.createElement('a');
 	a.href = u;
 	a.appendChild(document.createTextNode(t));
 	return a;
@@ -195,8 +195,7 @@ function add_entry(x, tgt) {
 	} else if (typeof(x) == 'number') {
 		tgt.appendChild(document.createTextNode('' + x));
 	} else if (Array.isArray(x)) {
-		var i;
-		for (i in x) {
+		for (let i in x) {
 			add_entry(x[i], tgt);
 		}
 	} else {
@@ -205,12 +204,12 @@ function add_entry(x, tgt) {
 }
 
 function table_row(l, p) {
-	var tr = document.createElement('tr');
+	let tr = document.createElement('tr');
 	if (typeof(p) === "string") {
 		bvi_color(tr, p);
 	}
-	var g, i;
-	for (i in l) {
+	for (let i in l) {
+		var g;
 		if (p === true) {
 			g = document.createElement('th');
 			g.id = colnames[i];
@@ -228,10 +227,10 @@ function table_row(l, p) {
 
 function getSubTitles(olympname, grad) {
 	var status;
-	var t1 = olympname.substring(olympname.indexOf('. "') + 3, olympname.indexOf('("') - 2).trim();
-	var t2 = olympname.substr(olympname.indexOf('уровень') - 2, 1).trim();
-	var t3 = olympname.substr(olympname.indexOf('Диплом') + 7, 1).trim();
-	var t4 = olympname.substring(olympname.indexOf('("') + 2, olympname.indexOf('")')).replace('cистемы', 'системы').trim();
+	let t1 = olympname.substring(olympname.indexOf('. "') + 3, olympname.indexOf('("') - 2).trim();
+	let t2 = olympname.substr(olympname.indexOf('уровень') - 2, 1).trim();
+	let t3 = olympname.substr(olympname.indexOf('Диплом') + 7, 1).trim();
+	let t4 = olympname.substring(olympname.indexOf('("') + 2, olympname.indexOf('")')).replace('cистемы', 'системы').trim();
 	if ((grad === 10) || (grad === 11)) {
 		status = checkBVI('01.03.02', t4, t1, t2, t3);
 	} else if ((grad === 9) || (grad === 8) || (grad === 7)) {
@@ -243,11 +242,10 @@ function getSubTitles(olympname, grad) {
 }
 
 function update_diplomas(olympYear) {
-	var target = clean_results();
-	var i;
-	for (i in diplomaCodes) {
-		var d = diplomaCodes[i];
-		var doa = getSubTitles(d.oa, d.form);
+	let target = clean_results();
+	for (let i in diplomaCodes) {
+		let d = diplomaCodes[i];
+		let doa = getSubTitles(d.oa, d.form);
 		tbody.appendChild(table_row([
 			doa[0],
 			doa[1],
@@ -263,8 +261,8 @@ function update_diplomas(olympYear) {
 }
 
 function load_diploma_list(year, pid) {
-	var s = document.createElement('script');
-	var url = RSROLYMP + year + '/by-person-released/' + pid + '/codes.js';
+	let s = document.createElement('script');
+	let url = RSROLYMP + year + '/by-person-released/' + pid + '/codes.js';
 	s.onload = function() {
 		update_diplomas(year);
 	};
@@ -280,7 +278,7 @@ function make_table() {
 		table.setAttribute('rules', 'all');
 		table.setAttribute('border', 'all');
 		table.createCaption().textContent = loadvars(0);
-	var thead = document.createElement('thead');
+	let thead = document.createElement('thead');
 		table.appendChild(thead);
 		thead.appendChild(table_row([
 			'Олимпиада',
@@ -293,7 +291,7 @@ function make_table() {
 		], true));
 		tbody = document.createElement('tbody');
 		table.appendChild(tbody);
-		var personID = SHA256(loadvars(2));
+		const personID = SHA256(loadvars(2));
 		for (let YEAR = 2020; YEAR >= 2014; YEAR--) {
 			load_diploma_list(YEAR, personID);
 		}
@@ -336,7 +334,7 @@ function checktable(nt) {
 }
 
 function sort_table(nt) {
-	var th_sort = nt ? nt.tHead.rows[0].cells : document.querySelectorAll('#table th');
+	let th_sort = nt ? nt.tHead.rows[0].cells : document.querySelectorAll('#table th');
 	for (let i of th_sort) {
 		if (i.id !== "stream") {
 			i.onclick = function() {
@@ -373,12 +371,12 @@ function do_search(){
 	var old_table = document.getElementById('table');
 	old_table ? old_table.remove() : true;
 	EGE = {};
-	for (var i of document.querySelectorAll("#search_form > p > input")) {
+	for (let i of document.querySelectorAll("#search_form > p > input")) {
 		params[i.id] = i.value.trim().toLowerCase().replace(/(([- ]|^)[^ ])/g, function(s) {
 			return s.toUpperCase();
 		});
 	}
-	for (var j of document.querySelectorAll(".ege > form > p > input")) {
+	for (let j of document.querySelectorAll(".ege > form > p > input")) {
 		EGE[document.querySelector('[for='+j.id+']').innerText.toLowerCase()] = Number(j.value);
 	}
 	params.NAME = (params.LN+' '+params.FN+' '+params.MN).replace(/\s+/g, ' ');

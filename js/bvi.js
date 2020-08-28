@@ -5,13 +5,13 @@
 */
 
 var EGE,
+	nonconf = ' Не подтв.',
+	yesconf = ' Подтв.';
+const ia = 'ИД',
 	bvi = 'БВИ',
 	sto = '100',
 	wtf = '—',
-	ia = 'ИД',
 	itin = 'спросить у Итина',
-	nonconf = ' Не подтв.',
-	yesconf = ' Подтв.',
 	DEF_EGE = {
 		'русский язык':100,
 		'математика':100,
@@ -82,7 +82,7 @@ var EGE,
 function getEGE() {
 	EGE = params.EGE.split(',').reduce(
 		function(p, e) {
-			var a = e.split(':');
+			let a = e.split(':');
 			p[decodeURIComponent(a[0]).toLowerCase()] = decodeURIComponent(a[1]);
 			return p;
 		}, {}
@@ -91,8 +91,8 @@ function getEGE() {
 
 function checkBVI(stream,subj_in,name_in,lvl_in,dip_in){
 
-var status,
-	lvl = Number(lvl_in),
+var status;
+let lvl = Number(lvl_in),
 	dip = Number(dip_in),
 	subj = subj_in.toLowerCase(),
 	name = name_in.replace(/[«»]+/g, '"');
@@ -442,15 +442,15 @@ function checkConfNum(curr_points, conf_points) {
 }
 
 function checkConf(olymp_profile, conf_points) {
-	var stat = 0;
-	var conf_subj = SUBJ_EGE[olymp_profile];
+	let stat = 0;
+	const conf_subj = SUBJ_EGE[olymp_profile];
 
 	if (conf_subj === undefined) {
 		return itin;
 	} else if (conf_subj === false) {
 		return wtf;
 	} else if (Array.isArray(conf_subj)) {
-		for (var i of conf_subj) {
+		for (let i of conf_subj) {
 			stat += checkConfNum(EGE[i], conf_points);
 		}
 	} else {
@@ -461,7 +461,7 @@ function checkConf(olymp_profile, conf_points) {
 }
 
 function makeselector(){
-var streams = [
+let streams = [
 	"01.03.02",
 	"09.03.01",
 	"09.03.02",
@@ -492,13 +492,13 @@ var streams = [
 	"44.03.04",
 	"45.03.04",
 	];
-var sstream = document.createElement('select');
+let sstream = document.createElement('select');
 	sstream.autofocus = true;
 	sstream.addEventListener('change', function(){
 		update_status(this.value);
 	});
-	for (var i = 0; i < streams.length; i++) {
-		var option = document.createElement("option");
+	for (let i = 0; i < streams.length; i++) {
+	let option = document.createElement("option");
 		option.value = streams[i];
 		option.text = streams[i];
 		sstream.appendChild(option);
