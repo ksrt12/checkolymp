@@ -137,7 +137,6 @@ function SHA256(s) {
 }
 
 const RSROLYMP = 'https://diploma.rsr-olymp.ru/files/rsosh-diplomas-static/compiled-storage-',
-	colnames = ["name", "lvl", "dip", "subj", "num", "grad", "stream"],
 	WLS = window.location.search;
 var diplomaCodes = [];
 var table, tbody, params = {};
@@ -157,7 +156,7 @@ function load_params() {
 }
 
 function loadvars(n) {
-	var namestr;	
+	let namestr;	
 	if (n === 0) {
 		if ((params.DN === undefined) || (params.DN === "")) {
 			namestr = params.NAME;
@@ -209,15 +208,10 @@ function table_row(l, p) {
 		bvi_color(tr, p);
 	}
 	for (let i in l) {
-		var g;
-		if (p === true) {
-			g = document.createElement('th');
-			g.id = colnames[i];
-		} else {
-			g = document.createElement('td');
-		}
-		if (i == '6') {
+		let g = (p === true) ? document.createElement('th') : document.createElement('td');
+		if (i === '6') {
 			g.width = "85px";
+			g.id = "stream";
 		}
 		add_entry(l[i], g);
 		tr.appendChild(g);
@@ -226,7 +220,7 @@ function table_row(l, p) {
 }
 
 function getSubTitles(olympname, grad) {
-	var status;
+	let status;
 	let t1 = olympname.substring(olympname.indexOf('. "') + 3, olympname.indexOf('("') - 2).trim();
 	let t2 = olympname.substr(olympname.indexOf('уровень') - 2, 1).trim();
 	let t3 = olympname.substr(olympname.indexOf('Диплом') + 7, 1).trim();
@@ -348,6 +342,8 @@ function sort_table(nt) {
 
 function bvi_color(tr, new_status) {
 	if (new_status.includes(bvi)) {
+		tr.bgColor = "#a0faad";
+	} else if (new_status.includes(sto)) {
 		tr.bgColor = "#89f5dc";
 	}
 }
@@ -356,7 +352,7 @@ function update_status(stream) {
 	for (let i = 0; i < tbody.rows.length; i++) {
 		if ((tbody.rows[i].cells[5].innerText === "11") || (tbody.rows[i].cells[5].innerText === "10")) {
 			tbody.rows[i].bgColor = "";
-			var new_status = checkBVI(stream,
+			let new_status = checkBVI(stream,
 			tbody.rows[i].cells[3].innerText,
 			tbody.rows[i].cells[0].innerText,
 			tbody.rows[i].cells[1].innerText,
@@ -368,7 +364,7 @@ function update_status(stream) {
 }
 
 function do_search(){
-	var old_table = document.getElementById('table');
+	let old_table = document.getElementById('table');
 	old_table ? old_table.remove() : true;
 	EGE = {};
 	for (let i of document.querySelectorAll("#search_form > p > input")) {

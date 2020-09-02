@@ -91,8 +91,8 @@ function getEGE() {
 
 function checkBVI(stream,subj_in,name_in,lvl_in,dip_in){
 
-var status;
-let lvl = Number(lvl_in),
+let status,
+	lvl = Number(lvl_in),
 	dip = Number(dip_in),
 	subj = subj_in.toLowerCase(),
 	name = name_in.replace(/[«»]+/g, '"');
@@ -417,8 +417,8 @@ switch(stream) {
 	if (subj === 'русский язык') {
 		return (checkConfNum(EGE[subj], 75) === 1) ? sto : wtf;
 	}
-	var ch60 = checkConf(subj, 60);
-	var ch75 = checkConf(subj, 75);
+	let ch60 = checkConf(subj, 60);
+	let ch75 = checkConf(subj, 75);
 
 	function chwtf() {
 		return ((ch60 === wtf) || (ch60 === itin)) ? ch60 : ia + ch60;
