@@ -70,7 +70,7 @@ body {
 }
 
 .ege form input {
-	width: 48px;
+	width: 40px;
 }
 
 .ege form label {
@@ -78,7 +78,7 @@ body {
 }
 
 #search_form input{
-	width: 125px;
+	width: 135px;
 }
 
 #result {
