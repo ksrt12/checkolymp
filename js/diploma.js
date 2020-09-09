@@ -322,6 +322,7 @@ function checktable(nt) {
 				}
 			}
 		} else {
+			document.getElementById("contacts").style.display = "";
 			sort_table(nt);
 		}
 	});
