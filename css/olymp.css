@@ -73,12 +73,9 @@ body {
 	width: 40px;
 }
 
-.ege form label {
-	width: 150px;
-}
-
-#search_form input{
+#search_form input {
 	width: 135px;
+	padding: 1px 2px;
 }
 
 #result {
