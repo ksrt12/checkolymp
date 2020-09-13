@@ -265,8 +265,10 @@ function do_search() {
 	EGE = {};
 	for (let j of document.querySelectorAll(".ege > form > p > input")) {
 		let points = Number(j.value);
-		points = (points < 0) ? 0 : (points > 100) ? 100 : points;
-		j.value = points;
+		if (j.value !== "") {
+			points = (points < 0) ? 0 : (points > 100) ? 100 : points;
+			j.value = points;
+		}
 		EGE[document.querySelector('[for='+j.id+']').innerText.toLowerCase()] = points;
 	}
 	if (is_table) {
