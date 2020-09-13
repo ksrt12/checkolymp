@@ -298,6 +298,10 @@ function check_data() {
 	if (is_table) {
 		rename_button();
 		is_table.remove();
+		for (let j of document.querySelectorAll(".ege > form > p > input")) {
+			j.value = "";
+			is_empty_color(document.querySelector('[for='+j.id+']'), false);
+		}
 	} else {
 		let SB = document.querySelector("#check_button > button");
 		let LN = document.querySelector("#LN").value.length;
