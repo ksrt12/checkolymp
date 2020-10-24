@@ -443,10 +443,6 @@ function checkBVI(stream, subj_in, name_in, lvl_in, dip_in) {
 					status = wtf;
 			}
 			break;
-
-		case '14.03.01':
-			status = itin;
-			break;
 		case '12.03.04':
 		case '18.03.02':
 		case '19.03.01':
@@ -584,7 +580,6 @@ function makeselector() {
 		"12.03.05",
 		"12.05.01",
 		"13.03.02",
-		"14.03.01",
 		"15.03.04",
 		"15.03.06",
 		"16.03.01",
