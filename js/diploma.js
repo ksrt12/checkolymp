@@ -20,7 +20,7 @@ function load_params() {
 }
 
 function loadvars(n) {
-	let namestr;	
+	let namestr;
 	if (n === 0) {
 		if ((params.DN === undefined) || (params.DN === "")) {
 			namestr = params.NAME;
@@ -237,7 +237,7 @@ function set_ia_status(subj_in) {
 
 function update_ia_status() {
 	for (let i = 0; i < tbody.rows.length; i++) {
-		if ((tbody.rows[i].cells[5].innerText === "9") || 
+		if ((tbody.rows[i].cells[5].innerText === "9") ||
 			(tbody.rows[i].cells[5].innerText === "8") ||
 			(tbody.rows[i].cells[5].innerText === "7")) {
 			tbody.rows[i].cells[6].innerHTML = set_ia_status(tbody.rows[i].cells[3].innerText);
