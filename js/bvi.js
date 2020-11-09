@@ -108,9 +108,10 @@ SUBJ_EGE = {
 	'ядерные технологии': 'физика'
 };
 
-function checkBVI(stream, subj_in, name_in, lvl_in, dip_in) {
+function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
 
 	let status,
+		grad = Number(grad_in),
 		lvl = Number(lvl_in),
 		dip = Number(dip_in),
 		subj = subj_in.toLowerCase(),
@@ -128,30 +129,91 @@ function checkBVI(stream, subj_in, name_in, lvl_in, dip_in) {
 		case '01.03.02':
 			switch (subj) {
 				case 'информатика':
-					status = (lvl === 3) ? sto : bvi;
+					switch(name) {
+						case 'Московская олимпиада школьников':
+						case 'Всесибирская открытая олимпиада школьников':
+						case 'Олимпиада школьников "Ломоносов"':
+						case 'Олимпиада школьников по информатике и программированию':
+						case 'Олимпиада школьников по программированию "ТехноКубок"':
+						case 'Олимпиада школьников Санкт-Петербургского государственного университета':
+						case 'Олимпиада школьников СПбГУ':
+						case 'Открытая олимпиада школьников по программированию':
+						case 'Межрегиональная олимпиада школьников "Высшая проба"':
+						case 'Всероссийская олимпиада школьников "Высшая проба"':
+							status = (lvl === 1) ? bvi : sto;
+							break;
+						case 'Открытая олимпиада школьников':
+							status = (lvl === 1) ? ((grad === 11) || ((grad === 10) && (dip === 1))) ? bvi : sto : sto;
+							break;
+						case 'Олимпиада Университета Иннополис "Innopolis Open"':
+							status = (lvl === 2) ? bvi : sto;
+							break;
+						default:
+							status = sto;
+					}
 					break;
 				case 'информационные технологии':
-					status = itt();
+					status = sto; // ????
 					break;
 				case 'информатика и икт':
 					status = (dip === 2) ? bvi : sto;
 					break;
 				case 'программирование':
-					status = ((lvl === 2) && (dip === 1)) ? bvi : sto;
-					break;
-				case 'математика':
-					switch (name) {
-						case 'Открытая олимпиада школьников':
-							status = (lvl === 3) ? bvi : itin;
+					switch(name) {
+						case 'Олимпиада школьников "Шаг в будущее"':
+							status = ((lvl === 2) && (dip === 1)) ? bvi : sto;
+							break;
+						case 'Вузовско-академическая олимпиада по программированию на Урале':
+							status = ((lvl === 3) && (dip === 1)) ? bvi : sto;
 							break;
 						default:
-							if (lvl === 1) {
-								status = bvi;
-							} else if (lvl === 2) {
-								status = (dip === 1) ? bvi : sto;
-							} else {
-								status = sto;
-							}
+							status = sto;
+					}
+					break;
+				case 'математика':
+					switch(name) {
+						case 'Межрегиональная олимпиада школьников "Высшая проба"':
+						case 'Всероссийская олимпиада школьников "Высшая проба"':
+						case 'Московская олимпиада школьников':
+						case 'Олимпиада школьников Санкт-Петербургского государственного университета':
+						case 'Санкт-Петербургская олимпиада школьников':
+						case 'Турнир городов':
+							status = (lvl === 1) ? bvi : sto;
+							break;
+						case 'Олимпиада школьников "Ломоносов"':
+						case 'Олимпиада школьников "Покори Воробьѐвы горы!"':
+						case 'Олимпиада школьников "Покори Воробьёвы горы!"':
+							status = ((lvl === 1) && (dip === 1)) ? bvi : sto;
+							break;
+						case 'Всесибирская открытая олимпиада школьников':	
+						case 'Межрегиональная олимпиада школьников им. И.Я.Верченко':
+						case 'Межрегиональная олимпиада школьников на базе ведомственных образовательных организаций':
+						case 'Объединённая межвузовская математическая олимпиада школьников':
+						case 'Объединённая международная математическая олимпиада "Формула Единства" / "Третье тысячелетие"':
+						case 'Олимпиада Курчатов':
+						case 'Олимпиада школьников "Физтех"':
+						case 'Отраслевая физико-математическая олимпиада школьников "Росатом"':
+						case 'Олимпиада "Росатом"':
+							status = ((lvl === 2) && (dip === 1)) ? bvi : sto;
+							break;
+						case 'Олимпиада Юношеской математической школы':
+							status = (lvl === 2) ? bvi : sto;
+							break;
+						case 'Турнир имени М.В. Ломоносова':
+						case 'Турнир Ломоносова':
+							status = (lvl === 2) ? bvi : sto;
+							break;
+						case 'Открытая олимпиада школьников':
+						case 'Межрегиональная олимпиада школьников по математике "САММАТ"':
+						case 'Многопрофильная олимпиада школьников Уральского федерального университета "Изумруд"':
+						case 'Олимпиада Университета Иннополис "Innopolis Open"':
+							status = ((lvl === 3) && (dip === 1)) ? bvi : sto;
+							break;
+						case 'Межрегиональная олимпиада школьников по математике и криптографии':
+							status = itin;
+							break;
+						default:
+							status = sto;
 					}
 					break;
 				case 'большие данные и машинное обучение':
@@ -167,32 +229,36 @@ function checkBVI(stream, subj_in, name_in, lvl_in, dip_in) {
 			}
 			break;
 		case '09.03.02':
-			switch (subj) {
-				case 'информатика':
-					status = (lvl === 3) ? sto : bvi;
-					break;
-				case 'информационные технологии':
-					status = itt();
-					break;
-				case 'информатика и икт':
-					status = (dip === 2) ? bvi : sto;
-					break;
-				case 'программирование':
-					status = ((lvl === 2) && (dip === 1)) ? bvi : sto;
-					break;
-				case 'математика':
-					status = (lvl === 3) ? (name === 'Открытая олимпиада школьников') ? bvi : sto : bvi;
-					break;
-				case 'большие данные и машинное обучение':
-					status = (dip === 2) ? (dip === 1) ? bvi : sto : wtf;
-					break;
-				case 'информационные и коммуникационные технологии':
-				case 'искусственный интеллект':
-				case 'умный город':
-					status = sto;
-					break;
-				default:
-					status = wtf;
+			if (grad === 11) {
+				switch (subj) {
+					case 'информатика':
+						status = (lvl === 3) ? sto : bvi;
+						break;
+					case 'информационные технологии':
+						status = sto; //itt(); куда???
+						break;
+					case 'информатика и икт':
+						status = itin; //(dip === 2) ? bvi : sto; а на ПМИ есть....
+						break;
+					case 'программирование':
+						status = ((lvl === 2) && (dip === 1)) ? bvi : sto;
+						break;
+					case 'математика':
+						status = (lvl === 3) ? (name === 'Открытая олимпиада школьников') ? bvi : sto : bvi;
+						break;
+					case 'большие данные и машинное обучение':
+						status = itin; //(lvl === 2) ? (dip === 1) ? bvi : sto : wtf; тоже исчезло
+						break;
+					case 'информационные и коммуникационные технологии':
+					case 'искусственный интеллект':
+					case 'умный город':
+						status = sto;
+						break;
+					default:
+						status = wtf;
+				}
+			} else {
+				status = sto
 			}
 			break;
 		case '09.03.03':

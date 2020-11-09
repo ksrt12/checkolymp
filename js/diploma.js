@@ -90,9 +90,11 @@ function getSubTitles(olympname, grad) {
 	let t3 = olympname.substr(olympname.indexOf('Диплом') + 7, 1).trim();
 	let t4 = olympname.substring(olympname.indexOf('("') + 2, olympname.indexOf('")')).replace('cистемы', 'системы').trim();
 	if ((grad === 10) || (grad === 11)) {
-		status = checkBVI('01.03.02', t4, t1, t2, t3);
+		status = checkBVI('01.03.02', grad, t4, t1, t2, t3);
+	/*
 	} else if ((grad === 9) || (grad === 8) || (grad === 7)) {
-		status = set_ia_status(t4)
+		status = set_ia_status(t4);
+	*/
 	} else {
 		status = wtf;
 	}
@@ -103,18 +105,20 @@ function update_diplomas(olympYear) {
 	let target = clean_results();
 	for (let i in diplomaCodes) {
 		let d = diplomaCodes[i];
-		let doa = getSubTitles(d.oa, d.form);
-		tbody.appendChild(table_row([
-			doa[0],
-			doa[1],
-			doa[2],
-			doa[3],
-			make_link(('' + d.code).replace(/([0-9]{3})([0-9]{4})([0-9]{4})/, '$1 $2-$3'),
-				RSROLYMP + olympYear + '/by-code/' + d.code + '/white.pdf'),
-			d.form,
-			doa[4],
-		], doa[4]));
-		check_ege_is_empty(doa[3]);
+		if (d.form > 9) {
+			let doa = getSubTitles(d.oa, d.form);
+			tbody.appendChild(table_row([
+				doa[0],
+				doa[1],
+				doa[2],
+				doa[3],
+				make_link(('' + d.code).replace(/([0-9]{3})([0-9]{4})([0-9]{4})/, '$1 $2-$3'),
+					RSROLYMP + olympYear + '/by-code/' + d.code + '/white.pdf'),
+				d.form,
+				doa[4],
+			], doa[4]));
+			check_ege_is_empty(doa[3]);
+		}
 	}
 	target.appendChild(table);
 }
@@ -151,7 +155,7 @@ function make_table() {
 		tbody = document.createElement('tbody');
 		table.appendChild(tbody);
 		const personID = SHA256(loadvars(2));
-		for (let YEAR = 2020; YEAR >= 2014; YEAR--) {
+		for (let YEAR = 2021; YEAR >= 2014; YEAR--) {
 			load_diploma_list(YEAR, personID);
 		}
 	return table;
@@ -219,6 +223,7 @@ function update_status(stream) {
 		if ((tbody.rows[i].cells[5].innerText === "11") || (tbody.rows[i].cells[5].innerText === "10")) {
 			tbody.rows[i].bgColor = "";
 			let new_status = checkBVI(stream,
+			tbody.rows[i].cells[5].innerText,
 			tbody.rows[i].cells[3].innerText,
 			tbody.rows[i].cells[0].innerText,
 			tbody.rows[i].cells[1].innerText,
@@ -273,7 +278,7 @@ function do_search() {
 	}
 	if (is_table) {
 		update_status('01.03.02');
-		update_ia_status();
+		//update_ia_status();
 	} else {
 		for (let i of document.querySelectorAll("#search_form > p > input")) {
 			params[i.id] = i.value.trim().toLowerCase().replace(/(([- ]|^)[^ ])/g, function(s) {
