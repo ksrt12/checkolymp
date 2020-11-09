@@ -586,20 +586,20 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
 	if (subj === 'русский язык') {
 		return (checkConfNum(EGE[subj], 75) === 1) ? sto : wtf;
 	}
-	let ch60 = checkConf(subj, 60);
+	//let ch60 = checkConf(subj, 60);
 	let ch75 = checkConf(subj, 75);
-
+/*
 	function chwtf() {
 		return ((ch60 === wtf) || (ch60 === itin)) ? ch60 : ia + ch60;
 	}
-
+*/
 	if (status === wtf) {
-		status = chwtf();
+		status = ia + ch75;
 	} else if ((status === bvi) || (status === sto)) {
 		if (ch75 === yesconf) {
 			status += yesconf;
 		} else {
-			status = chwtf();
+			status += nonconf;
 		}
 	}
 
