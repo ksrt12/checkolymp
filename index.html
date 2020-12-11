@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=0.65">
-<meta name="description" content="Поиск и проверка олимпиад абитуриентов">
-<meta name="theme-color" content="#3367D6">
-<meta name="google-site-verification" content="-UX3T2JISXFjo-jWgSf0NvtiZazPDnhPaFh9Rff3z4g" />
-<meta name="yandex-verification" content="9811506c6180e078" />
-<script src="js/bvi.js"></script>
-<script src="js/diploma.js"></script>
-<!-- <script src="stars.js"></script> -->
-<style>
-@font-face {
-    font-family: 'ALS Schlange Sans';
-    src: url('fonts/font.eot');
-    src: url('fonts/font.eot?#iefix') format('embedded-opentype'),
-         url('fonts/font.svg#als_schlange_sansregular') format('svg'),
-         url('fonts/font.woff') format('woff'),
-         url('fonts/font.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-</style>
-<link rel="stylesheet" type="text/css" href="css/olymp.css">
-<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="128x128" href="icons/favicon-128x128.png">
-<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
-<title>Олимпиады РСОШ</title>
-<base target="_blank">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.65">
+    <meta name="description" content="Поиск и проверка олимпиад абитуриентов">
+    <meta name="theme-color" content="#3367D6">
+    <script src="js/bvi.js"></script>
+    <script src="js/diploma.js"></script>
+    <!-- <script src="stars.js"></script> -->
+    <style>
+        @font-face {
+            font-family: 'ALS Schlange Sans';
+            src: url('fonts/font.eot');
+            src: url('fonts/font.eot?#iefix') format('embedded-opentype'), url('fonts/font.svg#als_schlange_sansregular') format('svg'), url('fonts/font.woff') format('woff'), url('fonts/font.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/olymp.css">
+    <link rel="apple-touch-icon" sizes="120x120" href="../icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="../icons/favicon-128x128.png">
+    <link rel="mask-icon" href="../icons/safari-pinned-tab.svg" color="#5bbad5">
+    <title>Олимпиады РСОШ</title>
+    <base target="_blank">
 </head>
 
 <body>
@@ -58,19 +54,19 @@
                 <form id="search_form" autocomplete="on">
                     <p>
                         <label for="LN">Фамилия</label>
-                        <input type="text" id="LN" placeholder="Иванов" name="last_name" onkeyup="check_data()"/>
+                        <input type="text" id="LN" placeholder="Иванов" name="last_name" onkeyup="check_data()" />
                     </p>
                     <p>
                         <label for="FN">Имя</label>
-                        <input type="text" id="FN" placeholder="Иван" name="first_name" onkeyup="check_data()"/>
+                        <input type="text" id="FN" placeholder="Иван" name="first_name" onkeyup="check_data()" />
                     </p>
                     <p>
                         <label for="MN">Отчество</label>
-                        <input type="text" id="MN" placeholder="Иванович" name="middle_name" onkeyup="check_data()"/>
+                        <input type="text" id="MN" placeholder="Иванович" name="middle_name" onkeyup="check_data()" />
                     </p>
                     <p>
                         <label for="BD">Дата рождения</label>
-                        <input type="date" id="BD" max="2005-01-01" min="1996-01-01" value="2002-01-01" name="bday" onchange="check_data()"/>
+                        <input type="date" id="BD" max="2005-01-01" min="1996-01-01" value="2002-01-01" name="bday" onchange="check_data()" />
                     </p>
                 </form>
             </div>
@@ -78,43 +74,43 @@
                 <form>
                     <p>
                         <label for="m">Математика</label>
-                        <input type="number" min="0" max="100" placeholder="62" id="m"/>
+                        <input type="number" min="0" max="100" placeholder="62" id="m" />
                     </p>
                     <p>
                         <label for="r">Русский язык</label>
-                        <input type="number" min="0" max="100" placeholder="60" id="r"/>
+                        <input type="number" min="0" max="100" placeholder="60" id="r" />
                     </p>
                     <p>
                         <label for="i">Информатика</label>
-                        <input type="number" min="0" max="100" placeholder="61" id="i"/>
+                        <input type="number" min="0" max="100" placeholder="61" id="i" />
                     </p>
                     <p>
                         <label for="f">Физика</label>
-                        <input type="number" min="0" max="100" placeholder="60" id="f"/>
+                        <input type="number" min="0" max="100" placeholder="60" id="f" />
                     </p>
                 </form>
                 <form>
                     <p>
                         <label for="e">Иностранный язык</label>
-                        <input type="number" min="0" max="100" placeholder="60" id="e"/>
+                        <input type="number" min="0" max="100" placeholder="60" id="e" />
                     </p>
                     <p>
                         <label for="o">Обществознание</label>
-                        <input type="number" min="0" max="100" placeholder="60" id="o"/>
+                        <input type="number" min="0" max="100" placeholder="60" id="o" />
                     </p>
                     <p>
                         <label for="c">Химия</label>
-                        <input type="number" min="0" max="100" placeholder="60" id="c"/>
+                        <input type="number" min="0" max="100" placeholder="60" id="c" />
                     </p>
                     <p>
                         <label for="b">Биология</label>
-                        <input type="number" min="0" max="100" placeholder="60" id="b"/>
+                        <input type="number" min="0" max="100" placeholder="60" id="b" />
                     </p>
                 </form>
             </div>
         </div>
         <div id="check_button">
-			<br>
+            <br>
             <button type="submit" disabled onclick="do_search()">Проверить</button>
             <br>
         </div>
