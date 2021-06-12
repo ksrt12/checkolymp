@@ -183,6 +183,13 @@ function getSort(target) {
 
 function checktable(nt) {
     window.addEventListener("load", function() {
+        if (params.wallpapers == "true") {
+            document.querySelector("body > div.left").style.display = "none";
+            document.querySelector("#main_res").style.display = "none";
+            document.querySelector("body > div.right").style.display = "none";
+            // addScript("js/stars.js");
+            start_stars();
+        }
         if (nt.lastChild.rows.length === 0) {
             if (params.LN) {
                 alert('Олимпиад РСОШ абитуриента \n' + loadvars(0) + ' не найдено!');
@@ -304,6 +311,13 @@ function do_search() {
 
 function is_exist() {
     return document.getElementById('table');
+}
+
+function addScript(src){
+    var script = document.createElement('script');
+    script.src = src;
+    script.async = false;
+    document.head.appendChild(script);
 }
 
 function check_data() {
