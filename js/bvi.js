@@ -146,17 +146,14 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                             status = (lvl === 1) ? ((grad === 11) || ((grad === 10) && (dip === 1))) ? bvi : sto : sto;
                             break;
                         case 'Олимпиада Университета Иннополис "Innopolis Open"':
-                            status = (lvl === 2) ? bvi : sto;
+                            status = (lvl === 3) ? sto : bvi;
                             break;
                         default:
                             status = sto;
                     }
                     break;
-                case 'информационные технологии':
-                    status = sto; // ????
-                    break;
                 case 'информатика и икт':
-                    status = (dip === 2) ? bvi : sto;
+                    status = (lvl === 2) ? bvi : sto;
                     break;
                 case 'программирование':
                     switch (name) {
@@ -192,16 +189,15 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                         case 'Объединённая международная математическая олимпиада "Формула Единства" / "Третье тысячелетие"':
                         case 'Олимпиада Курчатов':
                         case 'Олимпиада школьников "Физтех"':
-                        case 'Отраслевая физико-математическая олимпиада школьников "Росатом"':
                         case 'Олимпиада "Росатом"':
                             status = ((lvl === 2) && (dip === 1)) ? bvi : sto;
                             break;
                         case 'Олимпиада Юношеской математической школы':
+                        case 'Турнир Ломоносова':
                             status = (lvl === 2) ? bvi : sto;
                             break;
                         case 'Турнир имени М.В. Ломоносова':
-                        case 'Турнир Ломоносова':
-                            status = (lvl === 2) ? bvi : sto;
+                            status = itin;
                             break;
                         case 'Открытая олимпиада школьников':
                         case 'Межрегиональная олимпиада школьников по математике "САММАТ"':
@@ -209,16 +205,11 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                         case 'Олимпиада Университета Иннополис "Innopolis Open"':
                             status = ((lvl === 3) && (dip === 1)) ? bvi : sto;
                             break;
-                        case 'Межрегиональная олимпиада школьников по математике и криптографии':
-                            status = itin;
-                            break;
                         default:
                             status = sto;
                     }
                     break;
                 case 'большие данные и машинное обучение':
-                    status = born();
-                    break;
                 case 'информационные и коммуникационные технологии':
                 case 'искусственный интеллект':
                 case 'умный город':
@@ -234,12 +225,6 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                     case 'информатика':
                         status = (lvl === 3) ? sto : bvi;
                         break;
-                    case 'информационные технологии':
-                        status = sto; //itt(); куда???
-                        break;
-                    case 'информатика и икт':
-                        status = itin; //(dip === 2) ? bvi : sto; а на ПМИ есть....
-                        break;
                     case 'программирование':
                         status = ((lvl === 2) && (dip === 1)) ? bvi : sto;
                         break;
@@ -247,11 +232,11 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                         status = (lvl === 3) ? (name === 'Открытая олимпиада школьников') ? bvi : sto : bvi;
                         break;
                     case 'большие данные и машинное обучение':
-                        status = itin; //(lvl === 2) ? (dip === 1) ? bvi : sto : wtf; тоже исчезло
-                        break;
                     case 'информационные и коммуникационные технологии':
                     case 'искусственный интеллект':
                     case 'умный город':
+                    case 'информатика и икт':
+                    case 'информационные технологии':
                         status = sto;
                         break;
                     default:
@@ -350,9 +335,6 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                 case 'информационные технологии':
                     status = itt();
                     break;
-                case 'криптография':
-                    status = itin;
-                    break;
                 case 'математика':
                 case 'информатика':
                 case 'компьютерная безопасность':
@@ -447,7 +429,7 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                 case 'информационные и коммуникационные технологии':
                 case 'техника и технологии':
                 case 'естественные науки':
-                case 'инженерное дело': //так 2 или всё???
+                case 'инженерное дело':
                 case 'инженерные науки':
                 case 'инженерные системы':
                 case 'системы связи и дистанционного зондирования земли':
@@ -474,18 +456,21 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                     status = wtf;
             }
             break;
+        case '13.03.01':
+            status = wtf;
+            break;
         case '16.03.01':
         case '16.03.03':
             switch (subj) {
                 case 'математика':
                 case 'техника и технологии':
                 case 'естественные науки':
-                case 'инженерное дело': //так 2 или всё???
+                case 'инженерное дело':
                 case 'инженерные науки':
                 case 'инженерные системы':
                 case 'системы связи и дистанционного зондирования земли':
                 case 'ядерные технологии':
-                case 'технологии беспроводной связи': //зачем тут???
+                case 'технологии беспроводной связи':
                 case 'нанотехнологии':
                 case 'анализ космических снимков и геопространственных данных':
                 case 'астрономия':
@@ -493,11 +478,10 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                 case 'физика':
                 case 'аэрокосмические системы':
                 case 'комплекс предметов (физика, информатика, математика)':
-                case 'робототехника': //зачем она тут???
+                case 'робототехника':
                 case 'нейротехнологии':
                     status = bvi;
                     break;
-                    //case 'механика и математическое моделирование':куда?
                 case 'наносистемы и наноинженерия':
                 case 'передовые производственные технологии':
                 case 'космонавтика':
