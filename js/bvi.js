@@ -108,6 +108,16 @@ SUBJ_EGE = {
     'ядерные технологии': 'физика'
 };
 
+function getEGE() {
+    EGE = params.EGE.split(',').reduce(
+        function (p, e) {
+            let a = e.split(':');
+            p[decodeURIComponent(a[0]).toLowerCase()] = decodeURIComponent(a[1]);
+            return p;
+        }, {}
+    );
+}
+
 function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
 
     let status,
