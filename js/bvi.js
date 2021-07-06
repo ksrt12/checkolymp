@@ -37,6 +37,7 @@ SUBJ_EGE = {
     'автономные транспортные системы': 'информатика',
     'академический рисунок, живопись, композиция, история искусства и культуры': 'информатика',
     'анализ космических снимков и геопространственных данных': 'физика',
+    'английский язык': false, // рсош 2021
     'архитектура, изобразительные и прикладные виды искусств': 'информатика',
     'астрономия и науки о земле': 'физика',
     'астрономия': 'физика',
@@ -85,6 +86,7 @@ SUBJ_EGE = {
     'педагогические науки и образование': false,
     'передовые производственные технологии': 'информатика',
     'политология': 'обществознание',
+    'программирование': 'информатика',
     'программная инженерия финансовых технологий': 'информатика',
     'разработка приложений виртуальной и дополненной реальности': 'информатика',
     'рисунок, живопись, скульптура, дизайн': 'информатика',
@@ -132,7 +134,7 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
     }
 
     function born() {
-        return (lvl === 2) ? bvi : itin;
+        return (lvl === 2) ? bvi : (name === 'Вузовско-академическая олимпиада по программированию на Урале') ? wtf : itin;
     }
 
     switch (stream) {
@@ -266,7 +268,7 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                         break;
                     default:
                         status = wtf;
-                }        
+                }
             }
             break;
         case '09.03.03':
@@ -412,7 +414,7 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                 case 'компьютерное моделирование и графика':
                     status = bvi;
                     break;
-                    // графика start
+                // графика start
                 case 'технический рисунок и декоративная композиция':
                 case 'академический рисунок, живопись, композиция, история искусства и культуры':
                 case 'рисунок, живопись, скульптура, дизайн':
@@ -424,7 +426,7 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                 case 'рисунок':
                 case 'графика':
                 case 'архитектура, изобразительные и прикладные виды искусств':
-                    // графика end
+                // графика end
                 case 'автоматизация бизнес-процессов':
                 case 'разработка приложений виртуальной и дополненной реальности':
                 case 'нейротехнологии и когнитивные науки':
@@ -595,9 +597,9 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
     //let ch60 = checkConf(subj, 60);
     let ch75 = checkConf(subj, 75);
     /*
-    	function chwtf() {
-    		return ((ch60 === wtf) || (ch60 === itin)) ? ch60 : ia + ch60;
-    	}
+        function chwtf() {
+            return ((ch60 === wtf) || (ch60 === itin)) ? ch60 : ia + ch60;
+        }
     */
     if (status === wtf) {
         status = ia + ch75;
@@ -669,7 +671,7 @@ function makeselector() {
     ];
     let sstream = document.createElement('select');
     sstream.autofocus = true;
-    sstream.addEventListener('change', function() {
+    sstream.addEventListener('change', function () {
         update_status(this.value);
     });
     for (let i = 0; i < streams.length; i++) {
