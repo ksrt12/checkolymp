@@ -242,7 +242,21 @@ function checkBVI(stream, grad_in, subj_in, name_in, lvl_in, dip_in) {
                         status = wtf;
                 }
             } else {
-                status = sto
+                switch (subj) {
+                    case 'информатика':
+                    case 'программирование':
+                    case 'математика':
+                    case 'большие данные и машинное обучение':
+                    case 'информационные и коммуникационные технологии':
+                    case 'искусственный интеллект':
+                    case 'умный город':
+                    case 'информатика и икт':
+                    case 'информационные технологии':
+                        status = sto;
+                        break;
+                    default:
+                        status = wtf;
+                }        
             }
             break;
         case '09.03.03':
