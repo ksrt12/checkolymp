@@ -31,7 +31,7 @@ const ia = 'ИД',
         'обществознание': 'o',
         'химия': 'c',
         'биология': 'b'
-    };
+    },
 SUBJ_EGE = {
     'автоматизация бизнес-процессов': ['информатика', 'обществознание'],
     'автономные транспортные системы': 'информатика',
@@ -678,10 +678,10 @@ function makeselector() {
     sstream.addEventListener('change', function () {
         update_status(this.value);
     });
-    for (let i = 0; i < streams.length; i++) {
+    for (let i of streams) {
         let option = document.createElement("option");
-        option.value = streams[i];
-        option.text = streams[i];
+        option.value = i;
+        option.text = i;
         sstream.appendChild(option);
     }
     return sstream;

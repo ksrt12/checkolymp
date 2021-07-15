@@ -112,8 +112,7 @@ function getSubTitles(olympname, grad) {
 
 function update_diplomas(olympYear) {
     let target = clean_results();
-    for (let i in diplomaCodes) {
-        let d = diplomaCodes[i];
+    for (let d of diplomaCodes) {
         if (d.form > 9) {
             let doa = getSubTitles(d.oa, d.form);
             tbody.appendChild(table_row([
